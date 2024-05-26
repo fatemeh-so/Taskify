@@ -9,6 +9,7 @@ import Calender from './pages/Calender'
 import Timer from './pages/Timer'
 import Login from './pages/Login'
 import SignUp from './pages/Signup'
+import EditTaskModal from './features/schedule/EditTaskModal'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
               <Route index element={<Navigate replace to='dashboard' />} />
               <Route path='dashboard' element={<Dashboard />} />
               <Route path='schedule' element={<Schedule />} />
+              <Route path='schedule/:scheduleId' element={<EditTaskModal />} />
               <Route path='calender' element={<Calender />} />
               <Route path='timer' element={<Timer />} />
               <Route path='login' element={<Login />} />

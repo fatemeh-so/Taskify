@@ -5,7 +5,7 @@ function Sidebar({ className }) {
   return (
     <>
       <div
-        className={`${className} bg-gray2 p-4 flex h-[5rem] items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem]  lg:rounded-[1rem] lg:m-[1rem] lg:h-auto   lg:flex-col`}
+        className={`${className} md:relative fixed md:h-[5.3rem] bg-gray2 p-4 flex h-[5rem] items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem]  lg:rounded-[1rem] lg:m-[1rem] lg:h-auto   lg:flex-col`}
       >
         <ul className='flex  lg:flex-col  gap-[5rem]'>
           <li>
