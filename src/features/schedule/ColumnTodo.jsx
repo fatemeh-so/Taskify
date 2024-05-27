@@ -8,7 +8,7 @@ function ColumnTodo({ label, color }) {
 
   // Check if task and task.status are defined before calling toString
   const todoTask = task?.filter(task => task?.status?.toString() === 'Not Started') || [];
-  console.log(todoTask);
+  // console.log(todoTask);
 
   if (isTask) return <Spinner />;
 

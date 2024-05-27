@@ -117,8 +117,8 @@ function AddTaskContent() {
   if (isLoading || isTask) return <Spinner />;
 
   return (
-    <div className='container mx-auto p-6'>
-      <div className='shadow-lg rounded-lg bg-white p-6'>
+    <div className='container h-full b-red-900 mx-auto md:p-6'>
+      <div className=' h-auto rounded-lg bg-white p-6'>
         <div className='text-center mb-6'>
           <h3 className='text-xl font-semibold text-gray-700'>Add New Task</h3>
         </div>
@@ -194,9 +194,9 @@ function AddTaskContent() {
           )}
           <Button
             bordered
-            size='lg'
+            // size='smg'
             onClick={addTodo}
-            className='flex items-center gap-2 self-start'
+            className='flex w-full md:w-auto items-center gap-2 self-start'
           >
             <ListPlus size={24} />
             Add Todo

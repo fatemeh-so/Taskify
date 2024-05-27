@@ -49,9 +49,9 @@ function ScheduleBar() {
         <Button
           onClick={openTask}
           color='primary'
-          className=' h-[2rem] w-[3rem] md:w-[4.3rem] md:h-[2.4rem]'
+          className=' h-[2rem] font-semibold w-[3rem] md:w-[4.3rem] md:h-[2.4rem]'
           variant='bordered'
-          size=''
+          size='lg'
         >
           + Add Task
         </Button>
