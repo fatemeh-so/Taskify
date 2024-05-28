@@ -3,7 +3,7 @@ import TimerProject from "../features/timer/TimerProject"
 
 function Timer() {
     return (
-        <div className="w-[100%]  overflow-x-hidden">
+        <div className="w-[100%]  overflow-hidden  ">
             <TimerBar/>
             <TimerProject/>
         </div>

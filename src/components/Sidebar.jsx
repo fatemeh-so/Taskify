@@ -1,13 +1,13 @@
 import { Files, SquaresFour, Timer, CalendarBlank } from 'phosphor-react'
 import { NavLink } from 'react-router-dom'
 
-function Sidebar({ className }) {
+function Sidebar({className}) {
   return (
     <>
       <div
-        className={`${className} md:relative fixed md:h-[5.3rem] bg-gray2 p-4 flex h-[5rem] items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem]  lg:rounded-[1rem] lg:m-[1rem] lg:h-auto   lg:flex-col`}
+        className={` lg:w-[7rem] z-50  lg:h-[97%] lg:w-[7rem] fixed bottom-[0rem]  w-full h-[5rem] bg-gray2 p-4 flex items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem]  lg:rounded-[1rem] lg:m-[1rem]   lg:flex-col`}
       >
-        <ul className='flex  lg:flex-col  gap-[5rem]'>
+        <ul className=' mt-9  flex mb-10 lg:flex-col  gap-[5rem]'>
           <li>
             <NavLink to='/dashboard'>
               <SquaresFour size={24} color='#f4ecf4' />
