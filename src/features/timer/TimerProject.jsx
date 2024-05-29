@@ -27,6 +27,7 @@ function TimerProject() {
         acc[date].push(current);
 
         return acc;
+        // console.log(aaa);
       }, {});
 
       // Step 2: Convert the grouped data object to an array of arrays and sort by date

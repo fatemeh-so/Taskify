@@ -29,3 +29,14 @@ export async function deleteTimer(id) {
     throw new Error(error.message)
   }
 }
+export async function editTimer({id,taskName,duration}) {
+  const { data, error } = await supabase
+    .from('timer')
+    .update({taskName,duration })
+    .eq('id', id)
+    .select()
+  if (error) {
+    throw new Error(error.message)
+  }
+  return data
+}
