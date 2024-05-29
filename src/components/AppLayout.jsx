@@ -5,7 +5,7 @@ import Header from './Header'
 function AppLayout() {
   return (
     <div className=' h-[100%]  bg-white2 flex w-[100%] flex-col-reverse lg:flex-row min-h-screen overflow-y-hidden '>
-      <div className=' flex  xl:h-[100%] flex-col-reverse h-[13vh] lg:w-[15vh]  '>
+      <div className=' flex  xl:h-[100%] flex-col-reverse h-[13vh] lg:w-[12vh]  '>
         <Sidebar />
       </div>
 
