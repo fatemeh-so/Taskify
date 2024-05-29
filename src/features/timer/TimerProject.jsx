@@ -73,9 +73,10 @@ function TimerProject() {
                   >
                     <Input
                       variant='bordered'
-                      className='w-1/3 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                      size='lg'
+                      className='w-1/3  px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
                       type='text'
-                      placeholder={timerToday.taskName}
+                      value={timerToday.taskName}
                     />
                     <div className='flex items-center gap-5'>
                       <div className='flex justify-end items-center gap-1 text-gray-700'>
