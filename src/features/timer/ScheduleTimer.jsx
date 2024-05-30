@@ -17,42 +17,53 @@ export default function ScheduleTimer() {
   const dispatch = useDispatch()
   const { taskId } = useSelector((store) => store.timerSchedule)
 
-  // console.log(tasks)
   const filterTask = tasks?.filter((task) => task.status !== 'Completed')
   const items = filterTask.map((task) => ({
     key: task.id,
     label: task.title,
     status: task.status,
   }))
+
   if (isTask) return <Spinner />
-  console.log(filterTask)
+
   return (
     <Dropdown>
       <DropdownTrigger>
         <Button
-          className='h-[2rem] font-semibold md:w-[4rem] md:h-[2.4rem]'
+          className='h-8 font-semibold w-full md:w-auto md:h-10'
           color='secondary'
           size='lg'
         >
-          select Task
+          Select Task
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label='Dynamic Actions'>
+      <DropdownMenu
+        aria-label='Dynamic Actions'
+        css={{
+          '@xs': {
+            width: '100%',
+          },
+          '@sm': {
+            width: '20rem',
+          },
+        }}
+      >
         {items.map((item) => (
           <DropdownItem
+            key={item.key}
             startContent={
               <div className='flex gap-1'>
-                <h3 className=''>
+                <h3>
                   {item.status === 'Not Started' ? (
                     <Tooltip content='Todo'>
-                      <h3 className='bg-pink-200 w-5 text-center'>T </h3>
+                      <span className='bg-pink-200 w-5 text-center'>T</span>
                     </Tooltip>
                   ) : (
                     <Tooltip content='In Progress'>
-                      <h3 className='bg-blue-200 w-5 text-center'>P </h3>
+                      <span className='bg-blue-200 w-5 text-center'>P</span>
                     </Tooltip>
                   )}
-                </h3>{' '}
+                </h3>
                 :
               </div>
             }
@@ -60,12 +71,6 @@ export default function ScheduleTimer() {
               dispatch(addTaskName(item.label))
               dispatch(addTaskId(item.key))
             }}
-            onChange={() => {
-              dispatch(addTaskName(item.label))
-              dispatch(addTaskId(item.key))
-            }}
-            on
-            key={item.key}
             color={item.status === 'Not Started' ? 'danger' : 'primary'}
           >
             {item.label}
