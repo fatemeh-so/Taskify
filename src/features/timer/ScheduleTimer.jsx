@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Dropdown,
   DropdownTrigger,
@@ -6,74 +6,66 @@ import {
   DropdownItem,
   Button,
   Tooltip,
-} from '@nextui-org/react';
-import useGetTask from '../schedule/useGetTask';
-import Spinner from '../../components/Spinner';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTaskId, addTaskName } from './timerScheduleSlice';
+} from '@nextui-org/react'
+import useGetTask from '../schedule/useGetTask'
+import Spinner from '../../components/Spinner'
+import { useDispatch, useSelector } from 'react-redux'
+import { addTaskId, addTaskName } from './timerScheduleSlice'
 
 export default function ScheduleTimer() {
-  const { data: tasks, isLoading: isTask } = useGetTask();
-  const dispatch = useDispatch();
-  const { taskId } = useSelector((store) => store.timerSchedule);
+  const { data: tasks, isLoading: isTask } = useGetTask()
+  const dispatch = useDispatch()
+  const { taskId } = useSelector((store) => store.timerSchedule)
 
-  const filterTask = tasks?.filter((task) => task.status !== 'Completed');
+  // console.log(tasks)
+  const filterTask = tasks?.filter((task) => task.status !== 'Completed')
   const items = filterTask.map((task) => ({
     key: task.id,
     label: task.title,
     status: task.status,
-  }));
-
-  if (isTask) return <Spinner />;
-
-  const handleItemClick = (key, label) => {
-    dispatch(addTaskName(label));
-    dispatch(addTaskId(key));
-  };
-
+  }))
+  if (isTask) return <Spinner />
+  console.log(filterTask)
   return (
     <Dropdown>
       <DropdownTrigger>
         <Button
-          className="h-8 font-semibold w-full md:w-auto md:h-10"
-          color="secondary"
-          size="lg"
+          className='h-[2rem] font-semibold md:w-[4rem] md:h-[2.4rem]'
+          color='secondary'
+          size='lg'
         >
-          Select Task
+          select Task
         </Button>
       </DropdownTrigger>
-      <DropdownMenu
-        aria-label="Dynamic Actions"
-        css={{
-          '@xs': {
-            width: '100%',
-          },
-          '@sm': {
-            width: '20rem',
-          },
-        }}
-      >
+      <DropdownMenu aria-label='Dynamic Actions'>
         {items.map((item) => (
           <DropdownItem
-            key={item.key}
             startContent={
-              <div className="flex gap-1">
-                <h3>
+              <div className='flex gap-1'>
+                <h3 className=''>
                   {item.status === 'Not Started' ? (
-                    <Tooltip content="Todo">
-                      <span className="bg-pink-200 w-5 text-center">T</span>
+                    <Tooltip content='Todo'>
+                      <h3 className='bg-pink-200 w-5 text-center'>T </h3>
                     </Tooltip>
                   ) : (
-                    <Tooltip content="In Progress">
-                      <span className="bg-blue-200 w-5 text-center">P</span>
+                    <Tooltip content='In Progress'>
+                      <h3 className='bg-blue-200 w-5 text-center'>P </h3>
                     </Tooltip>
                   )}
-                </h3>
+                </h3>{' '}
                 :
               </div>
             }
-            onClick={() => handleItemClick(item.key, item.label)}
-            onTouchStart={() => handleItemClick(item.key, item.label)} // Added touch event handler
+            onClick={() => {
+              dispatch(addTaskName(item.label))
+              dispatch(addTaskId(item.key))
+            }}
+            onTouchStart={() => {
+              dispatch(addTaskName(item.label))
+              dispatch(addTaskId(item.key))
+            }} // Added touch event handler
+            on
+            key={item.key}
             color={item.status === 'Not Started' ? 'danger' : 'primary'}
           >
             {item.label}
@@ -81,5 +73,5 @@ export default function ScheduleTimer() {
         ))}
       </DropdownMenu>
     </Dropdown>
-  );
+  )
 }
