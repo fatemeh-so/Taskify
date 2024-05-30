@@ -21,7 +21,7 @@ export default function TimerTab() {
              <TimerProject />
           </Card>
         </Tab>
-        <Tab key='music' title='Schedule Timer'>
+        <Tab key='music' title='Task Timer'>
           <Card>
             <TimerBarSchedule />
             <TimerProjectSchedule />
