@@ -35,7 +35,7 @@ function TimerProject() {
       const groupedDataArray = Object.keys(groupedData)
         .sort(sortByDate)
         .map((date) => groupedData[date])
-
+console.log(groupedDataArray);
       dispatch(addGroupDataTimerArray(groupedDataArray))
     }
   }, [timerData, isLoading, dispatch])
@@ -119,14 +119,37 @@ function TimerProject() {
 }
 
 // Function to sort dates, with today's date first
+// Function to sort dates, with today's date first
 const sortByDate = (a, b) => {
-  const dateA = new Date(a)
-  const dateB = new Date(b)
+  const dateA = new Date(a);
+  const dateB = new Date(b);
 
-  if (isToday(dateA)) return -1
-  if (isToday(dateB)) return 1
+  // Extract date parts
+  const yearA = dateA.getFullYear();
+  const monthA = dateA.getMonth();
+  const dayA = dateA.getDate();
+  const hourA = dateA.getHours();
+  const minuteA = dateA.getMinutes();
+  const secondA = dateA.getSeconds();
+  const millisecondA = dateA.getMilliseconds();
 
-  return dateB - dateA
-}
+  const yearB = dateB.getFullYear();
+  const monthB = dateB.getMonth();
+  const dayB = dateB.getDate();
+  const hourB = dateB.getHours();
+  const minuteB = dateB.getMinutes();
+  const secondB = dateB.getSeconds();
+  const millisecondB = dateB.getMilliseconds();
+
+  // Compare dates
+  if (yearA !== yearB) return yearB - yearA;
+  if (monthA !== monthB) return monthB - monthA;
+  if (dayA !== dayB) return dayB - dayA;
+  if (hourA !== hourB) return hourB - hourA;
+  if (minuteA !== minuteB) return minuteB - minuteA;
+  if (secondA !== secondB) return secondB - secondA;
+  return millisecondB - millisecondA;
+};
+
 
 export default TimerProject
