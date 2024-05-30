@@ -30,8 +30,8 @@ export default function ScheduleTimer() {
     <Dropdown>
       <DropdownTrigger>
         <Button
-          className='h-[2rem] font-semibold md:w-[4rem] md:h-[2.4rem]'
-          color='secondary'
+        className='font-semibold min-w-[80px] md:min-w-[100px]'
+        color='secondary'
           size='lg'
         >
           select Task

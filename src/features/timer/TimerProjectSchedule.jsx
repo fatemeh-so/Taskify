@@ -13,11 +13,16 @@ function TimerProjectSchedule() {
   const { data: timerData, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
   const dispatch = useDispatch()
-  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timerSchedule)
-  const filterTimer = timerData.filter(timer => timer.filter === "schedule")
+  const { GroupDataTimerArray, taskNames } = useSelector(
+    (store) => store.timerSchedule
+  )
 
   useEffect(() => {
     if (!isLoading && timerData) {
+      const filterTimer = timerData.filter(
+        (timer) => timer.filter === 'schedule'
+      )
+
       const groupedData = filterTimer.reduce((acc, current) => {
         const date = formatDate(startOfDay(new Date(current.created_at)))
 
@@ -63,13 +68,16 @@ function TimerProjectSchedule() {
               key={`group-${index}`}
               className=' bg-white flex flex-col rounded-xl mt-3 mx-2 p-4'
             >
-              <div className='flex flex-col bg-blue-100 w-full rounded-xl shadow-sm p-4'>
+              <div className='flex flex-col bg-purple-200 w-full rounded-xl shadow-sm p-4'>
                 <div className='flex justify-between items-center mb-4'>
                   <span className='text-gray-700 font-semibold'>
                     {formatDate(group[0].created_at)}
                   </span>
                   <span className='text-gray-900 text-xl font-bold'>
-                    {new Date(group.reduce((acc, timer) => acc + timer.duration, 0) * 1000)
+                    {new Date(
+                      group.reduce((acc, timer) => acc + timer.duration, 0) *
+                        1000
+                    )
                       .toISOString()
                       .substr(11, 8)}
                   </span>
@@ -88,8 +96,12 @@ function TimerProjectSchedule() {
                       className='flex-1 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
                       type='text'
                       value={taskNames[timerToday.id] || ''}
-                      onChange={(e) => handleInputChange(timerToday.id, e.target.value)}
-                      onBlur={(e) => handleEditInput(timerToday.id, e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange(timerToday.id, e.target.value)
+                      }
+                      onBlur={(e) =>
+                        handleEditInput(timerToday.id, e.target.value)
+                      }
                     />
                     <div className='flex flex-col sm:flex-row sm:items-center gap-4'>
                       <div className='flex justify-end items-center gap-1 text-gray-700'>
@@ -98,7 +110,9 @@ function TimerProjectSchedule() {
                         <span>{formatTime(timerToday.endTime)}</span>
                       </div>
                       <span className='text-gray-700'>
-                        {new Date(timerToday.duration * 1000).toISOString().substr(11, 8)}
+                        {new Date(timerToday.duration * 1000)
+                          .toISOString()
+                          .substr(11, 8)}
                       </span>
                       <TimerProjectSettings id={timerToday.id} />
                     </div>

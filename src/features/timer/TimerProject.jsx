@@ -8,15 +8,17 @@ import { formatDate, formatTime } from '../../helpers/TimeConverter'
 import { isToday, startOfDay } from 'date-fns'
 import { addGroupDataTimerArray, updateTaskName } from './timerSlice'
 import useEditTimer from './useEditTimer'
+
 function TimerProject() {
   const { data: timerData, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
   const dispatch = useDispatch()
   const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timer)
-const filterTimer=timerData?.filter(timer=>timer.filter==="timer")
+
   useEffect(() => {
     if (!isLoading && timerData) {
-    
+      const filterTimer = timerData?.filter(timer => timer.filter === "timer")
+
       // Group data by created_at date using startOfDay to handle date boundaries correctly
       const groupedData = filterTimer?.reduce((acc, current) => {
         const date = formatDate(startOfDay(new Date(current.created_at)))
@@ -30,17 +32,8 @@ const filterTimer=timerData?.filter(timer=>timer.filter==="timer")
         return acc
       }, {})
 
-      // Convert the grouped data object to an array of arrays and sort by date
       const groupedDataArray = Object.keys(groupedData)
-        .sort((a, b) => {
-          const dateA = new Date(a)
-          const dateB = new Date(b)
-
-          if (isToday(dateA)) return -1 // Show today first
-          if (isToday(dateB)) return 1
-
-          return dateB - dateA // Then sort by other dates in descending order
-        })
+        .sort(sortByDate)
         .map((date) => groupedData[date])
 
       dispatch(addGroupDataTimerArray(groupedDataArray))
@@ -50,13 +43,12 @@ const filterTimer=timerData?.filter(timer=>timer.filter==="timer")
   const handleInputChange = (id, value) => {
     dispatch(updateTaskName({ id, taskName: value }))
   }
+
   const handleEditInput = (id, value) => {
     edit({ id: id, taskName: value })
   }
-  if (isLoading || isEdit) return <Spinner />
 
-  // console.log('GroupDataTimerArray:', GroupDataTimerArray)
-  // console.log('Task Names:', taskNames)
+  if (isLoading || isEdit) return <Spinner />
 
   return (
     <div className='mb-8'>
@@ -97,8 +89,6 @@ const filterTimer=timerData?.filter(timer=>timer.filter==="timer")
                       value={taskNames[timerToday.id] || ''}
                       onChange={(e) => {
                         handleInputChange(timerToday.id, e.target.value)
-
-                        console.log('cur', timerToday.id, e.target.value)
                       }}
                       onBlur={(e) =>
                         handleEditInput(timerToday.id, e.target.value)
@@ -126,6 +116,17 @@ const filterTimer=timerData?.filter(timer=>timer.filter==="timer")
       )}
     </div>
   )
+}
+
+// Function to sort dates, with today's date first
+const sortByDate = (a, b) => {
+  const dateA = new Date(a)
+  const dateB = new Date(b)
+
+  if (isToday(dateA)) return -1
+  if (isToday(dateB)) return 1
+
+  return dateB - dateA
 }
 
 export default TimerProject

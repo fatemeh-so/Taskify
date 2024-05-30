@@ -19,7 +19,7 @@ function TimerBarSchedule() {
   const dispatch = useDispatch()
   const { mutate: addTimer, isLoading: isAddTimer } = useAddTimer()
   const { mutate: editTask, isLoading: isEditTask } = useEditTask()
-  const { data: task, isLoading: isTask } = useGetTask();
+  const { data: task, isLoading: isTask } = useGetTask()
 
   const { duration, taskName, startTime, open, taskId } = useSelector(
     (store) => store.timerSchedule
@@ -29,8 +29,8 @@ function TimerBarSchedule() {
   const convertDuration = new Date(duration * 1000).toISOString().substr(11, 8)
   useEffect(() => {
     let id
-   
-    if (open ) {
+
+    if (open) {
       id = setInterval(() => {
         dispatch(
           startTimer({
@@ -47,13 +47,13 @@ function TimerBarSchedule() {
 
   const handleStartStop = async () => {
     if (!taskName) {
-      toast.error("select schedule first")
+      toast.error('Select a schedule first')
       return
     }
     if (open) {
       const endTimeValue = new Date().toISOString()
-      const curTask=task.find(task=>task.id===taskId)
-      const curTaskDur=curTask.duration
+      const curTask = task.find((task) => task.id === taskId)
+      const curTaskDur = curTask.duration
       const all = {
         filter: 'schedule',
         duration,
@@ -64,36 +64,35 @@ function TimerBarSchedule() {
       }
       dispatch(stopTimer(endTimeValue))
       addTimer(all)
-      editTask({ duration:curTaskDur+duration, id: taskId })
+      editTask({ duration: curTaskDur + duration, id: taskId })
       dispatch(resetTimer())
     }
     dispatch(setOpen(!open))
   }
-  // console.log(taskName);
-  if (isAddTimer || isEditTask||isTask) return <Spinner />
+
+  if (isAddTimer || isEditTask || isTask) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] gap-6 flex max-w-full mr-4 rounded-[1rem] mt-[1rem] ml-2 h-[3rem] md:h-[4rem] items-center justify-between px-4'>
+    <div className='bg-white gap-4 flex flex-wrap max-w-full rounded-xl mt-4 p-2 md:p-4 items-center justify-between shadow-md'>
       <Input
+      disabled
         type='text'
-        placeholder={`What are you working on?`}
+        placeholder={`select your task ...`}
         value={taskName}
         variant='bordered'
-        // onChange={(e) => {
-        //   dispatch(addTaskName(e.target.value))
-        // }}
+        className='flex-grow min-w-[200px]'
+        readOnly
       />
-      <div>
-        <span>{convertDuration}</span>
-      </div>
+
       <Button
-        color={!open ? 'primary' : 'danger'}
-        className='h-[2rem] font-semibold w-[3rem] md:w-[4.3rem] md:h-[2.4rem]'
+        color={!open ? 'secondary' : 'danger'}
+        className='font-semibold min-w-[80px] md:min-w-[100px]'
         size='lg'
         onClick={handleStartStop}
       >
         {open ? 'Stop' : 'Start'}
       </Button>
+      <div className='text-lg font-semibold'>{convertDuration}</div>
       <ScheduleTimer />
     </div>
   )

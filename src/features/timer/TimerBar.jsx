@@ -66,7 +66,7 @@ function TimerBar() {
       </div>
       <Button
         color={!open ? 'primary' : 'danger'}
-        className='h-[2rem] font-semibold w-[3rem] md:w-[4.3rem] md:h-[2.4rem]'
+        className='font-semibold min-w-[80px] md:min-w-[100px]'
         size='lg'
         onClick={handleStartStop}
       >
