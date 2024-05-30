@@ -38,6 +38,7 @@ export default function TimerProjectSettings({ id }) {
             onClick={() => {
               dispatch(setOpen(!open))
             }}
+            onSmart
           >
             New Timer
           </DropdownItem>
@@ -45,6 +46,7 @@ export default function TimerProjectSettings({ id }) {
           <DropdownItem
             variant='light'
             onClick={() => handleDeleteTimer(id)}
+            onTouchStart={() => handleDeleteTimer(id)}
             color='danger'
             className='text-danger'
           >
