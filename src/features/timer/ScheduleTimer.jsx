@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
+  Tooltip,
 } from '@nextui-org/react'
 import useGetTask from '../schedule/useGetTask'
 import Spinner from '../../components/Spinner'
@@ -17,7 +18,7 @@ export default function ScheduleTimer() {
   const { taskId } = useSelector((store) => store.timerSchedule)
 
   // console.log(tasks)
-  const filterTask = tasks?.filter((task) => task.status !== "Completed")
+  const filterTask = tasks?.filter((task) => task.status !== 'Completed')
   const items = filterTask.map((task) => ({
     key: task.id,
     label: task.title,
@@ -28,24 +29,44 @@ export default function ScheduleTimer() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button className='font' color='secondary'>
-          Open Menu
+        <Button
+          className='h-[2rem] font-semibold md:w-[4rem] md:h-[2.4rem]'
+          color='secondary'
+          size='lg'
+        >
+          select Task
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label='Dynamic Actions'>
         {items.map((item) => (
           <DropdownItem
             startContent={
-              <div>
-                {item.status === 'Not Started' ? 'Todo :' : 'In Progress :'}
+              <div className='flex gap-1'>
+                <h3 className=''>
+                  {item.status === 'Not Started' ? (
+                    <Tooltip content='Todo'>
+                      <h3 className='bg-pink-200 w-5 text-center'>T </h3>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip content='In Progress'>
+                      <h3 className='bg-blue-200 w-5 text-center'>P </h3>
+                    </Tooltip>
+                  )}
+                </h3>{' '}
+                :
               </div>
             }
             onClick={() => {
               dispatch(addTaskName(item.label))
               dispatch(addTaskId(item.key))
             }}
+            onChange={() => {
+              dispatch(addTaskName(item.label))
+              dispatch(addTaskId(item.key))
+            }}
+            on
             key={item.key}
-            color={item.status === 'Not Started' ? 'danger' : 'success'}
+            color={item.status === 'Not Started' ? 'danger' : 'primary'}
           >
             {item.label}
           </DropdownItem>
