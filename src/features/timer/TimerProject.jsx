@@ -1,54 +1,73 @@
-import React, { useEffect } from 'react'
-import { Input } from '@nextui-org/react'
-import TimerProjectSettings from './TimerProjectSetting'
-import { useDispatch, useSelector } from 'react-redux'
-import useGetTimer from './useTimer'
-import Spinner from '../../components/Spinner'
-import { formatDate, formatTime } from '../../helpers/TimeConverter'
-import { isToday, startOfDay } from 'date-fns'
-import { addGroupDataTimerArray, updateTaskName } from './timerSlice'
-import useEditTimer from './useEditTimer'
+import React, { useEffect } from 'react';
+import { Input } from '@nextui-org/react';
+import TimerProjectSettings from './TimerProjectSetting';
+import { useDispatch, useSelector } from 'react-redux';
+import useGetTimer from './useTimer';
+import Spinner from '../../components/Spinner';
+import { formatDate, formatTime } from '../../helpers/TimeConverter';
+import { isToday, isYesterday, startOfDay } from 'date-fns';
+import { addGroupDataTimerArray, updateTaskName } from './timerSlice';
+import useEditTimer from './useEditTimer';
 
 function TimerProject() {
-  const { data: timerData, isLoading } = useGetTimer()
-  const { mutate: edit, isLoading: isEdit } = useEditTimer()
-  const dispatch = useDispatch()
-  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timer)
+  const { data: timerData, isLoading } = useGetTimer();
+  const { mutate: edit, isLoading: isEdit } = useEditTimer();
+  const dispatch = useDispatch();
+  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timer);
 
   useEffect(() => {
     if (!isLoading && timerData) {
-      const filterTimer = timerData?.filter(timer => timer.filter === "timer")
-
-      // Group data by created_at date using startOfDay to handle date boundaries correctly
-      const groupedData = filterTimer?.reduce((acc, current) => {
-        const date = formatDate(startOfDay(new Date(current.created_at)))
-
+      const filterTimer = timerData.filter((timer) => timer.filter === 'timer');
+  
+      const groupedData = filterTimer.reduce((acc, current) => {
+        const date = formatDate(startOfDay(new Date(current.created_at)));
+  
         if (!acc[date]) {
-          acc[date] = []
+          acc[date] = [];
         }
-
-        acc[date].push(current)
-
-        return acc
-      }, {})
-
-      const groupedDataArray = Object.keys(groupedData)
-        .sort(sortByDate)
-        .map((date) => groupedData[date])
-console.log(groupedDataArray);
-      dispatch(addGroupDataTimerArray(groupedDataArray))
+  
+        acc[date].push(current);
+  
+        return acc;
+      }, {});
+  
+      const sortedGroupedData = Object.keys(groupedData)
+        .sort((a, b) => {
+          // Parse dates for comparison
+          const dateA = new Date(a);
+          const dateB = new Date(b);
+  
+          // Compare if dates are today
+          if (isToday(dateA)) return -1;
+          if (isToday(dateB)) return 1;
+  
+          // Compare if dates are yesterday
+          if (isYesterday(dateA)) return 1; // Change the order to prioritize today over yesterday
+          if (isYesterday(dateB)) return -1; // Change the order to prioritize today over yesterday
+  
+          // Otherwise, sort by proximity to today
+          return Math.abs(dateA - new Date()) - Math.abs(dateB - new Date());
+        })
+        .map((date) => groupedData[date]);
+  
+      // Reverse the order of sortedGroupedData
+      sortedGroupedData.reverse();
+  
+      dispatch(addGroupDataTimerArray(sortedGroupedData));
     }
-  }, [timerData, isLoading, dispatch])
+  }, [timerData, isLoading, dispatch]);
+  
+  
 
   const handleInputChange = (id, value) => {
-    dispatch(updateTaskName({ id, taskName: value }))
-  }
+    dispatch(updateTaskName({ id, taskName: value }));
+  };
 
   const handleEditInput = (id, value) => {
-    edit({ id: id, taskName: value })
-  }
+    edit({ id: id, taskName: value });
+  };
 
-  if (isLoading || isEdit) return <Spinner />
+  if (isLoading || isEdit) return <Spinner />;
 
   return (
     <div className='mb-8'>
@@ -88,7 +107,7 @@ console.log(groupedDataArray);
                       type='text'
                       value={taskNames[timerToday.id] || ''}
                       onChange={(e) => {
-                        handleInputChange(timerToday.id, e.target.value)
+                        handleInputChange(timerToday.id, e.target.value);
                       }}
                       onBlur={(e) =>
                         handleEditInput(timerToday.id, e.target.value)
@@ -115,41 +134,7 @@ console.log(groupedDataArray);
         </div>
       )}
     </div>
-  )
+  );
 }
 
-// Function to sort dates, with today's date first
-// Function to sort dates, with today's date first
-const sortByDate = (a, b) => {
-  const dateA = new Date(a);
-  const dateB = new Date(b);
-
-  // Extract date parts
-  const yearA = dateA.getFullYear();
-  const monthA = dateA.getMonth();
-  const dayA = dateA.getDate();
-  const hourA = dateA.getHours();
-  const minuteA = dateA.getMinutes();
-  const secondA = dateA.getSeconds();
-  const millisecondA = dateA.getMilliseconds();
-
-  const yearB = dateB.getFullYear();
-  const monthB = dateB.getMonth();
-  const dayB = dateB.getDate();
-  const hourB = dateB.getHours();
-  const minuteB = dateB.getMinutes();
-  const secondB = dateB.getSeconds();
-  const millisecondB = dateB.getMilliseconds();
-
-  // Compare dates
-  if (yearA !== yearB) return yearB - yearA;
-  if (monthA !== monthB) return monthB - monthA;
-  if (dayA !== dayB) return dayB - dayA;
-  if (hourA !== hourB) return hourB - hourA;
-  if (minuteA !== minuteB) return minuteB - minuteA;
-  if (secondA !== secondB) return secondB - secondA;
-  return millisecondB - millisecondA;
-};
-
-
-export default TimerProject
+export default TimerProject;
