@@ -6,10 +6,11 @@ export async function addTimer({
   startTime,
   endTime,
   created_at,
+  filter
 }) {
   const { data, error } = await supabase
     .from('timer')
-    .insert([{ duration, taskName, startTime, endTime, created_at }])
+    .insert([{ duration, taskName, startTime, endTime, created_at ,filter}])
     .select()
   if (error) {
     throw new Error(error.message)

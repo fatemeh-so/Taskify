@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Dropdown,
   DropdownTrigger,
@@ -9,20 +9,21 @@ import {
 import { DotsThreeVertical } from 'phosphor-react'
 import useDelete from './useDeleteTimer'
 import Spinner from '../../components/Spinner'
+import { useDispatch, useSelector } from 'react-redux'
+import { setOpen, startTimer } from './timerSlice'
 
 export default function TimerProjectSettings({ id }) {
   const { mutate: deleting, isLoading: isDelete } = useDelete()
-  // const items = {
-  //   label: 'New Timer',
+  const dispatch = useDispatch()
+  const { duration, startTime, open } = useSelector((store) => store.timer)
 
-  //   label1: 'Edit Timer',
-
-  //   label2: 'Delete Timer',
-  // }
-  function deleteTimer(id) {
+  // console.log(open)
+  const handleDeleteTimer = (id) => {
     deleting(id)
   }
+
   if (isDelete) return <Spinner />
+
   return (
     <div className='mr-4'>
       <Dropdown>
@@ -34,19 +35,18 @@ export default function TimerProjectSettings({ id }) {
         <DropdownMenu aria-label='Dynamic Actions'>
           <DropdownItem
             variant='light'
+            onClick={() => {
+              dispatch(setOpen(!open))
+            }}
           >
             New Timer
           </DropdownItem>
+          <DropdownItem variant='light'>Edit Timer</DropdownItem>
           <DropdownItem
             variant='light'
-          >
-            Edit Timer
-          </DropdownItem>{' '}
-          <DropdownItem
-            variant='light'
-            onClick={() => deleteTimer(id)}
-            color={ 'danger' }
-            className={ 'text-danger'}
+            onClick={() => handleDeleteTimer(id)}
+            color='danger'
+            className='text-danger'
           >
             Delete Timer
           </DropdownItem>

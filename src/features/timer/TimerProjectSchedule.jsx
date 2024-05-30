@@ -6,19 +6,19 @@ import useGetTimer from './useTimer'
 import Spinner from '../../components/Spinner'
 import { formatDate, formatTime } from '../../helpers/TimeConverter'
 import { isToday, startOfDay } from 'date-fns'
-import { addGroupDataTimerArray, updateTaskName } from './timerSlice'
+import { addGroupDataTimerArray, updateTaskName } from './timerScheduleSlice'
 import useEditTimer from './useEditTimer'
-function TimerProject() {
+function TimerProjectSchedule() {
   const { data: timerData, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
   const dispatch = useDispatch()
-  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timer)
-const filterTimer=timerData?.filter(timer=>timer.filter==="timer")
+  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timerSchedule)
+  const filterTimer=timerData.filter(timer=>timer.filter==="schedule")
+
   useEffect(() => {
     if (!isLoading && timerData) {
-    
       // Group data by created_at date using startOfDay to handle date boundaries correctly
-      const groupedData = filterTimer?.reduce((acc, current) => {
+      const groupedData = filterTimer.reduce((acc, current) => {
         const date = formatDate(startOfDay(new Date(current.created_at)))
 
         if (!acc[date]) {
@@ -128,4 +128,4 @@ const filterTimer=timerData?.filter(timer=>timer.filter==="timer")
   )
 }
 
-export default TimerProject
+export default TimerProjectSchedule

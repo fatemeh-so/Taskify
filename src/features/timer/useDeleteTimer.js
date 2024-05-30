@@ -7,7 +7,7 @@ export default function useDelete() {
   const { mutate, isLoading } = useMutation({
     mutationFn: deleteTimer,
     onSuccess: () => {
-      toast.success('New Timer successfully created')
+      toast.success('deleted')
       queryClient.invalidateQueries({ queryKey: ['timer'] })
     },
     onError: (err) => toast.error(err.message),

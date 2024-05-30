@@ -122,7 +122,6 @@ export default function EditTaskModal() {
   // console.log(title,category,priority,todos);
 
   if (isLoading || isEdit) return <Spinner />
-  console.log(currentStatus)
   return (
     <Modal
       isOpen={OpenEditTask}

@@ -10,7 +10,6 @@ function ColumnInProgress({ label, color }) {
   // Check if task and task.status are defined before calling toString
   const InProgressTask =
     task?.filter((task) => task?.status?.toString() === 'In Progress') || []
-  console.log(InProgressTask)
 
   if (isTask) return <Spinner />
 

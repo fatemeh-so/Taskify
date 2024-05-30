@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   duration: 0,
   filter:"schedule",
+  taskId:null,
   taskName: '',
   startTime: null,
   endTime: null,
@@ -11,8 +12,8 @@ const initialState = {
   taskNames: {}
 };
 
-const timerSlice = createSlice({
-  name: 'timer',
+const timerScheduleSlice = createSlice({
+  name: 'timerSchedule',
   initialState,
   reducers: {
     startTimer: (state, action) => {
@@ -48,6 +49,9 @@ const timerSlice = createSlice({
     updateTaskName: (state, action) => {
       const { id, taskName } = action.payload;
       state.taskNames[id] = taskName;
+    },
+    addTaskId:(state,action)=>{
+      state.taskId=action.payload
     }
   },
 });
@@ -59,7 +63,8 @@ export const {
   resetTimer,
   addTaskName,
   setOpen,
-  updateTaskName
-} = timerSlice.actions;
+  updateTaskName,
+  addTaskId
+} = timerScheduleSlice.actions;
 
-export default timerSlice.reducer;
+export default timerScheduleSlice.reducer;
