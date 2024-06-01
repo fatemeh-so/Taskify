@@ -1,6 +1,6 @@
 import { Button, Input } from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   addTaskName,
   resetTimer,
@@ -14,11 +14,14 @@ import ScheduleTimer from './ScheduleTimer'
 import useEditTask from '../schedule/useEditTask'
 import toast from 'react-hot-toast'
 import useGetTask from '../schedule/useGetTask'
+import ScheduleSearchResult from './ScheduleSearchResult'
 
 function TimerBarSchedule() {
   const dispatch = useDispatch()
   const { mutate: addTimer, isLoading: isAddTimer } = useAddTimer()
   const { mutate: editTask, isLoading: isEditTask } = useEditTask()
+  const [valueSearch, setValueSearch] = useState('')
+
   const { data: task, isLoading: isTask } = useGetTask()
 
   const { duration, taskName, startTime, open, taskId } = useSelector(
@@ -66,23 +69,16 @@ function TimerBarSchedule() {
       addTimer(all)
       editTask({ duration: curTaskDur + duration, id: taskId })
       dispatch(resetTimer())
+      setValueSearch('')
     }
     dispatch(setOpen(!open))
   }
-
+console.log(taskName);
   if (isAddTimer || isEditTask || isTask) return <Spinner />
 
   return (
     <div className='bg-white gap-4 flex flex-wrap max-w-full rounded-xl mt-4 p-2 md:p-4 items-center justify-between shadow-md'>
-      <Input
-      disabled
-        type='text'
-        placeholder={`select your task ...`}
-        value={taskName}
-        variant='bordered'
-        className='flex-grow min-w-[200px]'
-        readOnly
-      />
+      <div className='w-full'><ScheduleSearchResult valueSearch={valueSearch} setValueSearch={setValueSearch} /></div>
 
       <Button
         color={!open ? 'secondary' : 'danger'}
@@ -93,7 +89,6 @@ function TimerBarSchedule() {
         {open ? 'Stop' : 'Start'}
       </Button>
       <div className='text-lg font-semibold'>{convertDuration}</div>
-      <ScheduleTimer />
     </div>
   )
 }

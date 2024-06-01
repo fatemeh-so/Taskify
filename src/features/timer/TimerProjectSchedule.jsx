@@ -45,7 +45,7 @@ function TimerProjectSchedule() {
 
           return dateB - dateA
         })
-        .map((date) => groupedData[date])
+        .map((date) => groupedData[date]).reverse()
 
       dispatch(addGroupDataTimerArray(groupedDataArray))
     }
