@@ -74,7 +74,7 @@ function SquareRow({ task }) {
   return (
     <div className='p-4 overflow-x-hidden bg-white rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-300 ease-in-out'>
       <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4'>
-        <div className='font-bold text-lg sm:text-xl text-gray-800 mb-2 sm:mb-0' style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+        <div className='font-bold  sm:text-xl md:text-lg text-gray-800 mb-2 sm:mb-0' style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
           <span>{task?.title}</span>
         </div>
         <div className='flex items-center gap-3'>

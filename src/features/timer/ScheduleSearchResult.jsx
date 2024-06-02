@@ -1,15 +1,18 @@
-import { Input } from '@nextui-org/react'
+import { Button, Input } from '@nextui-org/react'
 import { useState } from 'react'
 import useGetTask from '../schedule/useGetTask'
 import Spinner from '../../components/Spinner'
 import { useDispatch } from 'react-redux'
 import { addTaskId, addTaskName } from './timerScheduleSlice'
+import { openAddTask } from '../schedule/taskSlice'
+import { useNavigate } from 'react-router-dom'
 
-function ScheduleSearchResult({valueSearch,setValueSearch}) {
+function ScheduleSearchResult({ valueSearch, setValueSearch }) {
   // const [valueSearch, setValueSearch] = useState('')
-  const[close1,setClose]=useState(false)
+  const [close1, setClose] = useState(false)
   const { data: tasks, isLoading: isTaskLoading } = useGetTask()
   const dispatch = useDispatch()
+  const navigate=useNavigate()
   function handleSearchResult(e) {
     setValueSearch(e.target.value)
     setClose(false)
@@ -18,13 +21,17 @@ function ScheduleSearchResult({valueSearch,setValueSearch}) {
   const filteredTasks = tasks?.filter((task) =>
     task.title.toLowerCase().includes(valueSearch.toLowerCase())
   )
-  function handelAddTaskName(n,id) {
+  function handelAddTaskName(n, id) {
     dispatch(addTaskName(n))
     dispatch(addTaskId(id))
     setValueSearch(n)
     setClose(true)
-   
+
     // console.log('n', n)
+  }
+  function openTask() {
+    dispatch(openAddTask(true));
+    navigate("/schedule")
   }
   // console.log(filteredTasks)
   const priorities = [
@@ -44,54 +51,72 @@ function ScheduleSearchResult({valueSearch,setValueSearch}) {
         value={valueSearch}
         variant='bordered'
         className='flex-grow min-w-[200px]'
-        endContent={<div onClick={()=>{setClose(true)}} className='cursor-pointer'>x</div>}
+        endContent={
+          <div
+            onClick={() => {
+              setClose(true)
+            }}
+            className='cursor-pointer'
+          >
+            x
+          </div>
+        }
       />
-      { close1 || valueSearch&&(
-        <div className=' w-full  my-[.1rem]  bg-white2 rounded  h-auto'>
-          {isTaskLoading ? (
-            <p>Loading tasks...</p>
-          ) : (
-            filteredTasks?.map((task) => (
-              <div
-                key={task.id}
-                onClick={() => handelAddTaskName(task.title,task.id)}
-                className='border-b flex gap-1 pl-2 cursor-pointer  hover:bg-slate-300 hover:w-full'
-              
-              >
-                <div className=''>
-                  <span>{task.title}</span>
-                </div>
+      {close1 ||
+        (valueSearch && (
+          <div className=' w-full  my-[.1rem]  bg-white2 rounded  h-auto'>
+            {isTaskLoading ? (
+              <p>Loading tasks...</p>
+            ) : (
+              filteredTasks?.map((task) => (
+                <div
+                  key={task.id}
+                  onClick={() => handelAddTaskName(task.title, task.id)}
+                  className='border-b flex gap-1 pl-2 cursor-pointer  hover:bg-slate-300 hover:w-full'
+                >
+                  <div className=''>
+                    <span>{task.title}</span>
+                  </div>
 
-                <span>
-                  {task.status === 'Not Started' ? (
-                    <div className='flex gap-1 items-center'>
-                      <div className='rounded-full w-2  bg-pink-200 h-2 '></div>
-                      Todo
-                    </div>
-                  ) : (
-                    <div className='flex gap-1 items-center'>
-                      <div className='rounded-full w-2  bg-yellow-200 h-2 '></div>
-                      In Progress
-                    </div>
-                  )}{' '}
-                </span>
-                <div className='flex items-center gap-1'>
-                  {/* <span
+                  <span>
+                    {task.status === 'Not Started' ? (
+                      <div className='flex gap-1 items-center'>
+                        <div className='rounded-full w-2  bg-pink-200 h-2 '></div>
+                        Todo
+                      </div>
+                    ) : (
+                      <div className='flex gap-1 items-center'>
+                        <div className='rounded-full w-2  bg-yellow-200 h-2 '></div>
+                        In Progress
+                      </div>
+                    )}{' '}
+                  </span>
+                  <div className='flex items-center gap-1'>
+                    {/* <span
                     className={`w-2 h-2 rounded-full ${
                       priority ? priority.color : ''
                     }`}
                   ></span> */}
-                  <span
-                  // className={`${priority ? priority.color : ''}`}
-                  >
-                    {task.priority}
-                  </span>
+                    <span
+                    // className={`${priority ? priority.color : ''}`}
+                    >
+                      {task.priority}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))
-          )}
-        </div>
-      )}
+              ))
+            )}
+            <Button
+              className='mx-2 my-2 font-semibold'
+              isIconOnly
+              size='sm'
+              color='primary'
+              onClick={openTask}
+            >
+              +
+            </Button>
+          </div>
+        ))}
     </div>
   )
 }

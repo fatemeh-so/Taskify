@@ -1,22 +1,25 @@
-import React from 'react';
+import React from 'react'
+import CalenderSection from '../features/dashboard/CalenderSection'
+import { Calendar } from '@nextui-org/react'
+import { NoteBlank } from 'phosphor-react'
+import useGetTask from '../features/schedule/useGetTask'
+import Spinner from '../components/Spinner'
+import TaskReport from '../features/dashboard/TaskReport'
 
 function Dashboard() {
+  const { data: task, isLoading: isTask } = useGetTask()
+
+  const todoTask =
+    task?.filter((task) => task?.status?.toString() === 'Not Started').length ||
+    []
+  console.log(todoTask)
+  if (isTask) return <Spinner />
+
   return (
-    <div className='h-[85%] w-[99%]'>
-    
-      <div className="grid grid-cols-2 grid-rows-2 gap-4 h-full w-full">
-        <div className="col-span-1 row-span-1 bg-blue-200 p-4">
-          <p>Content 1</p>
-        </div>
-        <div className="col-span-1 row-span-1 bg-green-200 p-4">
-          <p>Content 2</p>
-        </div>
-        <div className="col-span-2 row-span-2 bg-red-200 p-4">
-          <p>Content 3 (Vertical)</p>
-        </div>
-      </div>
+    <div className='h-[100%] w-[100%]'>
+     <TaskReport/>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard
