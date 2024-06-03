@@ -5,19 +5,19 @@ import { NoteBlank } from 'phosphor-react'
 import useGetTask from '../features/schedule/useGetTask'
 import Spinner from '../components/Spinner'
 import TaskReport from '../features/dashboard/TaskReport'
+import TaskReview from '../features/dashboard/TaskReview'
 
 function Dashboard() {
   const { data: task, isLoading: isTask } = useGetTask()
 
-  const todoTask =
-    task?.filter((task) => task?.status?.toString() === 'Not Started').length ||
-    []
-  console.log(todoTask)
   if (isTask) return <Spinner />
 
   return (
-    <div className='h-[100%] w-[100%]'>
-     <TaskReport/>
+    <div className='w-[100%]'>
+      <TaskReport />
+      <div className='h-[60vh]'>
+        <TaskReview />
+      </div>
     </div>
   )
 }

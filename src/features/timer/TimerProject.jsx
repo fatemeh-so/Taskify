@@ -1,73 +1,52 @@
-import React, { useEffect } from 'react';
-import { Input } from '@nextui-org/react';
-import TimerProjectSettings from './TimerProjectSetting';
-import { useDispatch, useSelector } from 'react-redux';
-import useGetTimer from './useTimer';
-import Spinner from '../../components/Spinner';
-import { formatDate, formatTime } from '../../helpers/TimeConverter';
-import { isToday, isYesterday, startOfDay } from 'date-fns';
-import { addGroupDataTimerArray, updateTaskName } from './timerSlice';
-import useEditTimer from './useEditTimer';
+import React, { useEffect } from 'react'
+import { Input } from '@nextui-org/react'
+import TimerProjectSettings from './TimerProjectSetting'
+import { useDispatch, useSelector } from 'react-redux'
+import useGetTimer from './useTimer'
+import Spinner from '../../components/Spinner'
+import { formatDate, formatTime } from '../../helpers/TimeConverter'
+import { isToday, isYesterday, startOfDay } from 'date-fns'
+import { addGroupDataTimerArray, updateTaskName } from './timerSlice'
+import useEditTimer from './useEditTimer'
 
 function TimerProject() {
-  const { data: timerData, isLoading } = useGetTimer();
-  const { mutate: edit, isLoading: isEdit } = useEditTimer();
-  const dispatch = useDispatch();
-  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timer);
+  const { data: timerData, isLoading } = useGetTimer()
+  const { mutate: edit, isLoading: isEdit } = useEditTimer()
+  const dispatch = useDispatch()
+  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timer)
 
   useEffect(() => {
     if (!isLoading && timerData) {
-      const filterTimer = timerData.filter((timer) => timer.filter === 'timer');
-  
+      const filterTimer = timerData.filter((timer) => timer.filter === 'timer')
       const groupedData = filterTimer.reduce((acc, current) => {
-        const date = formatDate(startOfDay(new Date(current.created_at)));
-  
+        const date = formatDate(startOfDay(new Date(current.created_at)))
         if (!acc[date]) {
-          acc[date] = [];
+          acc[date] = []
         }
-  
-        acc[date].push(current);
-  
-        return acc;
-      }, {});
-  
+
+        acc[date].push(current)
+
+        return acc
+      }, {})
       const sortedGroupedData = Object.keys(groupedData)
-        .sort((a, b) => {
-          // Parse dates for comparison
-          const dateA = new Date(a);
-          const dateB = new Date(b);
-  
-          // Compare if dates are today
-          if (isToday(dateA)) return -1;
-          if (isToday(dateB)) return 1;
-  
-          // Compare if dates are yesterday
-          if (isYesterday(dateA)) return 1; // Change the order to prioritize today over yesterday
-          if (isYesterday(dateB)) return -1; // Change the order to prioritize today over yesterday
-  
-          // Otherwise, sort by proximity to today
-          return Math.abs(dateA - new Date()) - Math.abs(dateB - new Date());
-        })
-        .map((date) => groupedData[date]);
-  
-      // Reverse the order of sortedGroupedData
-      sortedGroupedData.reverse();
-  
-      dispatch(addGroupDataTimerArray(sortedGroupedData));
+      .map((date) => groupedData[date]
+    )
+
+      // Reverse the order of sortedGroupedData,first add first show
+      sortedGroupedData.reverse()
+      dispatch(addGroupDataTimerArray(sortedGroupedData))
     }
-  }, [timerData, isLoading, dispatch]);
-  
-  
+  }, [timerData, isLoading, dispatch])
 
   const handleInputChange = (id, value) => {
-    dispatch(updateTaskName({ id, taskName: value }));
-  };
+    dispatch(updateTaskName({ id, taskName: value }))
+  }
 
   const handleEditInput = (id, value) => {
-    edit({ id: id, taskName: value });
-  };
+    edit({ id: id, taskName: value })
+  }
 
-  if (isLoading || isEdit) return <Spinner />;
+  if (isLoading || isEdit) return <Spinner />
 
   return (
     <div className='mb-8'>
@@ -107,7 +86,7 @@ function TimerProject() {
                       type='text'
                       value={taskNames[timerToday.id] || ''}
                       onChange={(e) => {
-                        handleInputChange(timerToday.id, e.target.value);
+                        handleInputChange(timerToday.id, e.target.value)
                       }}
                       onBlur={(e) =>
                         handleEditInput(timerToday.id, e.target.value)
@@ -134,7 +113,7 @@ function TimerProject() {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default TimerProject;
+export default TimerProject

@@ -25,11 +25,10 @@ function SquareRow({ task }) {
   const { mutate: deleteTask, isLoading: isDelete } = useDeleteTask()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
 
-  const priorityColorsChip = {
+ const priorityColorsChip = {
     Low: 'success',
-    Medium: 'secondary',
+     Medium: 'secondary',
     High: 'warning',
     Urgent: 'danger',
   }
