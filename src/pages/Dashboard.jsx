@@ -1,60 +1,91 @@
-import React, { useRef } from 'react';
-import { ArrowLeft, ArrowRight } from 'phosphor-react';
-import useGetTask from '../features/schedule/useGetTask';
-import Spinner from '../components/Spinner';
-import TaskReport from '../features/dashboard/TaskReport';
-import TaskReview from '../features/dashboard/TaskReview';
+import React, { useRef, useMemo } from 'react'
+import { ArrowLeft, ArrowRight } from 'phosphor-react'
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
+import useGetTask from '../features/schedule/useGetTask'
+import Spinner from '../components/Spinner'
+import TaskReport from '../features/dashboard/TaskReport'
+import TaskReview from '../features/dashboard/TaskReview'
+import ProrityTaskCharts from '../features/dashboard/ProrityTaskCharts'
+import PriorityTasksChart from '../features/dashboard/PriorityTasksChart'
+import StatusTaskChart from '../features/dashboard/StatusTaskChart'
 
 function Dashboard() {
-  const { data: task, isLoading: isTask } = useGetTask();
-  const scrollContainerRef = useRef(null);
+  const { data: tasks, isLoading: isTask } = useGetTask()
+  const scrollContainerRef = useRef(null)
 
-  if (isTask) return <Spinner />;
+  if (isTask) return <Spinner />
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -340, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: -280, behavior: 'smooth' })
     }
-  };
+  }
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 340, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' })
     }
-  };
+  }
 
   return (
-    <div className="w-full px-4">
+    <div className='w-auto px-4'>
       <TaskReport />
-      <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mt-6 mb-4">
-        In Progress Review
-      </h1>
-      <div className="relative">
-        <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 hover:bg-gray-400 text-white p-2 rounded-full z-10 shadow-md"
-          onClick={scrollLeft}
-          aria-label="Scroll Left"
-        >
-          <ArrowLeft size={24} />
-        </button>
+
+      <div className='relative bg-white rounded-lg  '>
+        <div className='flex h-[4rem] justify-between items-center mt-4 p-4'>
+          <h1 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mt-5'>
+            In Progress Review
+          </h1>
+          <div className='gap-2 flex'>
+            <button
+              className='rounded-full border p-2 hover:bg-blue-100'
+              onClick={scrollLeft}
+              aria-label='Scroll Left'
+            >
+              <ArrowLeft size={24} />
+            </button>
+            <button
+              className='rounded-full border p-2 hover:bg-blue-100'
+              onClick={scrollRight}
+              aria-label='Scroll Right'
+            >
+              <ArrowRight size={24} />
+            </button>
+          </div>
+        </div>
         <div
           ref={scrollContainerRef}
-          className="flex justify-start items-start overflow-x-hidden space-x-4 p-4"
+          className='flex overflow-x-auto  gap-2  justify-start items-start pb-4 px-4 '
         >
-          {task.map((task) => (
-            <TaskReview key={task.id} task={task} />
-          ))}
+          {tasks.length > 0 ? (
+            tasks.map((task) => <TaskReview key={task.id} task={task} />)
+          ) : (
+            <div className='flex justify-center items-center w-full h-32 text-gray-500'>
+              No tasks to display
+            </div>
+          )}
         </div>
-        <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 hover:bg-gray-400 text-white p-2 rounded-full z-10 shadow-md"
-          onClick={scrollRight}
-          aria-label="Scroll Right"
-        >
-          <ArrowRight size={24} />
-        </button>
+      </div>
+      <div className='flex flex-col md:flex-row gap-4'>
+        <div className='w-full md:w-2/4 md:h-[5vh] md:mb-[1rem]'>
+          <ProrityTaskCharts height={300} />
+        </div>
+        <div className='w-full md:w-2/4 md:h-[5vh] md:mb-[1rem]'>
+        <StatusTaskChart height={300} />
+        </div>
+        <div className='w-full md:w-2/4 md:h-[5vh] md:mb-[1rem]'>
+        <PriorityTasksChart height={300} />
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

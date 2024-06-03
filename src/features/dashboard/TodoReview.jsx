@@ -48,10 +48,10 @@ console.log(task);
     : '';
 
   return (
-    <div className="border  bg-white rounded-lg shadow-md p-4 flex-shrink-0 max-w-full mx-4">
+    <div className="border bg-white rounded-lg shadow-md p-4 flex-shrink-0 max-w-full mx-4">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
         <h1 className="text-lg font-bold text-gray-800">{task?.title}</h1>
-        <div className="flex items-center  mt-2 md:mt-0">
+        <div className="flex items-center gap-3 mt-2 md:mt-0">
           <span className="text-sm text-gray-600">
             {task?.duration ? new Date(task.duration * 1000).toISOString().substr(11, 8) : ''}
           </span>

@@ -8,8 +8,8 @@ function TaskReport() {
   if (isTask) return <Spinner />;
 
   const total = task.length || 0;
-  const todoTask = task.filter(task => task.status?.toString() === 'Not Started').length || 0;
-  const inProgressTask = task.filter(task => task.status?.toString() === 'In Progress').length || 0;
+  const todoTask = task?.filter(task => task.status?.toString() === 'Not Started').length || 0;
+  const inProgressTask = task?.filter(task => task.status?.toString() === 'In Progress').length || 0;
   const completedTask = task.filter(task => task.status?.toString() === 'Completed').length || 0;
   const allTimer = task.reduce((acc, cur) => acc + cur.duration, 0) || 0;
 
