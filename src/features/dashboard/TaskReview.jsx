@@ -1,47 +1,90 @@
-import { Chip } from "@nextui-org/react"
+import { Chip, Progress } from '@nextui-org/react';
+import { Briefcase, User, BookOpen, DribbbleLogo, Heart, Wallet, Airplane, Palette, UsersThree, Heartbeat } from 'phosphor-react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-function TaskReview() {
+function TaskReview({ task }) {
+  const processValueLength = task?.description.filter(task => task?.completed === true).length;
+  const allProcess = task?.description.map(task => task.text);
+
+  const priorityColorsChip = {
+    Low: 'success',
+    Medium: 'secondary',
+    High: 'warning',
+    Urgent: 'danger',
+  };
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const categoryIcons = {
+    Work: <Briefcase size={20} />,
+    Personal: <User size={20} />,
+    Study: <BookOpen size={20} />,
+    Fitness: <DribbbleLogo size={28} color='#f4ecf4' />,
+    Family: <Heart size={20} />,
+    Health: <Heartbeat size={28} color='#f4ecf4' />,
+    Finance: <Wallet size={20} />,
+    Travel: <Airplane size={20} />,
+    Hobbies: <Palette size={20} />,
+    Social: <UsersThree size={20} />,
+  };
+
+  const priorityColorChip = priorityColorsChip[task?.priority] || 'gray';
+  const createdAtDate = task?.created_at ? new Date(task.created_at) : null;
+  const formattedDate = createdAtDate
+    ? createdAtDate.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : '';
+  const formattedTime = createdAtDate
+    ? createdAtDate.toLocaleTimeString(undefined, {
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : '';
+
   return (
-    <div className="w-[98%] p-8 md:m-[1rem] xl:m-[1rem] h-full bg-ed-100">
-      <h1 className="text-xl text-gray-600  font-bold mb-4">Task Review</h1>
-      <div className="xl:w-1/4 md:w-2/4">
-        <div className="p-4 overflow-x-hidden bg-white rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-300 ease-in-out">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
-            <div className="font-bold sm:text-xl md:text-lg text-gray-800 mb-2 sm:mb-0" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-              <span>xxxx</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-sm sm:text-base text-gray-600">
-                xxxx{/* {task?.duration ? new Date(task.duration * 1000).toISOString().substr(11, 8) : ''} */}
-              </span>
-              <Chip size="sm" variant="flat">
-                xxxx {/* {task.priority} */}
-              </Chip>
-            </div>
-          </div>
-          <div className="border p-4 rounded-lg bg-gray-50">
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-                {/* {categoryIcons[task?.category]} */}
-                <span className="ml-3 text-gray-700 text-lg">xxxx{/* {task?.category} */}</span>
-              </div>
-            </div>
-            <div className="text-gray-700">
-              {/* {task?.description?.map((desc, index) => (
-                <div key={index} className="flex justify-start mt-2 mb-2">
-                  <Checkbox lineThrough defaultSelected={desc?.completed}>
-                    <span className="ml-3" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-                      {desc.text}
-                    </span>
-                  </Checkbox>
-                </div>
-              ))} */}
-            </div>
-          </div>
+    <div className="w-80 bg-white rounded-lg shadow-md p-4 flex-shrink-0">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+        <h1 className="text-lg font-bold text-gray-800">{task.title}</h1>
+        <div className="flex items-center gap-3 mt-2 md:mt-0">
+          <span className="text-sm text-gray-600">
+            {task?.duration ? new Date(task.duration * 1000).toISOString().substr(11, 8) : ''}
+          </span>
+          <Chip size="sm" variant="flat" color={priorityColorChip}>
+            {task.priority}
+          </Chip>
         </div>
       </div>
+
+      <div className="flex items-center mb-4">
+        {categoryIcons[task?.category]}
+        <span className="ml-2 text-lg text-gray-700">{task?.category}</span>
+      </div>
+
+      <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="mb-4">
+          <span className="text-gray-700">Task Completion:</span>
+          <span className="ml-2 text-gray-800 font-semibold">
+            {processValueLength}/{allProcess.length}
+          </span>
+        </div>
+        <Progress
+          aria-label="Task completion"
+          value={(processValueLength / allProcess.length) * 100}
+          className="max-w-full"
+        />
+      </div>
+
+      <div className="mt-4">
+        <span className="text-sm text-gray-500">
+          Created on: {formattedDate} at {formattedTime}
+        </span>
+      </div>
     </div>
-  )
+  );
 }
 
-export default TaskReview
+export default TaskReview;
