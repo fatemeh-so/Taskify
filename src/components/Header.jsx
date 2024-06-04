@@ -9,9 +9,21 @@ import {
 import HeaderTitle from './HeaderTitle.jsx'
 import { SearchIcon } from './SearchIcon.jsx'
 import { useLocation } from 'react-router-dom'
+import SearchInputReasult from './SearchInputReasult.jsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { addInputValue, openSearch } from '../features/Header/HeaderSlice.jsx'
 export default function Header() {
   const { pathname } = useLocation()
-  if (pathname === '/login' || pathname==="/signup") return
+  const { close } = useSelector((store) => store.header)
+  const dispatch = useDispatch()
+  function handelFocus(value) {
+    dispatch(openSearch(value))
+  }
+  function handelChange(e) {
+    dispatch(addInputValue(e.target.value))
+  }
+  if (pathname === '/login' || pathname === '/signup') return
+
   return (
     <div className=' lg:mt-[2rem] mt-[1rem]  flex justify-between mr-[1.2rem] md:mr-[1.5rem]'>
       {' '}
@@ -25,10 +37,22 @@ export default function Header() {
             inputWrapper:
               'h-full  font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
           }}
+          onChange={(e) => handelChange(e)}
+          onFocus={() => handelFocus(true)}
           placeholder='Type to search...'
           size='sm'
           startContent={<SearchIcon size={18} />}
           type='search'
+          endContent={
+            <button
+              onClick={() => {
+                handelFocus(false)
+                dispatch(addInputValue(""))
+              }}
+            >
+              x
+            </button>
+          }
         />
         <Dropdown placement='bottom-end'>
           <DropdownTrigger>

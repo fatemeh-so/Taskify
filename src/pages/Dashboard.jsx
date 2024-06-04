@@ -35,10 +35,10 @@ function Dashboard() {
   }
 
   return (
-    <div className='w-auto px-4'>
+    <div className='w-auto px-4 overflow-h-auto'>
       <TaskReport />
 
-      <div className='relative bg-white rounded-lg  '>
+      <div className='relative bg-white rounded-lg '>
         <div className='flex h-[4rem] justify-between items-center mt-4 p-4'>
           <h1 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mt-5'>
             In Progress Review
@@ -62,7 +62,7 @@ function Dashboard() {
         </div>
         <div
           ref={scrollContainerRef}
-          className='flex overflow-x-auto  gap-2  justify-start items-start pb-4 px-4 '
+          className='flex  overflow-x-hidden  gap-2  justify-start items-start pb-4 px-4 '
         >
           {tasks.length > 0 ? (
             tasks.map((task) => <TaskReview key={task.id} task={task} />)
@@ -73,7 +73,7 @@ function Dashboard() {
           )}
         </div>
       </div>
-      <div className='flex flex-col md:flex-row gap-4'>
+      <div className='flex flex-col md:flex-row gap-4 md:h-[30rem]  '>
         <div className='w-full md:w-2/4 md:h-[5vh] md:mb-[1rem]'>
           <ProrityTaskCharts height={300} />
         </div>
