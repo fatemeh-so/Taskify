@@ -40,6 +40,7 @@ export default function App1() {
         label='Filter by date'
         className='max-w-[140px] h-[rem]'
         onChange={handleCal}
+        value={dateCal}
       />
       <div>
         {/* {filteredTasks.length > 0 ? (

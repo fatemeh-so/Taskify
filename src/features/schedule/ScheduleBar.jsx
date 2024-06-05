@@ -11,7 +11,7 @@ import Spinner from '../../components/Spinner'
 function ScheduleBar() {
   const { data: task, isLoading: isTask } = useGetTask()
 
-  const { close, status } = useSelector((store) => store.task)
+  const { close, status, datePickerStatus } = useSelector((store) => store.task)
   const [openSchedule, setOpenSchedule] = useState(false)
   const dispatch = useDispatch()
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -54,10 +54,18 @@ function ScheduleBar() {
       </div>
       <div className='flex items-center gap- sm:gap-3'>
         <App1 />
-        <Button color='primary' onClick={()=>    dispatch(closeDateCal(false))
-}>
-          Show All
-        </Button>
+        {datePickerStatus && (
+          <Button
+            color='primary'
+            onClick={() => {
+              dispatch(closeDateCal(false))
+              // dispatch(addDateCal(null))
+
+            }}
+          >
+            Show All
+          </Button>
+        )}
         <Button
           onClick={openTask}
           color='primary'

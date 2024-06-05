@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function TaskReview({ task }) {
 
-console.log(task);
+// console.log(task);
   const processValueLength = task?.description?.filter(task => task?.completed === true)?.length;
   const allProcess = task?.description?.map(task => task.text);
 

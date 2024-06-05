@@ -22,7 +22,7 @@ function TaskReport() {
     .reduce((acc, cur) => acc + cur.duration, 0) || 0
 
   const formattedTotalWeekTimer = new Date(totalWeekTimer * 1000).toISOString().substr(11, 8)
-console.log(weekStartDates);
+// console.log(weekStartDates);
   return (
     <div className='w-full p-2 md:p-4'>
       <div className='flex flex-wrap justify-around gap-2 md:gap-4'>
