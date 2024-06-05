@@ -4,7 +4,7 @@ import TimerTab from "../features/timer/TimerTab"
 
 function Timer() {
     return (
-        <div className="w-[100%] h-full   overflow-hidden  ">
+        <div className="w-[100%] h-full   ">
                        <TimerTab/>
             {/* <TimerProject/> */}
         </div>

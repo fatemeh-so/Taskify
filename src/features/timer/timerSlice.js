@@ -8,7 +8,8 @@ const initialState = {
   endTime: null,
   open: false,
   GroupDataTimerArray: [],
-  taskNames: {}
+  taskNames: {},
+  weekStartDates: [],
 };
 
 const timerSlice = createSlice({
@@ -48,11 +49,15 @@ const timerSlice = createSlice({
     updateTaskName: (state, action) => {
       const { id, taskName } = action.payload;
       state.taskNames[id] = taskName;
-    }
+    },
+    setWeekStartDates: (state, action) => {
+      state.weekStartDates = action.payload
+    },
   },
 });
 
 export const {
+  setWeekStartDates,
   addGroupDataTimerArray,
   startTimer,
   stopTimer,

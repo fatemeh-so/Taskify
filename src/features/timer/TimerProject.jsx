@@ -1,19 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from '@nextui-org/react'
 import TimerProjectSettings from './TimerProjectSetting'
 import { useDispatch, useSelector } from 'react-redux'
 import useGetTimer from './useTimer'
+import useEditTimer from './useEditTimer'
+
 import Spinner from '../../components/Spinner'
 import { formatDate, formatTime } from '../../helpers/TimeConverter'
-import { isToday, isYesterday, startOfDay } from 'date-fns'
-import { addGroupDataTimerArray, updateTaskName } from './timerSlice'
-import useEditTimer from './useEditTimer'
+import {
+  startOfDay,
+  startOfWeek,
+  differenceInCalendarWeeks,
+  isThisWeek,
+  endOfWeek,
+  isToday,
+} from 'date-fns'
+import {
+  addGroupDataTimerArray,
+  updateTaskName,
+  setWeekStartDates,
+} from './timerSlice'
 
 function TimerProject() {
   const { data: timerData, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
+
   const dispatch = useDispatch()
-  const { GroupDataTimerArray, taskNames } = useSelector((store) => store.timer)
+  const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
+    (store) => store.timer
+  )
 
   useEffect(() => {
     if (!isLoading && timerData) {
@@ -28,13 +43,46 @@ function TimerProject() {
 
         return acc
       }, {})
-      const sortedGroupedData = Object.keys(groupedData)
-      .map((date) => groupedData[date]
-    )
 
-      // Reverse the order of sortedGroupedData,first add first show
-      sortedGroupedData.reverse()
+      const sortedGroupedData = Object.keys(groupedData)
+        .map((date) => groupedData[date])
+        .reverse() // Reverse the order of sortedGroupedData, first add first show
+
       dispatch(addGroupDataTimerArray(sortedGroupedData))
+
+      // Group by week
+      console.log(sortedGroupedData)
+      const weekStartDates = sortedGroupedData.reduce((weeks, group) => {
+        const weekStart = formatDate(
+          startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
+        )
+        const weekEnd = formatDate(
+          endOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
+        )
+
+        console.log('kkk', group)
+        if (!weeks[weekStart]) {
+          weeks[weekStart] = []
+          // weeks[weekEnd] = []
+        }
+
+        weeks[weekStart].push(group)
+        return weeks
+      }, {})
+
+      const labeledWeeks = Object.entries(weekStartDates).map(
+        ([weekStart, groups]) => {
+          console.log(groups)
+          const weekEnd = formatDate(
+            endOfWeek(new Date(groups[0][1].created_at), { weekStartsOn: 1 })
+          )
+          // console.log("jjj",weekStart);
+
+          return { weekEnd, weekStart, groups }
+        }
+      )
+
+      dispatch(setWeekStartDates(labeledWeeks))
     }
   }, [timerData, isLoading, dispatch])
 
@@ -47,69 +95,103 @@ function TimerProject() {
   }
 
   if (isLoading || isEdit) return <Spinner />
-
+  console.log(weekStartDates)
   return (
-    <div className='mb-8'>
-      {GroupDataTimerArray.length > 0 && (
+    <div className='w-[98%] mx-auto mb-8'>
+      {weekStartDates.length > 0 && (
         <div className='mt-6 w-full h-full'>
-          {GroupDataTimerArray.map((group, index) => (
-            <div
-              key={`group-${index}`}
-              className='shadow-lg mr-4 bg-white h-auto flex flex-col rounded-xl mt-3 ml-2'
-            >
-              <div className='flex flex-col bg-blue-100 w-full rounded-[1rem] shadow-sm'>
-                <div className='flex justify-between p-4 items-center'>
-                  <span className='text-gray-700 font-semibold'>
-                    {formatDate(group[0].created_at)}
-                  </span>
-                  <span className='text-gray-900 text-xl font-bold'>
-                    {new Date(
-                      group.reduce((acc, timer) => acc + timer.duration, 0) *
-                        1000
-                    )
-                      .toISOString()
-                      .substr(11, 8)}
-                  </span>
+          {weekStartDates.map(
+            ({ label, weekStart, weekEnd, groups }, index) => (
+              <div key={`week-${index}`} className='mb-8'>
+                <div className='flex flex-col m-2 gap-1'>
+                  <div className='text-lg font-bold text-gray-600'>{label}</div>
+                  <div className='flex items-center gap-1 text-sm text-gray-500'>
+                    <span >
+                      {weekStart} -{' '}
+                      {isThisWeek(groups[0][1].created_at) ? 'Toady' : weekEnd}
+                    </span>
+                    <span> | Total : </span>
+                    <span className='font-semibold text-gray-700'>
+                      {new Date(
+                        groups.reduce((acc, group) => {
+                          return (
+                            acc +
+                            group.reduce(
+                              (groupAcc, cur) => groupAcc + cur.duration,
+                              0
+                            )
+                          )
+                        }, 0) * 1000
+                      )
+                        .toISOString()
+                        .substr(11, 8)}
+                    </span>
+                  </div>
                 </div>
 
-                {group.map((timerToday, idx) => (
+                {groups.map((group, groupIndex) => (
                   <div
-                    key={timerToday.id}
-                    className={`bg-[#ffffff] border-b flex items-center justify-between w-auto gap-5 p-4 ${
-                      idx === group.length - 1 ? 'rounded-b-[1rem]' : ''
-                    }`}
+                    key={`group-${groupIndex}`}
+                    className='shadow-lg bg-white h-auto flex flex-col rounded-xl mt-3 ml-2'
                   >
-                    <Input
-                      variant='bordered'
-                      size='lg'
-                      className='w-1/3 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                      type='text'
-                      value={taskNames[timerToday.id] || ''}
-                      onChange={(e) => {
-                        handleInputChange(timerToday.id, e.target.value)
-                      }}
-                      onBlur={(e) =>
-                        handleEditInput(timerToday.id, e.target.value)
-                      }
-                    />
-                    <div className='flex items-center gap-5'>
-                      <div className='flex justify-end items-center gap-1 text-gray-700'>
-                        <span>{formatTime(timerToday.startTime)}</span>
-                        <span>-</span>
-                        <span>{formatTime(timerToday.endTime)}</span>
+                    <div className='flex flex-col bg-blue-100 w-full rounded-[1rem] shadow-sm'>
+                      <div className='flex justify-between p-4 items-center bg-blue-200 rounded-t-[1rem]'>
+                        <span className='text-gray-700 font-semibold'>
+                          {formatDate(new Date(group[0].created_at), 'MM/dd')}
+                        </span>
+                        <span className='text-gray-900 text-xl font-bold'>
+                          {new Date(
+                            group.reduce(
+                              (acc, timer) => acc + timer.duration,
+                              0
+                            ) * 1000
+                          )
+                            .toISOString()
+                            .substr(11, 8)}
+                        </span>
                       </div>
-                      <span className='text-gray-700'>
-                        {new Date(timerToday.duration * 1000)
-                          .toISOString()
-                          .substr(11, 8)}
-                      </span>
-                      <TimerProjectSettings id={timerToday.id} />
+
+                      {group.map((timerToday, idx) => (
+                        <div
+                          key={timerToday.id}
+                          className={`bg-white border-b flex items-center justify-between w-full gap-5 p-4 ${
+                            idx === group.length - 1 ? 'rounded-b-[1rem]' : ''
+                          }`}
+                        >
+                          <Input
+                            variant='bordered'
+                            size='lg'
+                            className='w-1/3 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                            type='text'
+                            value={taskNames[timerToday.id] || ''}
+                            onChange={(e) => {
+                              handleInputChange(timerToday.id, e.target.value)
+                            }}
+                            onBlur={(e) =>
+                              handleEditInput(timerToday.id, e.target.value)
+                            }
+                          />
+                          <div className='flex items-center gap-5'>
+                            <div className='flex justify-end items-center gap-1 text-gray-700'>
+                              <span>{formatTime(timerToday.startTime)}</span>
+                              <span>-</span>
+                              <span>{formatTime(timerToday.endTime)}</span>
+                            </div>
+                            <span className='text-gray-700'>
+                              {new Date(timerToday.duration * 1000)
+                                .toISOString()
+                                .substr(11, 8)}
+                            </span>
+                            <TimerProjectSettings id={timerToday.id} />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       )}
     </div>
