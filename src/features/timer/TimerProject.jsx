@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Input } from '@nextui-org/react'
 import TimerProjectSettings from './TimerProjectSetting'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,10 +10,8 @@ import { formatDate, formatTime } from '../../helpers/TimeConverter'
 import {
   startOfDay,
   startOfWeek,
-  differenceInCalendarWeeks,
-  isThisWeek,
   endOfWeek,
-  isToday,
+  isThisWeek,
 } from 'date-fns'
 import {
   addGroupDataTimerArray,
@@ -51,7 +49,6 @@ function TimerProject() {
       dispatch(addGroupDataTimerArray(sortedGroupedData))
 
       // Group by week
-      console.log(sortedGroupedData)
       const weekStartDates = sortedGroupedData.reduce((weeks, group) => {
         const weekStart = formatDate(
           startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
@@ -60,10 +57,8 @@ function TimerProject() {
           endOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
         )
 
-        console.log('kkk', group)
         if (!weeks[weekStart]) {
           weeks[weekStart] = []
-          // weeks[weekEnd] = []
         }
 
         weeks[weekStart].push(group)
@@ -72,11 +67,9 @@ function TimerProject() {
 
       const labeledWeeks = Object.entries(weekStartDates).map(
         ([weekStart, groups]) => {
-          console.log(groups)
           const weekEnd = formatDate(
-            endOfWeek(new Date(groups[0][1].created_at), { weekStartsOn: 1 })
+            endOfWeek(new Date(groups[0][0].created_at), { weekStartsOn: 1 })
           )
-          // console.log("jjj",weekStart);
 
           return { weekEnd, weekStart, groups }
         }
@@ -95,22 +88,18 @@ function TimerProject() {
   }
 
   if (isLoading || isEdit) return <Spinner />
-  console.log(weekStartDates)
+  
   return (
     <div className='w-[98%] mx-auto mb-8'>
       {weekStartDates.length > 0 && (
         <div className='mt-6 w-full h-full'>
           {weekStartDates.map(
-            ({ label, weekStart, weekEnd, groups }, index) => (
+            ({ weekStart, weekEnd, groups }, index) => (
               <div key={`week-${index}`} className='mb-8'>
                 <div className='flex flex-col m-2 gap-1'>
-                  <div className='text-lg font-bold text-gray-600'>{label}</div>
+                  <div className='text-lg font-bold text-gray-600'>{weekStart} - {isThisWeek(new Date(groups[0][0].created_at)) ? 'Today' : weekEnd}</div>
                   <div className='flex items-center gap-1 text-sm text-gray-500'>
-                    <span >
-                      {weekStart} -{' '}
-                      {isThisWeek(groups[0][1].created_at) ? 'Toady' : weekEnd}
-                    </span>
-                    <span> | Total : </span>
+                    <span>Total : </span>
                     <span className='font-semibold text-gray-700'>
                       {new Date(
                         groups.reduce((acc, group) => {
