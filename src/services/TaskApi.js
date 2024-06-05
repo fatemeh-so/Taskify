@@ -5,11 +5,11 @@ export async function AddTask({
   status,
   category,
   priority,
-  description,
+  description,created_at
 }) {
   const { data, error } = await supabase
     .from('task')
-    .insert([{ title, category, priority, status, description }])
+    .insert([{ title, category, priority, status, description,created_at }])
     .select()
   if (error) {
     throw new Error(error.message)

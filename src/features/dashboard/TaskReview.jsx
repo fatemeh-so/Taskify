@@ -70,7 +70,7 @@ console.log(task);
         <div className="mb-4">
           <span className="text-gray-700">Task Completion:</span>
           <span className="ml-2 text-gray-800 font-semibold">
-            {processValueLength}/{allProcess.length}
+            {processValueLength}/{allProcess?.length}
           </span>
         </div>
         <Progress

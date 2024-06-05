@@ -1,14 +1,13 @@
 import React from 'react'
-import { format } from 'date-fns'
+import { useSelector } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import useGetTask from '../schedule/useGetTask'
-import { useSelector } from 'react-redux'
+import TimerDataInitializer from './TimerDataInitializer'
+// import TimerDataInitializer from './TimerDataInitializer'
 
 function TaskReport() {
   const { data: task, isLoading: isTask } = useGetTask()
-  const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
-    (store) => store.timer
-  )
+  const { weekStartDates } = useSelector((store) => store.timer)
 
   if (isTask) return <Spinner />
 
@@ -18,13 +17,12 @@ function TaskReport() {
   const completedTask = task?.filter((task) => task.status?.toString() === 'Completed').length || 0
   const allTimer = task?.reduce((acc, cur) => acc + cur.duration, 0) || 0
 
-  // Flatten the nested groups array and calculate the total duration
-  const totalWeekTimer = weekStartDates?.[0]?.groups
+  const totalWeekTimer = weekStartDates[0]?.groups
     .flat()
     .reduce((acc, cur) => acc + cur.duration, 0) || 0
 
   const formattedTotalWeekTimer = new Date(totalWeekTimer * 1000).toISOString().substr(11, 8)
-
+console.log(weekStartDates);
   return (
     <div className='w-full p-2 md:p-4'>
       <div className='flex flex-wrap justify-around gap-2 md:gap-4'>
@@ -53,4 +51,10 @@ function TaskReport() {
   )
 }
 
-export default TaskReport
+const TaskReportWithInitialization = () => (
+  <TimerDataInitializer>
+    <TaskReport />
+  </TimerDataInitializer>
+)
+
+export default TaskReportWithInitialization

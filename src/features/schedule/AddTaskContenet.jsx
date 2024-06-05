@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Button, Input, Select, SelectItem, Checkbox } from '@nextui-org/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react'
+import { Button, Input, Select, SelectItem, Checkbox } from '@nextui-org/react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   CloseAddTask,
   addCategories,
@@ -9,21 +9,21 @@ import {
   addTask,
   addTitle,
   addToDoValue,
-} from './taskSlice';
-import { ListPlus, Trash } from 'phosphor-react';
-import useAddTask from './useTask';
-import Spinner from '../../components/Spinner';
-import useGetTask from './useGetTask';
+} from './taskSlice'
+import { ListPlus, Trash } from 'phosphor-react'
+import useAddTask from './useTask'
+import Spinner from '../../components/Spinner'
+import useGetTask from './useGetTask'
 
 function AddTaskContent() {
-  const { mutate: addTaskTo, isLoading } = useAddTask();
-  const { data: task, isLoading: isTask } = useGetTask();
+  const { mutate: addTaskTo, isLoading } = useAddTask()
+  const { data: task, isLoading: isTask } = useGetTask()
   const priorities = [
     { id: 1, name: 'Low', color: 'text-green-500' },
     { id: 2, name: 'Medium', color: 'text-yellow-500' },
     { id: 3, name: 'High', color: 'text-red-500' },
     { id: 4, name: 'Urgent', color: 'text-purple-500' },
-  ];
+  ]
 
   const {
     statuses,
@@ -34,87 +34,93 @@ function AddTaskContent() {
     currentPriority,
     currentStatus,
     allTask,
-  } = useSelector((store) => store.task);
-  const dispatch = useDispatch();
+  } = useSelector((store) => store.task)
+  const dispatch = useDispatch()
 
-  const [todos, setTodos] = useState([]);
-  const [statusError, setStatusError] = useState(false);
+  const [todos, setTodos] = useState([])
+  const [statusError, setStatusError] = useState(false)
 
   useEffect(() => {
-    dispatch(addToDoValue(todos));
-  }, [todos, dispatch]);
+    dispatch(addToDoValue(todos))
+  }, [todos, dispatch])
 
   const handleCategoryChange = (value) => {
     const selectedCategory = categories.find(
       (category) => category.id.toString() === value
-    );
+    )
     if (selectedCategory) {
-      dispatch(addCategories(selectedCategory.name));
+      dispatch(addCategories(selectedCategory.name))
     }
-  };
+  }
 
   const handlePriorityChange = (value) => {
     const selectedPriority = priorities.find(
       (priority) => priority.id.toString() === value
-    );
+    )
     if (selectedPriority) {
-      dispatch(addPriority(selectedPriority.name));
+      dispatch(addPriority(selectedPriority.name))
     }
-  };
+  }
 
   const handleStatusChange = (value) => {
     const selectedStatus = statuses.find(
       (status) => status.id.toString() === value
-    );
+    )
     if (selectedStatus) {
-      dispatch(addStatus(selectedStatus.name));
-      setStatusError(false); // Clear error if status is selected
+      dispatch(addStatus(selectedStatus.name))
+      setStatusError(false) // Clear error if status is selected
     }
-  };
+  }
 
   const addTodo = () => {
-    const newTodo = { id: Date.now(), text: '', completed: false };
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
-  };
+    const newTodo = { id: Date.now(), text: '', completed: false }
+    setTodos((prevTodos) => [...prevTodos, newTodo])
+  }
 
   const handleTodoChange = (id, text) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) => (todo.id === id ? { ...todo, text } : todo))
-    );
-  };
+    )
+  }
 
   const handleDeleteTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-  };
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id))
+  }
 
   const toggleTodoCompleted = (id) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
-    );
-  };
+    )
+  }
 
   const handleAddTask = () => {
     if (!currentStatus) {
-      setStatusError(true);
-      return;
+      setStatusError(true)
+      return
     }
-
+    const created_at = new Date()
+    console.log()
     const task = {
       title,
       category: currentCategory,
       priority: currentPriority,
       description: todoValue,
       status: currentStatus,
-    };
-    
-    dispatch(addTask(task));
-    addTaskTo(task);
-    dispatch(CloseAddTask());
-  };
+      created_at,
+    }
 
-  if (isLoading || isTask) return <Spinner />;
+    dispatch(addTask(task))
+    addTaskTo(task)
+    dispatch(CloseAddTask())
+  }
+  console.log(new Date());
+
+  // Function to convert time to Iran time
+ 
+
+  if (isLoading || isTask) return <Spinner />
 
   return (
     <div className='container h-full b-red-900 mx-auto md:p-6'>
@@ -128,7 +134,7 @@ function AddTaskContent() {
             size='lg'
             color='secondary'
             onChange={(event) => {
-              dispatch(addTitle(event.target.value));
+              dispatch(addTitle(event.target.value))
             }}
             type='text'
             variant='underlined'
@@ -236,7 +242,7 @@ function AddTaskContent() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AddTaskContent;
+export default AddTaskContent

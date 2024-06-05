@@ -53,10 +53,14 @@ const timerScheduleSlice = createSlice({
     addTaskId:(state,action)=>{
       state.taskId=action.payload
     }
+    , setWeekStartDates: (state, action) => {
+      state.weekStartDates = action.payload
+    },
   },
 });
 
 export const {
+  setWeekStartDates,
   addGroupDataTimerArray,
   startTimer,
   stopTimer,

@@ -4,14 +4,13 @@ import Spinner from '../../components/Spinner'
 import SquareRow from './SquareRow'
 import useGetTask from './useGetTask'
 
-function ColumnInProgress({ label, color }) {
-  const { data: task, isLoading: isTask } = useGetTask()
+function ColumnInProgress({ label, color,task }) {
+  // const { data: task, isLoading: isTask } = useGetTask()
 
   // Check if task and task.status are defined before calling toString
   const InProgressTask =
     task?.filter((task) => task?.status?.toString() === 'In Progress') || []
 
-  if (isTask) return <Spinner />
 
   const bgColorClass =
     {

@@ -1,18 +1,15 @@
-// Column.js
-
-import Spinner from '../../components/Spinner'
+/* eslint-disable react/prop-types */
 import SquareRow from './SquareRow'
-import useGetTask from './useGetTask'
 
-function ColumnCompleted({ label, color }) {
-  const { data: task, isLoading: isTask } = useGetTask()
+
+function ColumnCompleted({ label, color,task }) {
+  // const { data: task, isLoading: isTask } = useGetTask()
 
   // Check if task and task.status are defined before calling toString
   const CompletedTask =
     task?.filter((task) => task?.status?.toString() === 'Completed') || []
 
 
-  if (isTask) return <Spinner />
 
   const bgColorClass =
     {
@@ -34,8 +31,8 @@ function ColumnCompleted({ label, color }) {
         </div>
       </div>
       <div className=' overflow-y-auto h-[100%] w-[100%] '>
-        {CompletedTask.map((task) => {
-          return <SquareRow key={task.id} task={task} />
+        {CompletedTask?.map((task) => {
+          return <SquareRow key={task?.id} task={task} />
         })}
       </div>
     </div>

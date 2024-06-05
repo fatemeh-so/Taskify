@@ -1,22 +1,23 @@
+/* eslint-disable react/prop-types */
 // ColumnTodo.js
-import SquareRow from './SquareRow';
-import useGetTask from './useGetTask';
-import Spinner from '../../components/Spinner';
+import SquareRow from './SquareRow'
+import useGetTask from './useGetTask'
+import Spinner from '../../components/Spinner'
 
-function ColumnTodo({ label, color }) {
-  const { data: task, isLoading: isTask } = useGetTask();
-
+function ColumnTodo({ label, color, task }) {
   // Check if task and task.status are defined before calling toString
-  const todoTask = task?.filter(task => task?.status?.toString() === 'Not Started') || [];
+  const todoTask =
+    task?.filter((task) => task?.status?.toString() === 'Not Started') || []
   // console.log(todoTask);
 
-  if (isTask) return <Spinner />;
-
-  const bgColorClass = {
-    pink1: 'bg-pink-100',
-    blue1: 'bg-blue-100',
-    yellow: 'bg-yellow-100',
-  }[color] || 'bg-gray-100'; // default to gray if color is not found
+  // console.log(todoTask);
+  const bgColorClass =
+    {
+      pink1: 'bg-pink-100',
+      blue1: 'bg-blue-100',
+      yellow: 'bg-yellow-100',
+    }[color] || 'bg-gray-100' // default to gray if color is not found
+  // if (task?.length === 0) return <Spinner />
 
   return (
     <div
@@ -31,12 +32,12 @@ function ColumnTodo({ label, color }) {
         </div>
       </div>
       <div className='overflow-y-auto h-[100%] w-[100%]'>
-        {todoTask.map((task) => (
-          <SquareRow key={task.id} task={task} />
+        {todoTask?.map((task) => (
+          <SquareRow key={task?.id} task={task} />
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default ColumnTodo;
+export default ColumnTodo
