@@ -15,9 +15,11 @@ function ScheduleBar() {
   const [openSchedule, setOpenSchedule] = useState(false)
   const dispatch = useDispatch()
   const [currentDate, setCurrentDate] = useState(new Date())
+
   function openTask() {
     dispatch(openAddTask(true))
   }
+
   const handleNextDay = () => {
     setCurrentDate(addDays(currentDate, 1))
   }
@@ -25,56 +27,66 @@ function ScheduleBar() {
   const handlePrevDay = () => {
     setCurrentDate(subDays(currentDate, 1))
   }
+
   if (isTask) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] flex max-w-full rounded-[1rem] mt-[1rem] ml-2 h-[3rem] md:h-[4rem] flex items-center justify-between px-4'>
-      <div className='flex items-center'>
-        <div className='flex-1 text-center'>
-          <span className='sm:text-lg sm:font-bold   text-sm '>
+    <div className='bg-[#ffffff] flex flex-col md:flex-row max-w-full rounded-[1rem] mt-[1rem] ml-2 h-auto md:h-[4rem] items-center justify-between px-4 py-2'>
+      <div className='flex items-center w-full justify-between md:justify-start'>
+        <div className='flex-2 text-center md:text-left mb-2 md:mb-0'>
+          <span className='sm:text-lg sm:font-bold text-1rem]'>
             {format(currentDate, 'MMMM dd, yyyy')}
           </span>
         </div>
-        <Button
-          size='sm'
-          isIconOnly
-          onClick={handlePrevDay}
-          className='bg-blue1 hover:bg-gray-40  font-bold mx-2 py-2 px-2 rounded-full'
-        >
-          <CaretLeft size={24} color='#0f0e0f' />
-        </Button>
-        <Button
-          size='sm'
-          isIconOnly
-          onClick={handleNextDay}
-          className='bg-blue1 hover:bg-gray-40   font-bold mx-2 py-2 px-2 rounded-full'
-        >
-          <CaretRight size={24} color='#0f0e0f' />
-        </Button>
+        <div className='flex items-center'>
+          <Button
+            size='sm'
+            isIconOnly
+            onClick={handlePrevDay}
+            className='hidden sm:flex bg-blue1 hover:bg-gray-40 font-bold mx-1 py-2 px-2 rounded-full'
+          >
+            <CaretLeft size={24} color='#0f0e0f' />
+          </Button>
+          <Button
+            size='sm'
+            isIconOnly
+            onClick={handleNextDay}
+            className='hidden sm:flex bg-blue1 hover:bg-gray-40 font-bold mx-1 py-2 px-2 rounded-full'
+          >
+            <CaretRight size={24} color='#0f0e0f' />
+          </Button>{' '}
+          <Button
+            onClick={openTask}
+            color='primary'
+            className='md:hidden flex font-semibold text-[1rem] md:w-auto md:text-[1.1rem] h-9  mr-1 md:ml-2'
+            variant='bordered'
+            size='sm'
+          >
+            +Task
+          </Button>
+        </div>
       </div>
-      <div className='flex items-center gap- sm:gap-3'>
+      <div className='flex mt-1 md:mt-0  md:flex-row justify-between items-center gap-2 md:gap-3 w-full md:w-auto'>
         <App1 />
+        <Button
+            onClick={openTask}
+            color='primary'
+            className='hidden md:flex font-semibold text-[1rem] md:w-auto md:text-[1.1rem] md:h-11 h-9  mr-1 md:ml-2'
+            variant='bordered'
+            size='sm'
+          >
+            +Task
+          </Button>
         {datePickerStatus && (
           <Button
             color='primary'
             onClick={() => {
               dispatch(closeDateCal(false))
-              // dispatch(addDateCal(null))
-
             }}
           >
             Show All
           </Button>
         )}
-        <Button
-          onClick={openTask}
-          color='primary'
-          className=' font-semibold w-[3rem] '
-          variant='bordered'
-          size='md'
-        >
-          + Add Task
-        </Button>
       </div>
     </div>
   )

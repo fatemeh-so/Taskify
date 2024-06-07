@@ -64,7 +64,7 @@ function Dashboard() {
         </div>
         <div
           ref={scrollContainerRef}
-          className='flex overflow-x-hidden gap-2 justify-start items-start pb-4 px-4 '
+          className='flex w-full overflow-x-hidden gap-2 justify-start items-start pb-4 px-4 '
         >
           {tasks.length > 0 ? (
             tasks.map((task) => <TaskReview key={task.id} task={task} />)

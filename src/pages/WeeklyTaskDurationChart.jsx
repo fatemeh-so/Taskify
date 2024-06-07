@@ -41,7 +41,7 @@ const WeeklyTaskDurationChart = ({ tasks, height }) => {
           <YAxis />
           <Tooltip formatter={(value) => new Date(value * 1000).toISOString().substr(11, 8)} />
           <Legend />
-          <Bar dataKey='duration' name='Duration (seconds)' fill='#8884d8' />
+          <Bar dataKey='duration' name='Duration' fill='#8884d8' />
         </BarChart>
       </ResponsiveContainer>
     </div>

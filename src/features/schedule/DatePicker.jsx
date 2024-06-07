@@ -32,13 +32,14 @@ export default function App1() {
   console.log(filteredTasks)
 
   return (
-    <div>
+    <div className='w-full'>
       <DatePicker
+      fullWidth={true}
         size='sm'
         color='secondary'
         variant='bordered'
         label='Filter by date'
-        className='max-w-[140px] h-[rem]'
+        className='w-full h-[rem]'
         onChange={handleCal}
         value={dateCal}
       />

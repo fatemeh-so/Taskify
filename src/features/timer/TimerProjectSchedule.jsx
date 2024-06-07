@@ -12,7 +12,7 @@ import {
   setWeekStartDates,
 } from './timerScheduleSlice'
 import useEditTimer from './useEditTimer'
-import TimerScheduleDataInitializer from '../dashboard/TimerDataInitializer'
+import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
 
 function TimerProjectSchedule() {
   const { data: timerData, isLoading } = useGetTimer()
@@ -25,7 +25,9 @@ function TimerProjectSchedule() {
 
   useEffect(() => {
     if (!isLoading && timerData) {
-      const filterTimer = timerData.filter((timer) => timer.filter === 'schedule')
+      const filterTimer = timerData.filter(
+        (timer) => timer.filter === 'schedule'
+      )
       const groupedData = filterTimer.reduce((acc, current) => {
         const date = formatDate(startOfDay(new Date(current.created_at)))
         if (!acc[date]) {
@@ -48,7 +50,7 @@ function TimerProjectSchedule() {
         const weekStart = formatDate(
           startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
         )
-      
+
         if (!weeks[weekStart]) {
           weeks[weekStart] = []
         }
