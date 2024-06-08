@@ -8,51 +8,59 @@ import {
 } from '@nextui-org/react'
 import HeaderTitle from './HeaderTitle.jsx'
 import { SearchIcon } from './SearchIcon.jsx'
-import { useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import SearchInputReasult from './SearchInputReasult.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { addInputValue, openSearch } from '../features/Header/HeaderSlice.jsx'
+import useGetUser from '../features/auth/useGetUser.js'
+import Spinner from './Spinner.jsx'
+import { SignOut } from 'phosphor-react'
+import useLogout from '../features/auth/useSignout.js'
+
 export default function Header() {
+  const { data: user, isLoading } = useGetUser()
+  const { mutate: logout, isLoading: isOut } = useLogout()
   const { pathname } = useLocation()
   const { close } = useSelector((store) => store.header)
   const dispatch = useDispatch()
-  function handelFocus(value) {
+
+  const handleFocus = (value) => {
     dispatch(openSearch(value))
   }
-  function handelChange(e) {
+
+  const handleChange = (e) => {
     dispatch(addInputValue(e.target.value))
   }
-  if (pathname === '/login' || pathname === '/signup') return
+
+  const handleClearSearch = () => {
+    handleFocus(false)
+    dispatch(addInputValue(''))
+  }
+
+  if (pathname === '/login' || pathname === '/signup') return null
+  if (isLoading || isOut) return <Spinner />
+
+  const inputClassNames = {
+    base: 'w-[9rem] sm:w-[12rem] h-9 md:h-10',
+    mainWrapper: 'h-full',
+    input: 'text-small',
+    inputWrapper:
+      'h-full font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
+  }
 
   return (
-    <div className=' lg:mt-[2rem] mt-[1rem]  flex justify-between mr-[1.2rem] md:mr-[1.5rem]'>
-      {' '}
+    <div className='lg:mt-[2rem] mt-[1rem] flex justify-between mr-[1.2rem] md:mr-[1.5rem]'>
       <HeaderTitle />
       <div className='flex gap-5'>
         <Input
-          classNames={{
-            base: ' w-[9rem] sm:w-[12rem] h-9 md:h-10',
-            mainWrapper: 'h-full ',
-            input: 'text-small ',
-            inputWrapper:
-              'h-full  font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
-          }}
-          onChange={(e) => handelChange(e)}
-          onFocus={() => handelFocus(true)}
+          classNames={inputClassNames}
+          onChange={handleChange}
+          onFocus={() => handleFocus(true)}
           placeholder='Type to search...'
           size='sm'
           startContent={<SearchIcon size={18} />}
           type='search'
-          endContent={
-            <button
-              onClick={() => {
-                handelFocus(false)
-                dispatch(addInputValue(""))
-              }}
-            >
-              x
-            </button>
-          }
+          endContent={<button onClick={handleClearSearch}>x</button>}
         />
         <Dropdown placement='bottom-end'>
           <DropdownTrigger>
@@ -61,26 +69,28 @@ export default function Header() {
               as='button'
               className='transition-transform'
               color='secondary'
-              name='Jason Hughes'
+              name={user?.user_metadata?.username || 'User'}
               size='sm'
-              src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
+              src={user?.user_metadata?.avatar}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label='Profile Actions' variant='flat'>
             <DropdownItem key='profile' className='h-14 gap-2'>
-              <p className='font-semibold'>Signed in as</p>
-              <p className='font-semibold'>zoey@example.com</p>
+              <p className='font-semibold'>{user?.user_metadata?.username}</p>
+              <p className='font-semibold'>{user?.email}</p>
             </DropdownItem>
-            <DropdownItem key='settings'>My Settings</DropdownItem>
-            <DropdownItem key='team_settings'>Team Settings</DropdownItem>
+            <DropdownItem key='settings'>
+              <NavLink to='/profile'>My Profile</NavLink>
+            </DropdownItem>
             <DropdownItem key='analytics'>Analytics</DropdownItem>
-            <DropdownItem key='system'>System</DropdownItem>
-            <DropdownItem key='configurations'>Configurations</DropdownItem>
-            <DropdownItem key='help_and_feedback'>Help & Feedback</DropdownItem>
-            <DropdownItem key='logout' color='danger'>
-              Log Out
+            <DropdownItem key='system'>
+              <NavLink to='/'>System</NavLink>
             </DropdownItem>
-
+            <DropdownItem key='logout' color='danger'>
+              <div onClick={logout} className='flex gap-1 text-red-500'>
+                <SignOut className='mt-1' /> <p>Log Out</p>
+              </div>
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </div>

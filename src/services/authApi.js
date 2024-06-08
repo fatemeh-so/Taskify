@@ -1,17 +1,23 @@
 // authFunctions.js
-import supabase from '../supabase'
+import supabase, { supabaseUrl } from '../supabase'
 
-export async function signUp({ email, password, username }) {
+export async function signUp({ email, password, username, avatar }) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     username,
+    options: {
+      data: {
+        username,
+        avatar,
+      },
+    },
   })
   if (error) {
     console.error(error)
     throw new Error('email or password was wrong')
   }
-
+  console.log(data)
   return { data }
 }
 
@@ -52,3 +58,30 @@ export async function getUser() {
   } = await supabase.auth.getUser()
   return user
 }
+
+export async function editUser({ password, username, avatar }) {
+
+// export async function editUser({ password, username, avatar }) {
+  // Prepare the user metadata updates
+  const updates = {
+    user_metadata: {
+      username,
+      ...(avatar && { avatar: `https://ipujmkdynjpwmrbuoulr.supabase.co/storage/v1/object/public/avatars/${avatar}` }),
+    },
+  }
+
+  // Update user metadata
+  const { data: userData, error: userError } = await supabase.auth.updateUser({
+    data: updates.user_metadata,
+  })
+
+  // Update password separately if provided
+  let passwordError = null
+  if (password) {
+    const { error } = await supabase.auth.updateUser({ password })
+    passwordError = error
+  }
+
+  return { data: userData, error: userError || passwordError }
+}
+

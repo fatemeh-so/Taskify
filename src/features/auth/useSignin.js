@@ -12,7 +12,7 @@ export default function useSignin() {
     mutationFn: signIn,
     mutationKey: ['user'],
     onSuccess: (data) => {
-      queryClient.setQueryData(['user'], data.user)
+      queryClient.setQueryData(['users'], data.user)
       navigate('/dashboard', { replace: true })
     },
     onError: (erroe) => {

@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import SignUp from './pages/Signup'
 import EditTaskModal from './features/schedule/EditTaskModal'
 import ProtectedRoute from './components/ProtectedRoute'
+import MyProfile from './components/Myprofile'
 
 export default function App() {
   return (
@@ -30,6 +31,8 @@ export default function App() {
               <Route path='schedule/:scheduleId' element={<EditTaskModal />} />
               <Route path='calender' element={<Calender />} />
               <Route path='timer' element={<Timer />} />
+              <Route path='profile' element={<MyProfile />} />
+
             </Route>
             <Route path='login' element={<Login />} />
             <Route path='signup' element={<SignUp />} />
