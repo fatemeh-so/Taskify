@@ -14,17 +14,19 @@ import { ListPlus, Trash } from 'phosphor-react'
 import useAddTask from './useTask'
 import Spinner from '../../components/Spinner'
 import useGetTask from './useGetTask'
+import useGetUser from '../auth/useGetUser'
 
 function AddTaskContent() {
   const { mutate: addTaskTo, isLoading } = useAddTask()
   const { data: task, isLoading: isTask } = useGetTask()
+  const { data: user, isLoading: isUser } = useGetUser()
   const priorities = [
     { id: 1, name: 'Low', color: 'text-green-500' },
     { id: 2, name: 'Medium', color: 'text-yellow-500' },
     { id: 3, name: 'High', color: 'text-red-500' },
     { id: 4, name: 'Urgent', color: 'text-purple-500' },
   ]
-
+  console.log(user.id)
   const {
     statuses,
     title,
@@ -41,7 +43,7 @@ function AddTaskContent() {
   const [statusError, setStatusError] = useState(false)
 
   useEffect(() => {
-    dispatch(addToDoValue(todos))
+    dispatch(addToDoValue(todos ))
   }, [todos, dispatch])
 
   const handleCategoryChange = (value) => {
@@ -102,6 +104,8 @@ function AddTaskContent() {
     }
     const created_at = new Date()
     console.log()
+    const user_id = user.id; // Assuming `user` contains the user data including user ID
+
     const task = {
       title,
       category: currentCategory,
@@ -109,18 +113,19 @@ function AddTaskContent() {
       description: todoValue,
       status: currentStatus,
       created_at,
+      user_id, // Include user_id in the task object
+
     }
 
     dispatch(addTask(task))
     addTaskTo(task)
     dispatch(CloseAddTask())
   }
-  console.log(new Date());
+  console.log(new Date())
 
   // Function to convert time to Iran time
- 
 
-  if (isLoading || isTask) return <Spinner />
+  if (isLoading || isTask || isUser) return <Spinner />
 
   return (
     <div className='container h-full b-red-900 mx-auto md:p-6'>

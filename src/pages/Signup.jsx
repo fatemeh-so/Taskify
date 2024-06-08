@@ -1,25 +1,28 @@
 import { Button, Input } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
-// import BottomHeader from '../components/BottomHeader'
 import { useNavigate } from 'react-router-dom'
-// import useSignUp from '../features/auth/useSignUp'
-// import Spinner from '../components/Spinner'
-// import BottomHeader from '../components/BottomHeader'
+// import useSignup from '../features/auth/useSignup'
+import Spinner from "../components/Spinner"
+import useSignip from '../features/auth/useSignup'
 function SignUp() {
   const { register, getValues, formState, handleSubmit, reset } = useForm()
   const { errors } = formState
+  const {mutate:signup,isLoading}=useSignip()
   //   const { isLoading, mutate: signUp } = useSignUp()
   const navigate = useNavigate()
 
-  function onSubmit({ fullName, email, password }) {
+  function onSubmit({ fullName,email, password }) {
     console.log(fullName, email, password)
+    signup( {username:fullName, email, password })
     // signUp({ fullName, email, password })
   }
-  function handelToLogin(e) {
-    e.preventDefault()
-    navigate('/login')
+
+  function handleToLogin(e) {
+    e.preventDefault();
+    navigate('/login');
   }
-  //   if (isLoading) return <Spinner />
+  
+    if (isLoading) return <Spinner />
   return (
     <div className='h-[100vh] flex flex-col justify-center it w[100vh]'>
       {/* <BottomHeader  /> */}
@@ -41,7 +44,6 @@ function SignUp() {
                   'h-full  font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
               }}
               label='Full Name'
-              // placeholder='FullName'
               id='fullName'
               {...register('fullName', { required: 'this field is required' })}
             />
@@ -95,7 +97,7 @@ function SignUp() {
               })}
             />
             <p className='text-default-500 text-small ml-[1rem] text-red-600'>
-              {errors?.Password?.message}
+              {errors?.password?.message}
             </p>
           </div>
           {/* re pass */}
@@ -122,12 +124,12 @@ function SignUp() {
             </p>
           </div>
           <button
-            onClick={handelToLogin}
+            onClick={handleToLogin}
             className='text-default-500 text-small  text-blue-300'
           >
             Have an account?
           </button>
-          <Button className='text-white1 bg-blue1 mt-[1rem] font-semibold ' type='submit'>
+          <Button disabled={isLoading} className='text-white1 bg-blue1 mt-[1rem] font-semibold ' type='submit'>
             submit
           </Button>
         </div>

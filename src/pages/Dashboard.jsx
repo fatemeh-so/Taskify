@@ -1,40 +1,46 @@
-import React, { useRef } from 'react';
-import { ArrowLeft, ArrowRight } from 'phosphor-react';
-import useGetTask from '../features/schedule/useGetTask';
-import Spinner from '../components/Spinner';
-import TaskReport from '../features/dashboard/TaskReport';
-import TaskReview from '../features/dashboard/TaskReview';
-import ProrityTaskCharts from '../features/dashboard/ProrityTaskCharts';
-import PriorityTasksChart from '../features/dashboard/PriorityTasksChart';
-import StatusTaskChart from '../features/dashboard/StatusTaskChart';
+import React, { useRef } from 'react'
+import { ArrowLeft, ArrowRight } from 'phosphor-react'
+import useGetTask from '../features/schedule/useGetTask'
+import Spinner from '../components/Spinner'
+import TaskReport from '../features/dashboard/TaskReport'
+import TaskReview from '../features/dashboard/TaskReview'
+import ProrityTaskCharts from '../features/dashboard/ProrityTaskCharts'
+import PriorityTasksChart from '../features/dashboard/PriorityTasksChart'
+import StatusTaskChart from '../features/dashboard/StatusTaskChart'
 // import WeeklyTaskDurationChart from '../features/dashboard/WeeklyTaskDurationChart';
-import { isThisWeek } from 'date-fns';
-import WeeklyTaskDurationChart from './WeeklyTaskDurationChart';
-import useGetTimer from '../features/timer/useTimer';
+import { isThisWeek } from 'date-fns'
+import WeeklyTaskDurationChart from './WeeklyTaskDurationChart'
+import useGetTimer from '../features/timer/useTimer'
+import useGetUser from '../features/auth/useGetUser'
 
 function Dashboard() {
-  const { data: tasks, isLoading: isTask } = useGetTask();
-  const { data: timerData, isLoading } = useGetTimer();
+  const { data: task, isLoading: isTask } = useGetTask()
+  const { data: timerDatas, isLoading } = useGetTimer()
+  const { data: user, isLoading: isUser } = useGetUser()
 
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef(null)
+  const timerData = timerDatas?.filter((task) => task?.user_id === user?.id)
+  const tasks = task?.filter((task) => task.user_id === user.id)
 
-  const filter7lastDay = timerData?.filter((t) => isThisWeek(new Date(t.created_at)));
+  const filter7lastDay = timerData?.filter((t) =>
+    isThisWeek(new Date(t?.created_at))
+  )
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -280, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: -280, behavior: 'smooth' })
     }
-  };
+  }
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' })
     }
-  };
+  }
 
-  if (isTask || isLoading) return <Spinner />;
+  if (isTask || isLoading || isUser) return <Spinner />
 
-  const chartHeight = 300;
+  const chartHeight = 300
 
   return (
     <div className='w-[100%] px-4 overflow-h-auto md:overflow-hidden'>
@@ -64,7 +70,7 @@ function Dashboard() {
         </div>
         <div
           ref={scrollContainerRef}
-          className='flex w-full overflow-x-hidden gap-2 justify-start items-start pb-4 px-4 '
+          className='flex w-full md:h-[30vh] overflow-x-hidden gap-2 justify-start items-start pb-4 px-4 '
         >
           {tasks.length > 0 ? (
             tasks.map((task) => <TaskReview key={task.id} task={task} />)
@@ -78,20 +84,21 @@ function Dashboard() {
 
       <div className=' flex items-start flex-col md:flex-row gap-4 md:h-[30rem]'>
         <div className='w-full md:w-2/4'>
-          <ProrityTaskCharts height={chartHeight} />
-        </div> <div className='w-full mt-[2rem] md:w-2/4 bg-[#ffffff]'>
+          <ProrityTaskCharts tasks={tasks} height={chartHeight} />
+        </div>{' '}
+        <div className='w-full mt-[2rem] md:w-2/4 bg-[#ffffff]'>
           {/* <PriorityTasksChart height={chartHeight} /> */}
-          <WeeklyTaskDurationChart height={chartHeight} tasks={filter7lastDay} />
+          <WeeklyTaskDurationChart
+            height={chartHeight}
+            tasks={filter7lastDay}
+          />
         </div>
         <div className='w-full md:w-2/4'>
-          <StatusTaskChart height={chartHeight} />
+          <StatusTaskChart  tasks={tasks}height={chartHeight} />
         </div>
-       
       </div>
-
-      
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

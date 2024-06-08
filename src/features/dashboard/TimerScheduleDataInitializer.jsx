@@ -12,11 +12,14 @@ import {
 } from '../timer/timerScheduleSlice'
 
 import useGetTimer from '../timer/useTimer'
+import useGetUser from '../auth/useGetUser'
 
 const TimerScheduleDataInitializer = ({ children }) => {
   const dispatch = useDispatch()
-  const { data: timerData, isLoading } = useGetTimer()
-
+  const { data: timerDatas, isLoading } = useGetTimer()
+  const { data: user, isLoading: isUser } = useGetUser()
+  const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
+ 
   useEffect(() => {
     if (!isLoading && timerData) {
       const filterTimer = timerData.filter((timer) => timer.filter === 'timer')
@@ -57,7 +60,7 @@ const TimerScheduleDataInitializer = ({ children }) => {
 
       dispatch(setWeekStartDates(labeledWeeks))
     }
-  }, [timerData, isLoading, dispatch])
+  }, [timerDatas, isLoading, dispatch])
   // const { weekStartDates } = useSelector((store) => store.timerSchedule)
 
   useEffect(() => {
@@ -102,8 +105,8 @@ const TimerScheduleDataInitializer = ({ children }) => {
 
       dispatch(setWeekStartDates2(labeledWeeks))
     }
-  }, [timerData, isLoading, dispatch])
-  if (isLoading) {
+  }, [timerDatas, isLoading, dispatch])
+  if (isLoading||isUser) {
     return <Spinner />
   }
 

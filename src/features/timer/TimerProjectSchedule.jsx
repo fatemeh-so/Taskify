@@ -13,16 +13,19 @@ import {
 } from './timerScheduleSlice'
 import useEditTimer from './useEditTimer'
 import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
+import useGetUser from '../auth/useGetUser'
 
 function TimerProjectSchedule() {
-  const { data: timerData, isLoading } = useGetTimer()
+  const { data: timerDatas, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
-
+  const { data: user, isLoading: isUser } = useGetUser()
+  const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
+ 
   const dispatch = useDispatch()
   const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
     (store) => store.timerSchedule
   )
-
+console.log(timerData);
   useEffect(() => {
     if (!isLoading && timerData) {
       const filterTimer = timerData.filter(
@@ -71,7 +74,7 @@ function TimerProjectSchedule() {
 
       dispatch(setWeekStartDates(labeledWeeks))
     }
-  }, [timerData, isLoading, dispatch])
+  }, [timerDatas, isLoading, dispatch])
 
   const handleInputChange = (id, value) => {
     dispatch(updateTaskName({ id, taskName: value }))
@@ -81,7 +84,7 @@ function TimerProjectSchedule() {
     edit({ id: id, taskName: value })
   }
 
-  if (isLoading || isEdit) return <Spinner />
+  if (isLoading || isEdit||isUser) return <Spinner />
 
   return (
     <div className='mb-8'>

@@ -80,6 +80,7 @@ export default function Header() {
             <DropdownItem key='logout' color='danger'>
               Log Out
             </DropdownItem>
+
           </DropdownMenu>
         </Dropdown>
       </div>

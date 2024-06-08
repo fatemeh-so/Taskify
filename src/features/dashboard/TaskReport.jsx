@@ -3,30 +3,41 @@ import { useSelector } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import useGetTask from '../schedule/useGetTask'
 import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
+import useGetUser from '../auth/useGetUser'
 
 function TaskReport() {
-  const { data: task, isLoading: isTask } = useGetTask()
+  const { data: tasks, isLoading: isTask } = useGetTask()
+  const { data: user, isLoading: isUser } = useGetUser()
+
   const { weekStartDates } = useSelector((store) => store.timer)
   const { weekStartDates: weekStartDates2 } = useSelector(
     (store) => store.timerSchedule
   )
+  const task = tasks?.filter((timer) => timer.user_id === user.id)
 
-  if (isTask) return <Spinner />
+  if (isTask || isUser) return <Spinner />
 
   const total = task?.length || 0
-  const todoTask = task?.filter((task) => task.status?.toString() === 'Not Started').length || 0
-  const inProgressTask = task?.filter((task) => task.status?.toString() === 'In Progress').length || 0
-  const completedTask = task?.filter((task) => task.status?.toString() === 'Completed').length || 0
+  const todoTask =
+    task?.filter((task) => task.status?.toString() === 'Not Started').length ||
+    0
+  const inProgressTask =
+    task?.filter((task) => task.status?.toString() === 'In Progress').length ||
+    0
+  const completedTask =
+    task?.filter((task) => task.status?.toString() === 'Completed').length || 0
 
   const allTimer = task?.reduce((acc, cur) => acc + cur?.duration, 0) || 0
 
-  const totalWeekTimer = weekStartDates?.[0]?.groups
-    ?.flat()
-    .reduce((acc, cur) => acc + cur?.duration, 0) || 0
+  const totalWeekTimer =
+    weekStartDates?.[0]?.groups
+      ?.flat()
+      .reduce((acc, cur) => acc + cur?.duration, 0) || 0
 
-  const totalWeekTimer2 = weekStartDates2?.[0]?.groups
-    ?.flat()
-    .reduce((acc, cur) => acc + cur?.duration, 0) || 0
+  const totalWeekTimer2 =
+    weekStartDates2?.[0]?.groups
+      ?.flat()
+      .reduce((acc, cur) => acc + cur?.duration, 0) || 0
 
   const constTotalWeeks = totalWeekTimer + totalWeekTimer2
   const formattedTotalWeekTimer = new Date(constTotalWeeks * 1000)

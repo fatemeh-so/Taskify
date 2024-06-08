@@ -13,11 +13,13 @@ import {
   updateTaskName,
   setWeekStartDates,
 } from './timerSlice'
+import useGetUser from '../auth/useGetUser'
 
 function TimerProject() {
-  const { data: timerData, isLoading } = useGetTimer()
+  const { data: timerDatas, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
-
+  const { data: user, isLoading: isUser } = useGetUser()
+  const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
   const dispatch = useDispatch()
   const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
     (store) => store.timer
@@ -72,7 +74,7 @@ function TimerProject() {
 
       dispatch(setWeekStartDates(labeledWeeks))
     }
-  }, [timerData, isLoading, dispatch])
+  }, [timerDatas, isLoading, dispatch])
 
   const handleInputChange = (id, value) => {
     dispatch(updateTaskName({ id, taskName: value }))
@@ -82,7 +84,7 @@ function TimerProject() {
     edit({ id: id, taskName: value })
   }
 
-  if (isLoading || isEdit) return <Spinner />
+  if (isLoading || isEdit || isUser) return <Spinner />
 
   return (
     <div className='w-[98%] mx-auto mb-8'>
@@ -91,13 +93,13 @@ function TimerProject() {
           {weekStartDates.map(({ weekStart, weekEnd, groups }, index) => (
             <div key={`week-${index}`} className='mb-8'>
               <div className='flex  m-2 gap-1'>
-              
                 <div className='text-md text-gray-600'>
                   {weekStart} -{' '}
                   {isThisWeek(new Date(groups[0][0].created_at))
                     ? 'Today'
                     : weekEnd}
-                </div>|
+                </div>
+                |
                 <div className='flex fle items-center gap-1 text-sm text-gray-500'>
                   <span>Total : </span>
                   <span className='font-semibold text-gray-700'>

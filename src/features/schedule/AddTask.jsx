@@ -1,7 +1,9 @@
 import { ArrowCircleLeft } from 'phosphor-react'
 import AddTaskContenet from './AddTaskContenet'
+import { useUser } from '../auth/useUser'
 
 function AddTask({ onClose }) {
+
   return (
     <div
       className={`fixed  top-0 left-0 z-50 w-full h-full flex justify-end transition-opacity duration-300 `}

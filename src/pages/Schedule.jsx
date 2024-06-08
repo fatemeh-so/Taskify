@@ -11,14 +11,17 @@ import { CloseAddTask } from '../features/schedule/taskSlice'
 import useGetTask from '../features/schedule/useGetTask'
 import Spinner from '../components/Spinner'
 import ColumnCompleted from '../features/schedule/ColumnCopmleted'
+import useGetUser from '../features/auth/useGetUser'
 
 function Schedule() {
   const { close, dateCal, datePickerStatus } = useSelector(
     (store) => store.task
   )
   const dispatch = useDispatch()
-  const { data: task, isLoading: isTask } = useGetTask()
-
+  const { data: tasks, isLoading: isTask } = useGetTask()
+  
+  const {data:user,isLoading}=useGetUser()
+ const task=tasks?.filter(task=>task.user_id===user.id)
   const filteredTasks = task?.filter((t) => {
     const taskDate = new Date(t.created_at)
     const selectedDate = new Date(dateCal)
@@ -38,7 +41,7 @@ function Schedule() {
     dispatch(CloseAddTask(false))
   }
 
-  if (isTask) return <Spinner />
+  if (isTask||isLoading) return <Spinner />
 
   return (
     <div className='relative z-10 h-[80vh] md:h-[85vh] w-full md:overflow-hidden'>

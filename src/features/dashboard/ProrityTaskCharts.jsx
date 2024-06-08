@@ -3,12 +3,12 @@ import Spinner from '../../components/Spinner';
 import useGetTask from '../schedule/useGetTask';
 import { useMemo } from 'react';
 
-function ProrityTaskCharts() {
+function ProrityTaskCharts({tasks}) {
   const COLORS = ['#7CB342', '#FFB300', '#F06292', '#4DD0E1', '#9575CD', '#FF7043', '#81C784', '#4DB6AC', '#64B5F6', '#A1887F'];
 
-  const { data: tasks, isLoading: isTask } = useGetTask();
+  // const { data: tasks, isLoading: isTask } = useGetTask();
 
-  if (isTask) return <Spinner />;
+  // if (isTask) return <Spinner />;
   
   const totalTasks = tasks.length;
 
@@ -30,7 +30,13 @@ function ProrityTaskCharts() {
       percentage: ((value / totalTasks) * 100).toFixed(0), // Calculate percentage without decimal places
     }));
   }, [tasks, totalTasks]);
-
+  if (tasks.length === 0) {
+    return (
+      <div className='flex mt-8 h-[17.3rem] shadow-sm justify-center items-center bg-white w-full  text-gray-500'>
+        No tasks to display
+      </div>
+    )
+  }
   return (
     <div className="mt-8 bg-white p-4 rounded-lg shadow-md">
       <h2 className="text-lg font-bold text-gray-800 mb-4">Task Categories</h2>

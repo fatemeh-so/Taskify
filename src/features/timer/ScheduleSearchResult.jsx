@@ -6,10 +6,15 @@ import { useDispatch } from 'react-redux'
 import { addTaskId, addTaskName } from './timerScheduleSlice'
 import { openAddTask } from '../schedule/taskSlice'
 import { useNavigate } from 'react-router-dom'
+import useGetUser from '../auth/useGetUser'
 
 function ScheduleSearchResult({ valueSearch, setValueSearch }) {
   const [close1, setClose] = useState(false)
-  const { data: tasks, isLoading: isTaskLoading } = useGetTask()
+  const { data: task, isLoading: isTaskLoading } = useGetTask()
+  const { data: user, isLoading: isUser } = useGetUser()
+
+  const tasks=task.filter(task=>task.user_id===user.id)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

@@ -15,15 +15,18 @@ import useEditTask from '../schedule/useEditTask'
 import toast from 'react-hot-toast'
 import useGetTask from '../schedule/useGetTask'
 import ScheduleSearchResult from './ScheduleSearchResult'
+import useGetUser from '../auth/useGetUser'
 
 function TimerBarSchedule() {
   const dispatch = useDispatch()
   const { mutate: addTimer, isLoading: isAddTimer } = useAddTimer()
   const { mutate: editTask, isLoading: isEditTask } = useEditTask()
+  const { data: user, isLoading: isUser } = useGetUser()
   const [valueSearch, setValueSearch] = useState('')
 
-  const { data: task, isLoading: isTask } = useGetTask()
-
+  const { data: tasks, isLoading: isTask } = useGetTask()
+const task=tasks?.filter(task=>task.user_id===user.id)
+console.log(task);
   const { duration, taskName, startTime, open, taskId } = useSelector(
     (store) => store.timerSchedule
   )
@@ -64,6 +67,7 @@ function TimerBarSchedule() {
         startTime,
         endTime: endTimeValue,
         created_at: startTime,
+        user_id: user.id,
       }
       dispatch(stopTimer(endTimeValue))
       addTimer(all)
@@ -73,12 +77,17 @@ function TimerBarSchedule() {
     }
     dispatch(setOpen(!open))
   }
-console.log(taskName);
-  if (isAddTimer || isEditTask || isTask) return <Spinner />
+  console.log(taskName)
+  if (isAddTimer || isEditTask || isTask || isUser) return <Spinner />
 
   return (
     <div className='bg-white gap-4 flex flex-wrap max-w-full rounded-xl mt-4 p-2 md:p-4 items-center justify-between shadow-md'>
-      <div className='w-full'><ScheduleSearchResult valueSearch={valueSearch} setValueSearch={setValueSearch} /></div>
+      <div className='w-full'>
+        <ScheduleSearchResult
+          valueSearch={valueSearch}
+          setValueSearch={setValueSearch}
+        />
+      </div>
 
       <Button
         color={!open ? 'secondary' : 'danger'}

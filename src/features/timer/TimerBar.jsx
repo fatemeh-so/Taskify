@@ -11,11 +11,15 @@ import {
 import Spinner from '../../components/Spinner'
 import useAddTimer from './useAddTimer'
 import ScheduleTimer from './ScheduleTimer'
+import useGetUser from '../auth/useGetUser'
 
 function TimerBar() {
   const dispatch = useDispatch()
   const { mutate: addTimer, isLoading: isAddTimer } = useAddTimer()
-  const { duration, taskName, startTime, open } = useSelector((store) => store.timer)
+  const { duration, taskName, startTime, open } = useSelector(
+    (store) => store.timer
+  )
+  const {data:user,isLoading:isUser}=useGetUser()
 
   // Convert duration to a time string starting from 00:00:00
   const convertDuration = new Date(duration * 1000).toISOString().substr(11, 8)
@@ -40,15 +44,23 @@ function TimerBar() {
   const handleStartStop = async () => {
     if (open) {
       const endTimeValue = new Date().toISOString()
-      const all = { duration, taskName, startTime, endTime: endTimeValue, created_at: startTime,filter:"timer" }
+      const all = {
+        duration,
+        taskName,
+        startTime,
+        endTime: endTimeValue,
+        created_at: startTime,
+        filter: 'timer',
+        user_id: user.id,
+      }
       dispatch(stopTimer(endTimeValue))
       addTimer(all)
       dispatch(resetTimer())
     }
     dispatch(setOpen(!open))
   }
-// console.log(open);
-  if (isAddTimer) return <Spinner />
+  // console.log(open);
+  if (isAddTimer||isUser) return <Spinner />
 
   return (
     <div className='bg-[#ffffff] gap-6 flex max-w-full mr-4 rounded-[1rem] mt-[1rem] ml-2 h-[3rem] md:h-[4rem] items-center justify-between px-4'>
@@ -72,8 +84,6 @@ function TimerBar() {
       >
         {open ? 'Stop' : 'Start'}
       </Button>
-  
-
     </div>
   )
 }
