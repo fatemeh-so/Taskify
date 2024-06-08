@@ -25,8 +25,7 @@ function Sidebar({ className }) {
               <AcmeLogo />
             </NavLink>
           </li>
-          <div className='flex flex-col justify-evenly items-center h-[40vh]'>
-            {' '}
+          <div className='flex lg:flex-col w-[55vh] lg:w-auto justify-evenly items-center lg:h-[40vh]'>
             <li>
               <NavLink to='/dashboard'>
                 <SquaresFour size={24} color='#f4ecf4' />
