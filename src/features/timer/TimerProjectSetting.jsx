@@ -42,7 +42,7 @@ export default function TimerProjectSettings({ id }) {
           >
             New Timer
           </DropdownItem>
-          <DropdownItem variant='light'>Edit Timer</DropdownItem>
+          {/* <DropdownItem variant='light'>Edit Timer</DropdownItem> */}
           <DropdownItem
             variant='light'
             onClick={() => handleDeleteTimer(id)}

@@ -9,8 +9,8 @@ function AppLayout() {
     (store) => store.header
   )
   return (
-    <div className=' h-[100%]  bg-white2 flex w-[100%] flex-col-reverse lg:flex-row min-h-screen  '>
-      <div className=' flex  xl:h-[100%] flex-col-reverse h-[13vh] lg:w-[15vh]  '>
+    <div className=' h-[100vh]  bg-white2 flex w-[100%] flex-col-reverse lg:flex-row   '>
+      <div className=' flex  xl:h-[100vh] flex-col-reverse h-[13vh] lg:w-[15vh]  '>
         <Sidebar />
       </div>
 

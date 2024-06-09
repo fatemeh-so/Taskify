@@ -1,11 +1,10 @@
 import {
   Files,
   SquaresFour,
-  Timer,
-  CalendarBlank,
-  SignOut,
+  Timer, SignOut,
+  UserGear
 } from 'phosphor-react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import useLogout from '../features/auth/useSignout'
 import Spinner from './Spinner'
 import { AcmeLogo } from './AcmeLogo'
@@ -13,7 +12,13 @@ import { Tooltip } from '@nextui-org/react'
 
 function Sidebar({ className }) {
   const { mutate: logout, isLoading } = useLogout()
+  const navigate = useNavigate()
+
+  function handelNavigate(value) {
+    navigate(value)
+  }
   if (isLoading) return <Spinner />
+
   return (
     <>
       <div
@@ -48,14 +53,23 @@ function Sidebar({ className }) {
             </li>
           </div>
 
-          <li
-            onClick={() => logout()}
-            className='text-white hidden mt-24 lg:flex flex justify-end'
+          <div
+           
+            className='text-white mt-[3rem] hidden gap-4 lg:flex flex-col justify-end'
           >
-            <Tooltip content='logout'>
-              <SignOut size={28} color='#f4ecf4' />
-            </Tooltip>
-          </li>
+            <li className=''>
+              <UserGear
+                onClick={() => handelNavigate('/profile')}
+                size={24}
+                color='#f4ecf4'
+              />
+            </li>
+            <li onClick={() => logout()}>
+              <Tooltip content='logout'>
+                <SignOut size={24} color='#f4ecf4' />
+              </Tooltip>
+            </li>
+          </div>
         </ul>
       </div>
     </>

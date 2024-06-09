@@ -18,7 +18,7 @@ import useGetUser from '../auth/useGetUser'
 function TimerProject() {
   const { data: timerDatas, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
-  const { data: user, isLoading: isUser } = useGetUser()
+  const { data: user, isLoading: isUser } = useGetUser()  
   const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
   const dispatch = useDispatch()
   const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
@@ -44,7 +44,7 @@ function TimerProject() {
         .reverse() // Reverse the order of sortedGroupedData, first add first show
 
       dispatch(addGroupDataTimerArray(sortedGroupedData))
-
+      
       // Group by week
       const weekStartDates = sortedGroupedData.reduce((weeks, group) => {
         const weekStart = formatDate(

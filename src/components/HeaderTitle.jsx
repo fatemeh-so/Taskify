@@ -1,7 +1,9 @@
-import { useLocation } from 'react-router-dom'
+import { ArrowLeft } from 'phosphor-react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function HeaderTitle() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   //   console.log(pathname)
   let path
   if (pathname === '/dashboard') {
@@ -15,6 +17,14 @@ function HeaderTitle() {
   }
   if (pathname === '/timer') {
     path = 'Timer'
+  }
+  if (pathname === '/profile') {
+    // path = 'Profile'
+    return (
+      <p onClick={() => navigate('/')} className='px-4 pt-2'>
+        <ArrowLeft  size={20} />
+      </p>
+    )
   }
   return (
     <>

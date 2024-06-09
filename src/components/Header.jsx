@@ -8,7 +8,7 @@ import {
 } from '@nextui-org/react'
 import HeaderTitle from './HeaderTitle.jsx'
 import { SearchIcon } from './SearchIcon.jsx'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import SearchInputReasult from './SearchInputReasult.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { addInputValue, openSearch } from '../features/Header/HeaderSlice.jsx'
@@ -23,7 +23,7 @@ export default function Header() {
   const { pathname } = useLocation()
   const { close } = useSelector((store) => store.header)
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const handleFocus = (value) => {
     dispatch(openSearch(value))
   }
@@ -36,7 +36,9 @@ export default function Header() {
     handleFocus(false)
     dispatch(addInputValue(''))
   }
-
+  function handelNavigate(value) {
+    navigate(value)
+  }
   if (pathname === '/login' || pathname === '/signup') return null
   if (isLoading || isOut) return <Spinner />
 
@@ -79,12 +81,17 @@ export default function Header() {
               <p className='font-semibold'>{user?.user_metadata?.username}</p>
               <p className='font-semibold'>{user?.email}</p>
             </DropdownItem>
-            <DropdownItem key='settings'>
-              <NavLink to='/profile'>My Profile</NavLink>
+            <DropdownItem
+              key='settings'
+              onClick={() => handelNavigate('/profile')}
+            >
+              My Profile
             </DropdownItem>
-            <DropdownItem key='analytics'>Analytics</DropdownItem>
+            <DropdownItem onClick={() => handelNavigate('/')} key='analytics'>
+              Analytics
+            </DropdownItem>
             <DropdownItem key='system'>
-              <NavLink to='/'>System</NavLink>
+              {/* <NavLink to='/'>System</NavLink> */}
             </DropdownItem>
             <DropdownItem key='logout' color='danger'>
               <div onClick={logout} className='flex gap-1 text-red-500'>

@@ -43,7 +43,7 @@ function Dashboard() {
   const chartHeight = 300
 
   return (
-    <div className='w-[100%] px-4 overflow-h-auto md:overflow-hidden'>
+    <div className='w-[100%] px-4 overflow-h-auto md:overflow-hidden md:h-[90vh]'>
       <TaskReport />
 
       <div className='relative bg-white rounded-lg  '>

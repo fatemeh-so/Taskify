@@ -5,11 +5,16 @@ import useGetTask from '../features/schedule/useGetTask';
 import useGetTimer from '../features/timer/useTimer';
 import { useNavigate } from 'react-router-dom';
 import { addInputValue, openSearch } from '../features/Header/HeaderSlice';
+import useGetUser from '../features/auth/useGetUser';
 
 function SearchInputResult() {
-  const { data: tasks, isLoading: isTask } = useGetTask();
-  const { data: timerData, isLoading: isTimerLoading } = useGetTimer();
+  const { data: task, isLoading: isTask } = useGetTask();
+  const { data: timerDatas, isLoading: isTimerLoading } = useGetTimer();
   const { inputValue } = useSelector((store) => store.header);
+  const { data: user, isLoading: isUser } = useGetUser()
+  const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
+  const tasks=task?.filter(task=>task.user_id===user.id)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,11 +26,11 @@ function SearchInputResult() {
     );
 
   const filteredTasks = inputValue
-    ? tasks.filter((task) => {
+    ? tasks?.filter((task) => {
         return (
-          task.title.toLowerCase().includes(inputValue.toLowerCase()) ||
-          task.priority.toLowerCase().includes(inputValue.toLowerCase()) ||
-          task.status.toLowerCase().includes(inputValue.toLowerCase())
+          task?.title.toLowerCase().includes(inputValue.toLowerCase()) ||
+          task?.priority.toLowerCase()?.includes(inputValue?.toLowerCase()) ||
+          task?.status.toLowerCase().includes(inputValue.toLowerCase())
         );
       })
     : [];
@@ -42,9 +47,9 @@ function SearchInputResult() {
   const filteredTimer = inputValue
     ? timerData.filter(
         (timer) =>
-          timer.filter === 'timer' &&
-          typeof timer.taskName === 'string' &&
-          timer.taskName.toLowerCase().includes(inputValue.toLowerCase())
+          timer?.filter === 'timer' &&
+          typeof timer?.taskName === 'string' &&
+          timer?.taskName?.toLowerCase().includes(inputValue.toLowerCase())
       )
     : [];
 

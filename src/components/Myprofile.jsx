@@ -5,6 +5,7 @@ import Spinner from './Spinner'
 import useGetUser from '../features/auth/useGetUser'
 import { useUpdateUser } from '../features/auth/useUpadateUser'
 import uploadAvatar from '../services/uploadAvatar'
+import { useNavigate } from 'react-router-dom'
 
 const MyProfile = () => {
   const { data: user, isLoading: isUserLoading } = useGetUser()
@@ -14,7 +15,7 @@ const MyProfile = () => {
   const [avatarUrl, setAvatarUrl] = useState('')
 
   const { mutate: editProf, isLoading: isUpdating } = useUpdateUser()
-
+  
   useEffect(() => {
     if (user) {
       setUsername(user.user_metadata?.username || '')
@@ -66,6 +67,7 @@ const MyProfile = () => {
   if (isUserLoading || isUpdating) return <Spinner />
 
   return (
+    <>
     <div className='container mx-auto px-4 py-8'>
       <h1 className='text-3xl font-semibold mb-6'>My Profile</h1>
       <div className='flex flex-col md:flex-row gap-8'>
@@ -107,7 +109,7 @@ const MyProfile = () => {
         </div>
       </div>
     </div>
-  )
+ </> )
 }
 
 export default MyProfile
