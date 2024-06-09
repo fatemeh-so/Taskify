@@ -1,15 +1,14 @@
 // authFunctions.js
 import supabase, { supabaseUrl } from '../supabase'
 
-export async function signUp({ email, password, username, avatar }) {
+export async function signUp({ email, password, username }) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     username,
     options: {
       data: {
-        username,
-        avatar,
+        username
       },
     },
   })
@@ -17,7 +16,7 @@ export async function signUp({ email, password, username, avatar }) {
     console.error(error)
     throw new Error('email or password was wrong')
   }
-  console.log(data)
+  // console.log(data)
   return { data }
 }
 

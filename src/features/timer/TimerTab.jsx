@@ -9,7 +9,7 @@ export default function TimerTab() {
   const [selected, setSelected] = React.useState('photos')
 
   return (
-    <div className='flex w-full mt-4  h-full  flex-col'>
+    <div className='flex w-full mt-4  lg:h-full md:h-[120vh]     flex-col'>
       <Tabs
         aria-label='Options'
         selectedKey={selected}

@@ -1,10 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-// import { useUser } from '../features/auth/useUser'
 import Spinner from '../components/Spinner'
 import { useEffect } from 'react'
 import { useUser } from '../features/auth/useUser'
-// import { useUser } from '@nextui-org/react'
-// import { useUser } from '../features/auth/useUser'
 
 function ProtectedRoute({ children }) {
   const { user, isLoading, isAuthenticated } = useUser()
