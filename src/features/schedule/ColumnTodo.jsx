@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 // ColumnTodo.js
 import SquareRow from './SquareRow'
-import useGetTask from './useGetTask'
-import Spinner from '../../components/Spinner'
 
 function ColumnTodo({ label, color, task }) {
   // Check if task and task.status are defined before calling toString
@@ -26,7 +24,7 @@ function ColumnTodo({ label, color, task }) {
     >
       <div className='flex justify-center items-center'>
         <div
-          className={`text-center w-full rounded-[.4rem] pt-2 h-[2.5rem] font-bold mb-4 ${bgColorClass}`}
+          className={`text-center hidden md:block w-full rounded-[.4rem] pt-2 h-[2.5rem] font-bold mb-4 ${bgColorClass}`}
         >
           {label}
         </div>

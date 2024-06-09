@@ -10,9 +10,9 @@ import useGetUser from '../auth/useGetUser'
 export default function MobileTab() {
   const [selected, setSelected] = React.useState('photos')
   const { data: tasks, isLoading: isTask } = useGetTask()
-  const {data:user,isLoading}=useGetUser()
- const task=tasks?.filter(task=>task.user_id===user.id)
-  if (isTask||isLoading) return <Spinner />
+  const { data: user, isLoading } = useGetUser()
+  const task = tasks?.filter((task) => task.user_id === user.id)
+  if (isTask || isLoading) return <Spinner />
   return (
     <div className='   md:hidden    w-full h-[80%] md:h-[90%] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden'>
       <Tabs
@@ -23,14 +23,15 @@ export default function MobileTab() {
         selectedKey={selected}
         onSelectionChange={setSelected}
       >
-        <Tab key='photos' title='ToDo'>
-          <div className='mb-[-9rem]'>
-            {' '}
+        <Tab key='photos' title='ToDo' className=' '>
+          {/* <Card className='flex'> */}
             <ColumnTodo task={task} />
-          </div>
+          {/* </Card> */}
         </Tab>
         <Tab key='music' title='In Procces'>
-          <ColumnInProgress task={task} />
+          {/* <Card> */}
+            <ColumnInProgress task={task} />
+          {/* </Card> */}
         </Tab>
         <Tab key='videos' title='Completed'>
           <ColumnCompleted task={task} />
