@@ -25,7 +25,7 @@ export default function TimerProjectSettings({ id }) {
   if (isDelete) return <Spinner />
 
   return (
-    <div className='mr-4'>
+    <div className='mr-4 z-0'>
       <Dropdown>
         <DropdownTrigger>
           <Button isIconOnly variant='bordered'>
