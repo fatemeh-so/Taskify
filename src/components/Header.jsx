@@ -84,10 +84,11 @@ export default function Header() {
             <DropdownItem
               key='settings'
               onClick={() => handelNavigate('/profile')}
+              onTouchStart={() => handelNavigate('/profile')}
             >
               My Profile
             </DropdownItem>
-            <DropdownItem onClick={() => handelNavigate('/')} key='analytics'>
+            <DropdownItem onTouchStart={() => handelNavigate('/')} onClick={() => handelNavigate('/')} key='analytics'>
               Analytics
             </DropdownItem>
             <DropdownItem key='system'>

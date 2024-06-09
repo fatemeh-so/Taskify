@@ -12,7 +12,7 @@ function Login() {
   const {mutate:signip,isLoading}=useSignin()
 
   function onSubmit({  email, password }) {
-    console.log( email, password)
+    // console.log( email, password)
     signip({  email, password })
   }
 
