@@ -19,8 +19,8 @@ function ColumnTodo({ label, color, task }) {
 
   return (
     <div
-      className={`flex flex-col flex-1 m-2 p-4 rounded overflow-y-auto`}
-      style={{ maxHeight: '100%' }}
+      className={`flex h-[95%] flex-col flex-1 m-2 p-4 rounded overflow-y-auto`}
+      // style={{ maxHeight: '95%' }}
     >
       <div className='flex justify-center items-center'>
         <div

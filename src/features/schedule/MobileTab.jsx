@@ -14,7 +14,7 @@ export default function MobileTab() {
   const task = tasks?.filter((task) => task.user_id === user.id)
   if (isTask || isLoading) return <Spinner />
   return (
-    <div className='   md:hidden    w-full h-[80%] md:h-[90%] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden'>
+    <div className='   md:hidden z-0   w-full h-[75%] md:h-[90%] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden'>
       <Tabs
         color='secondary'
         fullWidth={true}
@@ -23,7 +23,7 @@ export default function MobileTab() {
         selectedKey={selected}
         onSelectionChange={setSelected}
       >
-        <Tab key='photos' title='ToDo' className=' '>
+        <Tab key='photos' title='ToDo' className='z-0 '>
           {/* <Card className='flex'> */}
             <ColumnTodo task={task} />
           {/* </Card> */}

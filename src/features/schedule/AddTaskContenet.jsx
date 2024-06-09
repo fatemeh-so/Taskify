@@ -128,7 +128,7 @@ function AddTaskContent() {
   if (isLoading || isTask || isUser) return <Spinner />
 
   return (
-    <div className='container h-full b-red-900 mx-auto md:p-6'>
+    <div className='container h-full b-red-900 mx-4   md:p-6'>
       <div className=' h-auto rounded-lg bg-white p-6'>
         <div className='text-center mb-6'>
           <h3 className='text-xl font-semibold text-gray-700'>Add New Task</h3>
