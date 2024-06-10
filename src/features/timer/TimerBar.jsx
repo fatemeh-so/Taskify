@@ -59,7 +59,6 @@ function TimerBar() {
     }
     dispatch(setOpen(!open))
   }
-  // console.log(open);
   if (isAddTimer||isUser) return <Spinner />
 
   return (

@@ -18,7 +18,7 @@ import useGetUser from '../auth/useGetUser'
 function TimerProject() {
   const { data: timerDatas, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
-  const { data: user, isLoading: isUser } = useGetUser()  
+  const { data: user, isLoading: isUser } = useGetUser()
   const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
   const dispatch = useDispatch()
   const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
@@ -44,7 +44,7 @@ function TimerProject() {
         .reverse() // Reverse the order of sortedGroupedData, first add first show
 
       dispatch(addGroupDataTimerArray(sortedGroupedData))
-      
+
       // Group by week
       const weekStartDates = sortedGroupedData.reduce((weeks, group) => {
         const weekStart = formatDate(
@@ -83,7 +83,49 @@ function TimerProject() {
   const handleEditInput = (id, value) => {
     edit({ id: id, taskName: value })
   }
+  function DateSplit(value) {
+    const text = value
 
+    // Split the text by comma
+    const parts = text.split(', ')
+
+    // Remove the day (Monday)
+    parts.shift()
+
+    // Join the remaining parts with comma (if needed)
+    return parts.join(', ')
+  }
+
+  // Define yesterday's date
+  const getYesterdayDate = () => {
+    const today = new Date()
+    const yesterday = new Date(today.setDate(today.getDate() - 1))
+
+    // Get the month name
+    const month = yesterday.toLocaleDateString('en-US', { month: 'long' })
+
+    // Get the day of the month
+    const day = yesterday.getDate()
+
+    // Add suffix to the day
+    const dayWithSuffix = getDayWithSuffix(day)
+
+    // Construct the formatted date string
+    const formattedDate = `${month} ${dayWithSuffix}`
+
+    return formattedDate
+  }
+  const getDayWithSuffix = (day) => {
+    if (day === 1 || day === 21 || day === 31) {
+      return day + 'st'
+    } else if (day === 2 || day === 22) {
+      return day + 'nd'
+    } else if (day === 3 || day === 23) {
+      return day + 'rd'
+    } else {
+      return day + 'th'
+    }
+  }
   if (isLoading || isEdit || isUser) return <Spinner />
 
   return (
@@ -94,10 +136,10 @@ function TimerProject() {
             <div key={`week-${index}`} className='mb-8'>
               <div className='flex  m-2 gap-1'>
                 <div className='text-md text-gray-600'>
-                  {weekStart} -{' '}
-                  {isThisWeek(new Date(groups[0][0].created_at))
-                    ? 'Today'
-                    : weekEnd}
+                  {weekStart !== 'Today' ? DateSplit(weekStart) : 'Today'}
+                  {weekEnd !== 'Yesterday'
+                    ? ' - ' + DateSplit(weekEnd)
+                    : ' - ' + getYesterdayDate()}
                 </div>
                 |
                 <div className='flex fle items-center gap-1 text-sm text-gray-500'>

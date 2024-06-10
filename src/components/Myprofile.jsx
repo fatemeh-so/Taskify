@@ -33,7 +33,7 @@ const MyProfile = () => {
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0]
-    console.log(file)
+    // console.log(file)
     if (file) {
       const reader = new FileReader()
       reader.onloadend = () => {
@@ -48,7 +48,7 @@ const MyProfile = () => {
     let avatarUrlToSave = avatarUrl
 
     if (avatar) {
-      console.log(avatar)
+      // console.log(avatar)
       // Replace this with your own function to upload the avatar and get the URL
       avatarUrlToSave = await uploadAvatar(avatar)
       editProf({

@@ -12,7 +12,6 @@ function SignUp() {
   const navigate = useNavigate()
 
   function onSubmit({ fullName,email, password }) {
-    console.log(fullName, email, password)
     signup( {username:fullName, email, password })
     // signUp({ fullName, email, password })
   }

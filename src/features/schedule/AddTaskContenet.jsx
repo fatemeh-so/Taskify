@@ -26,7 +26,6 @@ function AddTaskContent() {
     { id: 3, name: 'High', color: 'text-red-500' },
     { id: 4, name: 'Urgent', color: 'text-purple-500' },
   ]
-  console.log(user.id)
   const {
     statuses,
     title,
@@ -103,7 +102,7 @@ function AddTaskContent() {
       return
     }
     const created_at = new Date()
-    console.log()
+    // console.log()
     const user_id = user.id; // Assuming `user` contains the user data including user ID
 
     const task = {
@@ -121,7 +120,7 @@ function AddTaskContent() {
     addTaskTo(task)
     dispatch(CloseAddTask())
   }
-  console.log(new Date())
+  // console.log(new Date())
 
   // Function to convert time to Iran time
 

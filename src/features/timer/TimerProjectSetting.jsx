@@ -17,7 +17,6 @@ export default function TimerProjectSettings({ id }) {
   const dispatch = useDispatch()
   const { duration, startTime, open } = useSelector((store) => store.timer)
 
-  // console.log(open)
   const handleDeleteTimer = (id) => {
     deleting(id)
   }

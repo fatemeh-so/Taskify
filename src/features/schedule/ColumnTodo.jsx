@@ -6,9 +6,7 @@ function ColumnTodo({ label, color, task }) {
   // Check if task and task.status are defined before calling toString
   const todoTask =
     task?.filter((task) => task?.status?.toString() === 'Not Started') || []
-  // console.log(todoTask);
 
-  // console.log(todoTask);
   const bgColorClass =
     {
       pink1: 'bg-pink-100',

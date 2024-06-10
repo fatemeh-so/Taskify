@@ -17,7 +17,6 @@ export default function ScheduleTimer() {
   const dispatch = useDispatch()
   const { taskId } = useSelector((store) => store.timerSchedule)
 
-  // console.log(tasks)
   const filterTask = tasks?.filter((task) => task.status !== 'Completed')
   const items = filterTask.map((task) => ({
     key: task.id,
@@ -25,7 +24,6 @@ export default function ScheduleTimer() {
     status: task.status,
   }))
   if (isTask) return <Spinner />
-  console.log(filterTask)
   return (
     <Dropdown>
       <DropdownTrigger>

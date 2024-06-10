@@ -41,7 +41,9 @@ function Dashboard() {
   if (isTask || isLoading || isUser) return <Spinner />
 
   const chartHeight = 300
-
+  const text = "This is another sentence"
+  const limited_words = text.split(" ", 3)
+  console.log(limited_words);
   return (
     <div className='w-[100%] px-4 overflow-h-auto md:overflow-hidden xl:h-[90vh] md:h-[100vh] h-[257%]'>
       <TaskReport />

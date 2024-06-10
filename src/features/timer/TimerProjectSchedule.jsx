@@ -25,7 +25,6 @@ function TimerProjectSchedule() {
   const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
     (store) => store.timerSchedule
   )
-console.log(timerData);
   useEffect(() => {
     if (!isLoading && timerData) {
       const filterTimer = timerData.filter(

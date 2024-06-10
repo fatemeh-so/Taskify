@@ -22,11 +22,10 @@ function TimerBarSchedule() {
   const { mutate: addTimer, isLoading: isAddTimer } = useAddTimer()
   const { mutate: editTask, isLoading: isEditTask } = useEditTask()
   const { data: user, isLoading: isUser } = useGetUser()
-  const [valueSearch, setValueSearch] = useState('')
+  const [valueSearch, setValueSearch] = useState("")
 
   const { data: tasks, isLoading: isTask } = useGetTask()
 const task=tasks?.filter(task=>task.user_id===user.id)
-console.log(task);
   const { duration, taskName, startTime, open, taskId } = useSelector(
     (store) => store.timerSchedule
   )
@@ -77,7 +76,6 @@ console.log(task);
     }
     dispatch(setOpen(!open))
   }
-  console.log(taskName)
   if (isAddTimer || isEditTask || isTask || isUser) return <Spinner />
 
   return (

@@ -29,7 +29,6 @@ export default function App1() {
     return format(taskDate, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
   })
 
-  console.log(filteredTasks)
 
   return (
     <div className='w-full'>

@@ -7,6 +7,6 @@ export default function useGetUser() {
     queryKey: ['user'],
     queryFn: getUser,
   })
-  console.log(data);
+  // console.log(data);
   return { data, isLoading, error }
 }

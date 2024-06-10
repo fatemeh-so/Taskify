@@ -119,7 +119,6 @@ export default function EditTaskModal() {
       status: currentStatus,
     })
   }
-  // console.log(title,category,priority,todos);
 
   if (isLoading || isEdit) return <Spinner />
   return (

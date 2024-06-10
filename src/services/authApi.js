@@ -16,7 +16,6 @@ export async function signUp({ email, password, username }) {
     console.error(error)
     throw new Error('email or password was wrong')
   }
-  // console.log(data)
   return { data }
 }
 
@@ -44,7 +43,6 @@ export async function getCurrentUser() {
   if (!session?.session) return null
 
   const { data, error } = await supabase.auth.getUser()
-  //   console.log(user.role);
   if (error) {
     console.error(error)
     throw new Error('user wrong')

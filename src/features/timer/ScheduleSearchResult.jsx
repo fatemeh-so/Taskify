@@ -12,19 +12,18 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
   const [close1, setClose] = useState(false)
   const { data: task, isLoading: isTaskLoading } = useGetTask()
   const { data: user, isLoading: isUser } = useGetUser()
-
-  const tasks=task.filter(task=>task.user_id===user.id)
+  const tasks = task.filter((task) => task.user_id === user.id&&task.status==="In Progress")
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   function handleSearchResult(e) {
     setValueSearch(e.target.value)
-    setClose(false)
+    // setTest(false)
   }
 
   const filteredTasks = tasks?.filter((task) =>
-    task.title.toLowerCase().includes(valueSearch.toLowerCase())
+    task.title.toLowerCase().includes(valueSearch?.toLowerCase())
   )
 
   function handelAddTaskName(n, id) {
@@ -36,7 +35,8 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
 
   function openTask() {
     dispatch(openAddTask(true))
-    navigate("/schedule")
+
+    navigate('/schedule')
   }
 
   const priorities = [
@@ -45,13 +45,16 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
     { id: 3, name: 'High', color: 'text-red-500' },
     { id: 4, name: 'Urgent', color: 'text-purple-500' },
   ]
-
-  if (isTaskLoading) return <Spinner />
+  console.log(filteredTasks)
+  if (isTaskLoading || isUser) return <Spinner />
 
   return (
     <div className='flex flex-col w-full'>
       <Input
         onChange={handleSearchResult}
+        onFocus={() => {
+          setClose(true)
+        }}
         type='text'
         placeholder='Select your task ...'
         value={valueSearch}
@@ -60,7 +63,7 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
         endContent={
           <div
             onClick={() => {
-              setClose(true)
+              setClose(false)
             }}
             className='cursor-pointer'
           >
@@ -68,8 +71,8 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
           </div>
         }
       />
-      {!close1 && valueSearch && (
-        <div className='w-full my-[.1rem] bg-white rounded h-auto shadow-md'>
+      {close1 && (
+        <div className='w-full my-[.1rem] overflow-y-auto bg-white rounded h-[6rem] shadow-md'>
           {filteredTasks?.length > 0 ? (
             filteredTasks.map((task) => (
               <div
@@ -94,7 +97,11 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
                       </div>
                     )}
                   </span>
-                  <span className={`font-mono ${priorities.find(p => p.name === task.priority)?.color}`}>
+                  <span
+                    className={`font-mono ${
+                      priorities.find((p) => p.name === task.priority)?.color
+                    }`}
+                  >
                     {task.priority}
                   </span>
                 </div>
@@ -103,16 +110,18 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
           ) : (
             <p className='p-2 text-gray-500'>No tasks found.</p>
           )}
-          <div className='text-center'> <Button
-            className='mx-2 my-2 text-center'
-            auto
-            size='sm'
-            color='primary'
-            onClick={openTask}
-          >
-            Add New Task
-          </Button></div>
-         
+          <div className='text-center'>
+            {' '}
+            <Button
+              className='mx-2 my-2 text-center'
+              auto
+              size='sm'
+              color='primary'
+              onClick={openTask}
+            >
+              Add New Task
+            </Button>
+          </div>
         </div>
       )}
     </div>

@@ -54,7 +54,6 @@ const TimerDataInitializer = ({ children }) => {
       dispatch(setWeekStartDates(labeledWeeks))
     }
   }, [timerData, isLoading, dispatch])
-   console.log(weekStartDates);
 
   if (isLoading) {
     return <Spinner />

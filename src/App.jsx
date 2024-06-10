@@ -11,6 +11,7 @@ import SignUp from './pages/Signup'
 import EditTaskModal from './features/schedule/EditTaskModal'
 import ProtectedRoute from './components/ProtectedRoute'
 import MyProfile from './components/Myprofile'
+import PageNotFound from './pages/PageNotFound'
 
 export default function App() {
   return (
@@ -36,6 +37,8 @@ export default function App() {
             </Route>
             <Route path='login' element={<Login />} />
             <Route path='signup' element={<SignUp />} />
+            <Route path="*" element={<PageNotFound />} />
+
           </Routes>
         </BrowserRouter>
       </NextUIProvider>
