@@ -12,11 +12,13 @@ export default function useSignup() {
     mutationFn: signUp,
     mutationKey: ['user'],
     onSuccess: (data) => {
-      queryClient.setQueryData(['users'], data.user)
+      queryClient.setQueryData(['users'], data.user,["user"])
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+
       navigate('/dashboard', { replace: true })
 
       toast.success(
-        "Account successfully created! Please login."
+        "Account successfully created!"
       ),
         console.log(data)
     },
