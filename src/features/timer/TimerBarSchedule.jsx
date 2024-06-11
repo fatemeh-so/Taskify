@@ -1,16 +1,14 @@
-import { Button, Input } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import {
-  addTaskName,
   resetTimer,
   setOpen,
   startTimer,
-  stopTimer,
+  stopTimer
 } from './timerScheduleSlice'
 import Spinner from '../../components/Spinner'
 import useAddTimer from './useAddTimer'
-import ScheduleTimer from './ScheduleTimer'
 import useEditTask from '../schedule/useEditTask'
 import toast from 'react-hot-toast'
 import useGetTask from '../schedule/useGetTask'

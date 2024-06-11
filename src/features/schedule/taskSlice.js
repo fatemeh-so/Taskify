@@ -5,6 +5,7 @@ const initialState = {
   close: false,
   title: null,
   dateCal:null,
+  test:false,
   datePickerStatus:false,
   categories: [
     { id: '1', name: 'Work' },
@@ -86,11 +87,16 @@ const taskSlice = createSlice({
     },
     closeDateCal:(state,action)=>{
       state.datePickerStatus=action.payload
+    },
+    testadd:(state,action)=>{
+      state.test=action.payload
     }
+    
   },
 })
 
 export const {
+  testadd,
   closeDateCal,
   addDateCal,
   addStatus,

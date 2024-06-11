@@ -4,18 +4,21 @@ import { useNavigate } from 'react-router-dom'
 // import useSignup from '../features/auth/useSignup'
 import Spinner from "../components/Spinner"
 import useSignip from '../features/auth/useSignup'
+import { useDispatch } from 'react-redux'
+import { testadd } from '../features/schedule/taskSlice'
 function SignUp() {
   const { register, getValues, formState, handleSubmit, reset } = useForm()
   const { errors } = formState
   const {mutate:signup,isLoading}=useSignip()
+  const dispatch=useDispatch()
   //   const { isLoading, mutate: signUp } = useSignUp()
   const navigate = useNavigate()
 
   function onSubmit({ fullName,email, password }) {
     signup( {username:fullName, email, password })
+    dispatch(testadd(true))
     // signUp({ fullName, email, password })
   }
-
   function handleToLogin(e) {
     e.preventDefault();
     navigate('/login');
