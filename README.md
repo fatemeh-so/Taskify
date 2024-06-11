@@ -29,9 +29,4 @@ This project is a comprehensive Task Management Application designed to help use
 
 - Node.js and npm installed on your machine.
 
-### Installation
-
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-username/task-management-app.git
-   cd task-management-app
+task-managment-five.vercel.app
