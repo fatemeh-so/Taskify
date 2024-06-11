@@ -95,7 +95,7 @@ export default function Header() {
               {/* <NavLink to='/'>System</NavLink> */}
             </DropdownItem>
             <DropdownItem key='logout' color='danger'>
-              <div onClick={logout} className='flex gap-1 text-red-500'>
+              <div onClick={logout} onTouchStart={logout} className='flex gap-1 text-red-500'>
                 <SignOut className='mt-1' /> <p>Log Out</p>
               </div>
             </DropdownItem>

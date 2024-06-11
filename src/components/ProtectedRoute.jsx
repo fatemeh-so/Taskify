@@ -23,7 +23,7 @@ function ProtectedRoute({ children }) {
     function () {
       if (test&& !isLoading) {
         navigate('/dashboard')
-        console.log(test);
+        console.log(test)
       }
     },
     [test, isLoading,navigate]
