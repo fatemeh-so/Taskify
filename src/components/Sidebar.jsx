@@ -1,9 +1,4 @@
-import {
-  Files,
-  SquaresFour,
-  Timer, SignOut,
-  UserGear
-} from 'phosphor-react'
+import { Files, SquaresFour, Timer, SignOut, UserGear } from 'phosphor-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import useLogout from '../features/auth/useSignout'
 import Spinner from './Spinner'
@@ -25,13 +20,22 @@ function Sidebar({ className }) {
         className={` lg:w-[7rem] z-10  lg:h-[97%]  fixed bottom-[0rem]   w-full h-[5rem] bg-gray2 p-4 flex items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem]  lg:rounded-[1rem] lg:m-[1rem]   lg:flex-col`}
       >
         <ul className=' mt-9  flex mb-10 lg:flex-col  gap-[5rem]'>
-          <li className='bg-white mb-24 rounded-full hidden lg:flex'>
+          <li
+            onTouchStart={() => {
+              navigate('/dashboard')
+            }}
+            className='bg-white mb-24 rounded-full hidden lg:flex'
+          >
             <NavLink to='/dashboard'>
               <AcmeLogo />
             </NavLink>
           </li>
           <div className='flex lg:flex-col w-[46vh] lg:w-auto justify-evenly items-center lg:h-[40vh]'>
-            <li>
+            <li
+              onTouchStart={() => {
+                navigate('/dashboard')
+              }}
+            >
               <NavLink to='/dashboard'>
                 <SquaresFour size={24} color='#f4ecf4' />
               </NavLink>
@@ -46,17 +50,18 @@ function Sidebar({ className }) {
               <CalendarBlank size={24} color='#f4ecf4' />{' '}
             </NavLink>
           </li>{' '} */}
-            <li>
+            <li
+              onTouchStart={() => {
+                navigate('/timer')
+              }}
+            >
               <NavLink to='/timer'>
                 <Timer size={24} color='#f4ecf4' />
               </NavLink>
             </li>
           </div>
 
-          <div
-           
-            className='text-white mt-[3rem] hidden gap-4 lg:flex flex-col justify-end'
-          >
+          <div className='text-white mt-[3rem] hidden gap-4 lg:flex flex-col justify-end'>
             <li className=''>
               <UserGear
                 onClick={() => handelNavigate('/profile')}
