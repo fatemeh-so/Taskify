@@ -20,7 +20,7 @@ function TimerProjectSchedule() {
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
   const { data: user, isLoading: isUser } = useGetUser()
   const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
- 
+
   const dispatch = useDispatch()
   const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
     (store) => store.timerSchedule
@@ -52,6 +52,9 @@ function TimerProjectSchedule() {
         const weekStart = formatDate(
           startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
         )
+        const weekStartSplit=weekStart.split(",")   
+        const weekStartSlice=weekStartSplit.slice(1)
+        
 
         if (!weeks[weekStart]) {
           weeks[weekStart] = []
@@ -83,8 +86,8 @@ function TimerProjectSchedule() {
     edit({ id: id, taskName: value })
   }
 
-  if (isLoading || isEdit||isUser) return <Spinner />
-
+  if (isLoading || isEdit || isUser) return <Spinner />
+  // console.log(weekEnd);
   return (
     <div className='mb-8'>
       {weekStartDates?.length > 0 && (
@@ -93,10 +96,7 @@ function TimerProjectSchedule() {
             <div key={`week-${index}`} className='mb-8'>
               <div className='flex m-2 gap-1'>
                 <div className='text-md text-gray-600'>
-                  {weekStart} -{' '}
-                  {isThisWeek(new Date(groups[0][0].created_at))
-                    ? 'Today'
-                    : weekEnd}
+                  {weekStart.split(",").slice(1)   } -{weekEnd.split(",").slice(1) }
                 </div>
                 |
                 <div className='flex items-center gap-1 text-sm text-gray-500'>

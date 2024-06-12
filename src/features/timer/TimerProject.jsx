@@ -83,49 +83,7 @@ function TimerProject() {
   const handleEditInput = (id, value) => {
     edit({ id: id, taskName: value })
   }
-  function DateSplit(value) {
-    const text = value
 
-    // Split the text by comma
-    const parts = text.split(', ')
-
-    // Remove the day (Monday)
-    parts.shift()
-
-    // Join the remaining parts with comma (if needed)
-    return parts.join(', ')
-  }
-
-  // Define yesterday's date
-  const getYesterdayDate = () => {
-    const today = new Date()
-    const yesterday = new Date(today.setDate(today.getDate() - 1))
-
-    // Get the month name
-    const month = yesterday.toLocaleDateString('en-US', { month: 'long' })
-
-    // Get the day of the month
-    const day = yesterday.getDate()
-
-    // Add suffix to the day
-    const dayWithSuffix = getDayWithSuffix(day)
-
-    // Construct the formatted date string
-    const formattedDate = `${month} ${dayWithSuffix}`
-
-    return formattedDate
-  }
-  const getDayWithSuffix = (day) => {
-    if (day === 1 || day === 21 || day === 31) {
-      return day + 'st'
-    } else if (day === 2 || day === 22) {
-      return day + 'nd'
-    } else if (day === 3 || day === 23) {
-      return day + 'rd'
-    } else {
-      return day + 'th'
-    }
-  }
   if (isLoading || isEdit || isUser) return <Spinner />
 
   return (
@@ -136,10 +94,10 @@ function TimerProject() {
             <div key={`week-${index}`} className='mb-8'>
               <div className='flex  m-2 gap-1'>
                 <div className='text-md text-gray-600'>
-                  {weekStart !== 'Today' ? DateSplit(weekStart) : 'Today'}
-                  {weekEnd !== 'Yesterday'
-                    ? ' - ' + DateSplit(weekEnd)
-                    : ' - ' + getYesterdayDate()}
+                  {weekStart !== 'Today'
+                    ? weekStart.split(',').slice(1)
+                    : 'Today'} -
+                  {weekEnd.split(',').slice(1)}
                 </div>
                 |
                 <div className='flex fle items-center gap-1 text-sm text-gray-500'>
