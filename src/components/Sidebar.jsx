@@ -27,31 +27,31 @@ function Sidebar({ className }) {
         </li>
         <div className='flex lg:flex-col w-[46vh] lg:w-auto justify-evenly items-center lg:h-[40vh]'>
           <li>
-            <NavLink
-              to='/dashboard'
+            <a
+              // to='/dashboard'
               onTouchStart={() => handleNavigate('/dashboard')}
               onClick={() => handleNavigate('/dashboard')}
             >
               <SquaresFour size={24} color='#f4ecf4' />
-            </NavLink>
+            </a>
           </li>
           <li>
-            <NavLink
-              to='/schedule'
+            <a
+              // to='/schedule'
               onTouchStart={() => handleNavigate('/schedule')}
               onClick={() => handleNavigate('/schedule')}
             >
               <Files size={24} color='#f4ecf4' />
-            </NavLink>
+            </a>
           </li>
           <li>
-            <NavLink
-              to='/timer'
+            <a
+              // to='/timer'
               onClick={() => handleNavigate('/timer')}
               onTouchStart={() => handleNavigate('/timer')}
             >
               <Timer size={24} color='#f4ecf4' />
-            </NavLink>
+            </a>
           </li>
         </div>
         <div className='text-white mt-[3rem] hidden gap-4 lg:flex flex-col justify-end'>
