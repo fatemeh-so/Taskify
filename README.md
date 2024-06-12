@@ -28,4 +28,4 @@ This project is a comprehensive Task Management Application designed to help use
 ### Prerequisites
 
 - Node.js and npm installed on your machine.
-_ npm rub dev
+- npm run dev
