@@ -3,7 +3,7 @@ import { format, addDays, subDays } from 'date-fns'
 import { CaretLeft, CaretRight } from 'phosphor-react'
 import { Button } from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addDateCal, closeDateCal, openAddTask } from './taskSlice'
+import { closeDateCal, openAddTask } from './taskSlice'
 import App1 from './DatePicker'
 import useGetTask from './useGetTask'
 import Spinner from '../../components/Spinner'
@@ -31,7 +31,7 @@ function ScheduleBar() {
   if (isTask) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] flex flex-col md:flex-row max-w-full rounded-[1rem] mt-[1rem] ml-2 h-auto md:h-[4rem] items-center justify-between px-4 py-2'>
+    <div className='bg-[#ffffff] flex flex-col md:flex-row max-w-full rounded-[1rem] h-auto  items-center justify-between px-4 py-4'>
       <div className='flex items-center w-full justify-between md:justify-start'>
         <div className='flex-2 text-center md:text-left mb-2 md:mb-0'>
           <span className='sm:text-lg sm:font-bold text-1rem]'>
