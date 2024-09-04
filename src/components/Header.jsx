@@ -8,8 +8,7 @@ import {
 } from '@nextui-org/react'
 import HeaderTitle from './HeaderTitle.jsx'
 import { SearchIcon } from './SearchIcon.jsx'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import SearchInputReasult from './SearchInputReasult.jsx'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addInputValue, openSearch } from '../features/Header/HeaderSlice.jsx'
 import useGetUser from '../features/auth/useGetUser.js'
@@ -21,7 +20,6 @@ export default function Header() {
   const { data: user, isLoading } = useGetUser()
   const { mutate: logout, isLoading: isOut } = useLogout()
   const { pathname } = useLocation()
-  const { close } = useSelector((store) => store.header)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handleFocus = (value) => {
@@ -51,7 +49,7 @@ export default function Header() {
   }
 
   return (
-    <div className='lg:mt-[2rem] mt-[1rem] flex justify-between mr-[1.2rem] md:mr-[1.5rem]'>
+    <div className='flex justify-between px-6 py-4'>
       <HeaderTitle />
       <div className='flex gap-5'>
         <Input
