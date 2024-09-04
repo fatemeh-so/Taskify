@@ -68,14 +68,14 @@ const MyProfile = () => {
 
   return (
     <>
-    <div className='container mx-auto px-4 py-8'>
-      <h1 className='text-3xl font-semibold mb-6'>My Profile</h1>
-      <div className='flex flex-col md:flex-row gap-8'>
-        <div className='flex-shrink-0 relative g '>
+    <div className='pl-[7rem] py-'>
+      <h1 className='text-3xl  font-semibold mb-6'>My Profile</h1>
+      <div className='flex flex-col md:flex-row gap-8 pr-8 pl-4'>
+        <div className='flex-shrink-0 relative gap-4'>
           <Avatar src={avatarUrl} className='w-20 h-20 text-large' />
           <label
             htmlFor='avatarInput'
-            className='absolute md:w-[8rem] md:top-[rem] md:left-[-1.3rem]  bottom-0 right-0 bg-primary hover:bg-primary-dark px-5 py-2 rounded-md text-white cursor-pointer'
+            className='absolute md:w-[8rem] text-center  md:left-[18rem]  bottom-0 right-0 bg-primary hover:bg-primary-dark py-2 rounded-xl text-white cursor-pointer'
           >
             Choose File
           </label>
@@ -103,7 +103,7 @@ const MyProfile = () => {
             onChange={handlePasswordChange}
             className='mb-4'
           />
-          <Button onClick={handleSave} color='primary'>
+          <Button className='text-lg' onClick={handleSave} color='primary'>
             Save Changes
           </Button>
         </div>

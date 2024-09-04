@@ -31,10 +31,10 @@ function ScheduleBar() {
   if (isTask) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] flex flex-col md:flex-row max-w-full rounded-[1rem] h-auto  items-center justify-between px-4 py-4'>
+    <div className='bg-[#ffffff] flex flex-col gap-2 md:gap-0 md:flex-row max-w-full rounded-[1rem] h-auto  items-center justify-between px-4 py-4'>
       <div className='flex items-center w-full justify-between md:justify-start'>
-        <div className='flex-2 text-center md:text-left mb-2 md:mb-0'>
-          <span className='sm:text-lg sm:font-bold text-1rem]'>
+        <div className='flex-2  text-center md:text-left mb-2 md:mb-0'>
+          <span className='sm:text-lg sm:font-semibold text-[1rem]'>
             {format(currentDate, 'MMMM dd, yyyy')}
           </span>
         </div>

@@ -17,7 +17,7 @@ function Sidebar({ className }) {
 
   return (
     <div
-      className={`lg:w-[7rem] z-20 lg:h-[97%] fixed bottom-0 w-full h-[5rem] bg-gray2 flex items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem] lg:rounded-[1rem] lg:m-[1rem] lg:flex-col`}
+      className={`lg:w-[5rem] z-20 lg:h-[97%] fixed bottom-0 w-full h-[5rem] bg-gray2 flex items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem] lg:rounded-[1rem] lg:ml-[1rem] lg:my-4 lg:flex-col`}
     >
       <ul className='mt-9 flex mb-10 lg:flex-col gap-[5rem]'>
         <li className='bg-white rounded-full hidden lg:flex'>

@@ -49,9 +49,9 @@ export default function Header() {
   }
 
   return (
-    <div className='flex justify-between px-6 py-4'>
+    <div className='flex justify-between py-4'>
       <HeaderTitle />
-      <div className='flex gap-5'>
+      <div className='flex gap-5 px-6 '>
         <Input
           classNames={inputClassNames}
           onChange={handleChange}

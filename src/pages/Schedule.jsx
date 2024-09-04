@@ -44,10 +44,10 @@ function Schedule() {
   if (isTask||isLoading) return <Spinner />
 
   return (
-    <div className='relative z-10 h-[80vh] md:h-[85vh] w-full md:overflow-hidden'>
+    <div className='relative pl-[7rem] z-10 h-[80vh] md:h-[85vh] w-full md:overflow-hidden'>
       {close && <AddTask onClose={openTask} />}
       <div className='w-full h-full'>
-        <div className='w-full h-auto px-6 pt-4'>
+        <div className='w-full h-auto pr-4 pt-4'>
           <ScheduleBar />
         </div>
 
