@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs, Tab, Card, CardBody, CardHeader } from '@nextui-org/react'
+import { Tabs, Tab, Card} from '@nextui-org/react'
 import TimerProject from './TimerProject'
 import TimerBar from './TimerBar'
 import TimerBarSchedule from './TimerBarSchedule'
@@ -9,32 +9,24 @@ export default function TimerTab() {
   const [selected, setSelected] = React.useState('photos')
 
   return (
-    <div className='flex w-full mt-4  lg:h-full md:h-[120vh]     flex-col'>
+    <div className='flex w-full mt-4 lg:h-full md:h-[120vh] flex-col'>
       <Tabs
         aria-label='Options'
         selectedKey={selected}
         onSelectionChange={setSelected}
       >
-       
         <Tab key='music' title='Task Timer'>
-          <Card>
+          {/* <Card> */}
             <TimerBarSchedule />
             <TimerProjectSchedule />
-          </Card>
+          {/* </Card> */}
         </Tab>
         <Tab key='photos' title='Timer'>
-          <Card className='h-full'>
+          {/* <Card className='h-full bg-black'> */}
             <TimerBar />
              <TimerProject />
-          </Card>
+          {/* </Card> */}
         </Tab>
-        {/* <Tab key="videos" title="Videos">
-          <Card>
-            <CardBody>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </CardBody>
-          </Card>  
-        </Tab> */}
       </Tabs>
     </div>
   )

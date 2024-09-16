@@ -10,7 +10,6 @@ import {
 } from './timerSlice'
 import Spinner from '../../components/Spinner'
 import useAddTimer from './useAddTimer'
-import ScheduleTimer from './ScheduleTimer'
 import useGetUser from '../auth/useGetUser'
 
 function TimerBar() {
@@ -62,7 +61,7 @@ function TimerBar() {
   if (isAddTimer||isUser) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] gap-6 flex max-w-full mr-4 rounded-[1rem] mt-[1rem] ml-2 h-[3rem] md:h-[4rem] items-center justify-between px-4'>
+    <div className='bg-[#ffffff] gap-6 flex max-w-full rounded-[1rem] items-center justify-between px-6 py-6'>
       <Input
         type='text'
         placeholder={`What are you working on?`}

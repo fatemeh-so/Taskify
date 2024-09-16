@@ -17,7 +17,7 @@ function Sidebar({ className }) {
 
   return (
     <div
-      className={`lg:w-[5rem] z-20 lg:h-[97%] fixed bottom-0 w-full h-[5rem] bg-gray2 flex items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem] lg:rounded-[1rem] lg:ml-[1rem] lg:my-4 lg:flex-col`}
+      className={`lg:w-[5rem] z-20 lg:h-[96.4%] fixed bottom-0 w-full h-[5rem] bg-gray2 flex items-center justify-evenly rounded-t-[1.5rem] md:h-[5.5rem] lg:rounded-[1rem] lg:ml-[1rem] lg:my-4 lg:flex-col`}
     >
       <ul className='mt-9 flex mb-10 lg:flex-col gap-[5rem]'>
         <li className='bg-white rounded-full hidden lg:flex'>
@@ -54,7 +54,7 @@ function Sidebar({ className }) {
             </a>
           </li>
         </div>
-        <div className='text-white mt-[3rem] hidden gap-4 lg:flex flex-col justify-end'>
+        <div className='text-white mt-[3rem] xl:ml-2 hidden gap-[2.5rem] lg:flex flex-col justify-end'>
           <li>
             <UserGear
               onClick={() => handleNavigate('/profile')}
