@@ -51,7 +51,7 @@ function Schedule() {
           <ScheduleBar />
         </div>
 
-        <div className='hidden md:flex mt-4 w-full h-[90%] flex-col md:flex-row overflow-y-auto md:overflow-hidden'>
+        <div className='hidden md:flex w-full h-[90%] flex-col md:flex-row overflow-y-auto md:overflow-hidden'>
           <ColumnTodo task={tasksToDisplay} label='To Do' color='pink1' />
           <ColumnInProgress
             task={tasksToDisplay}

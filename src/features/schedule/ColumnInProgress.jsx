@@ -21,7 +21,7 @@ function ColumnInProgress({ label, color,task }) {
 
   return (
     <div
-      className={`flex flex-col flex-1 m-2 p-4 rounded overflow-y-auto  `}
+      className={`flex flex-col flex-1 p-4 rounded overflow-y-auto  `}
       style={{ maxHeight: '100%' }}
     >
       <div className='flex justify-center items-center'>

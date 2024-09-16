@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Button, Input, Avatar } from '@nextui-org/react'
 import Spinner from './Spinner'
-// import  useUpdateUser  from '../features/auth/useUpdateUser';
 import useGetUser from '../features/auth/useGetUser'
 import { useUpdateUser } from '../features/auth/useUpadateUser'
 import uploadAvatar from '../services/uploadAvatar'
-import { useNavigate } from 'react-router-dom'
 
 const MyProfile = () => {
   const { data: user, isLoading: isUserLoading } = useGetUser()

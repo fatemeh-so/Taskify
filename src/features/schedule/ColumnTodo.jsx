@@ -13,11 +13,9 @@ function ColumnTodo({ label, color, task }) {
       blue1: 'bg-blue-100',
       yellow: 'bg-yellow-100',
     }[color] || 'bg-gray-100' // default to gray if color is not found
-  // if (task?.length === 0) return <Spinner />
-
   return (
     <div
-      className={`flex h-[95%] flex-col flex-1 m-2 py- rounded overflow-y-auto`}
+      className={`flex h-[95%] flex-col flex-1 p-4 py- rounded overflow-y-auto`}
       // style={{ maxHeight: '95%' }}
     >
       <div className='flex justify-center items-center'>

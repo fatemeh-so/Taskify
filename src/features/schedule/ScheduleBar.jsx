@@ -12,7 +12,6 @@ function ScheduleBar() {
   const { data: task, isLoading: isTask } = useGetTask()
 
   const { close, status, datePickerStatus } = useSelector((store) => store.task)
-  const [openSchedule, setOpenSchedule] = useState(false)
   const dispatch = useDispatch()
   const [currentDate, setCurrentDate] = useState(new Date())
 
