@@ -21,7 +21,7 @@ function TimerProject() {
   const { data: user, isLoading: isUser } = useGetUser()
   const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
   const dispatch = useDispatch()
-  const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
+  const {taskNames, weekStartDates } = useSelector(
     (store) => store.timer
   )
 
@@ -123,7 +123,7 @@ function TimerProject() {
               {groups.map((group, groupIndex) => (
                 <div
                   key={`group-${groupIndex}`}
-                  className='shadow-lg bg-white h-auto flex flex-col rounded-xl mt-3 ml-2'
+                  className='shadow-lg bg-white h-auto flex flex-col rounded-xl mt-3'
                 >
                   <div className='flex flex-col bg-blue-100 w-full rounded-[1rem] shadow-sm'>
                     <div className='flex justify-between p-4 items-center bg-blue-200 rounded-t-[1rem]'>

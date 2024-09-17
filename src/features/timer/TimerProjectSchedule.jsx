@@ -122,7 +122,7 @@ function TimerProjectSchedule() {
               {groups.map((group, groupIndex) => (
                 <div
                   key={`group-${groupIndex}`}
-                  className='bg-white flex flex-col rounded-xl mt-3 mx-2 p-4'
+                  className='flex flex-col rounded-xl mt-3 p-4'
                 >
                   <div className='flex flex-col bg-purple-200 w-full rounded-xl shadow-sm p-4'>
                     <div className='flex justify-between items-center mb-4'>

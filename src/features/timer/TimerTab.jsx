@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs, Tab, Card} from '@nextui-org/react'
+import {Tabs, Tab} from '@nextui-org/react'
 import TimerProject from './TimerProject'
 import TimerBar from './TimerBar'
 import TimerBarSchedule from './TimerBarSchedule'
