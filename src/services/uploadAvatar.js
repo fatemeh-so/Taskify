@@ -19,7 +19,6 @@ const uploadAvatar = async (file) => {
       throw new Error('File upload failed');
     }
 
-console.log(filePath);
   
 return filePath
   } catch (error) {

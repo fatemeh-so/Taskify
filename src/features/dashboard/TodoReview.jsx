@@ -1,13 +1,9 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
 import { Chip, Progress } from '@nextui-org/react';
 import { Briefcase, User, BookOpen, DribbbleLogo, Heart, Wallet, Airplane, Palette, UsersThree, Heartbeat } from 'phosphor-react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 function TaskReview({ task }) {
 
-console.log(task);
   const processValueLength = task?.description?.filter(task => task?.completed === true)?.length;
   const allProcess = task?.description?.map(task => task.text);
 

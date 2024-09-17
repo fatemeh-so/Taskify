@@ -102,7 +102,6 @@ function AddTaskContent() {
       return
     }
     const created_at = new Date()
-    // console.log()
     const user_id = user.id; // Assuming `user` contains the user data including user ID
 
     const task = {

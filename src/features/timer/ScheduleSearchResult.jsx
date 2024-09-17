@@ -45,7 +45,6 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
     { id: 3, name: 'High', color: 'text-red-500' },
     { id: 4, name: 'Urgent', color: 'text-purple-500' },
   ]
-  console.log(filteredTasks)
   if (isTaskLoading || isUser) return <Spinner />
 
   return (
