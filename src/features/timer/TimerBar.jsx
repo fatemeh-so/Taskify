@@ -61,7 +61,7 @@ function TimerBar() {
   if (isAddTimer||isUser) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] gap-6 flex max-w-full rounded-[1rem] items-center justify-between px-6 py-6'>
+    <div className='bg-[#ffffff] gap-6 flex max-w-full rounded-[1rem] items-center justify-between px-4 py-6'>
       <Input
         type='text'
         placeholder={`What are you working on?`}

@@ -152,7 +152,7 @@ function TimerProject() {
                         <Input
                           variant='bordered'
                           size='lg'
-                          className='w-1/3 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                          className='w-1/3  py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
                           type='text'
                           value={taskNames[timerToday.id] || ''}
                           onChange={(e) => {

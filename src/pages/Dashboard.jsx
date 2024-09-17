@@ -45,10 +45,10 @@ function Dashboard() {
   // const limited_words = text.split(" ", 3)
   // console.log(limited_words);
   return (
-    <div className='w-[100%] pl-[7rem] pr-4 overflow-h-auto md:overflow-hidden xl:h-[90vh] md:h-[100vh] h-[257%]'>
+    <div className='w-[100%] lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden xl:h-[90vh] md:h-[100vh] h-[257%]'>
       <TaskReport />
 
-      <div className='relative bg-white rounded-lg  '>
+      <div className='relative bg-white rounded-lg'>
         <div className='flex h-[4rem] justify-between items-center mt-4 p-4'>
           <h1 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mt-5'>
             In Progress Review

@@ -65,7 +65,7 @@ const StatusTaskChart = ({ tasks }) => {
 
   return (
     <div className='mt-8 bg-white p-4 rounded-lg shadow-md'>
-      <h2 className='text-lg font-bold text-gray-800 mb-4'>Task Categories</h2>
+      <h2 className='text-lg font-bold text-gray-800 mb-4'>Task Priority</h2>
       <ResponsiveContainer
         width='100%'
         height={200}

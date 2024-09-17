@@ -17,7 +17,7 @@ function AppLayout() {
   )
   const { close } = useSelector((store) => store.header)
   return (
-    <div className='h-[100vh] bg-white2 flex w-[100%] flex-col-reverse lg:flex-row'>
+    <div className='h-[100vh] bg-white2 flex lg:w-[100%] flex-col-reverse lg:flex-row'>
       <div className='flex xl:h-[100vh] flex-col-reverse h-[13vh] '>
         <Sidebar />
       </div>
