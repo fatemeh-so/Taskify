@@ -4,9 +4,9 @@ const initialState = {
   currentStatus: '',
   close: false,
   title: null,
-  dateCal:null,
-  test:false,
-  datePickerStatus:false,
+  dateCal: null,
+  test: false,
+  datePickerStatus: false,
   categories: [
     { id: '1', name: 'Work' },
     { id: '2', name: 'Personal' },
@@ -19,7 +19,7 @@ const initialState = {
     { id: '9', name: 'Hobbies' },
     { id: '10', name: 'Social' },
   ],
-   statuses : [
+  statuses: [
     { id: 1, name: 'Not Started' },
     { id: 2, name: 'In Progress' },
     { id: 3, name: 'Completed' },
@@ -80,18 +80,23 @@ const taskSlice = createSlice({
     addStatus: (state, action) => {
       state.currentStatus = action.payload
     },
-    addDateCal:(state,action)=>{
-      state.dateCal=action.payload
-      state.datePickerStatus=true
-
+    addDateCal: (state, action) => {
+      state.dateCal = action.payload
+      state.datePickerStatus = true
     },
-    closeDateCal:(state,action)=>{
-      state.datePickerStatus=action.payload
+    closeDateCal: (state, action) => {
+      state.datePickerStatus = action.payload
     },
-    testadd:(state,action)=>{
-      state.test=action.payload
-    }
-    
+    testadd: (state, action) => {
+      state.test = action.payload
+    },
+    clearAllField: (state) => {
+      state.title = null
+      state.currentPriority = null
+      state.statuses = []
+      state.currentCategory = null
+      state.currentStatus = ''
+    },
   },
 })
 
@@ -109,6 +114,7 @@ export const {
   addPriority,
   addToDoValue,
   CloseAddTask,
+  clearAllField,
 } = taskSlice.actions
 
 export default taskSlice.reducer

@@ -21,7 +21,10 @@ function Dashboard() {
   const scrollContainerRef = useRef(null)
   const timerData = timerDatas?.filter((task) => task?.user_id === user?.id)
   const tasks = task?.filter((task) => task.user_id === user.id)
-
+  const taskFilterInProgressive = tasks?.filter(
+    (task) => task?.status === 'In Progress'
+  )
+  console.log(taskFilterInProgressive)
   const filter7lastDay = timerData?.filter((t) =>
     isThisWeek(new Date(t?.created_at))
   )
@@ -50,7 +53,7 @@ function Dashboard() {
 
       <div className='relative bg-white rounded-lg'>
         <div className='flex h-[4rem] justify-between items-center mt-4 p-4'>
-          <h1 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mt-5'>
+          <h1 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800'>
             In Progress Review
           </h1>
           <div className='gap-2 flex'>
@@ -74,8 +77,8 @@ function Dashboard() {
           ref={scrollContainerRef}
           className='flex w-full md:h-[30vh] overflow-x-hidden gap-2 justify-start items-start pb-4 px-4 '
         >
-          {tasks.length > 0 ? (
-            tasks.map((task) => <TaskReview key={task.id} task={task} />)
+          {taskFilterInProgressive.length > 0 ? (
+            taskFilterInProgressive.map((task) => <TaskReview key={task.id} task={task} />)
           ) : (
             <div className='flex justify-center items-center w-full h-32 text-gray-500'>
               No tasks to display
@@ -84,7 +87,7 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className=' flex items-start flex-col md:flex-row gap-4 md:h-[30rem]'>
+      <div className='flex items-start flex-col md:flex-row gap-4 md:h-[30rem]'>
         <div className='w-full md:w-2/4'>
           <ProrityTaskCharts tasks={tasks} height={chartHeight} />
         </div>{' '}
@@ -96,7 +99,7 @@ function Dashboard() {
           />
         </div>
         <div className='w-full md:w-2/4'>
-          <StatusTaskChart  tasks={tasks}height={chartHeight} />
+          <StatusTaskChart tasks={tasks} height={chartHeight} />
         </div>
       </div>
     </div>

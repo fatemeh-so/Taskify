@@ -13,8 +13,6 @@ import {
   UsersThree,
   Heartbeat,
 } from 'phosphor-react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 function TaskReview({ task }) {
   // console.log(task);
@@ -60,8 +58,8 @@ function TaskReview({ task }) {
     : ''
 
   return (
-    <div className='border  bg-white rounded-lg shadow-md p-4 flex-shrink-0  max-w-1/5'>
-      <div className='flex flex-col md:flex-row justify-between items-start md:items-center mb-4'>
+    <div className='border  bg-white rounded-lg shadow-md p-4 flex-shrink-0 min-h-full max-w-1/5'>
+      <div className='flex flex-col md:flex-row justify-between items-start md:items-center '>
         <h1 className='text-lg font-bold text-gray-800'>{task?.title}</h1>
         <div className='flex items-center gap-1  mt-2 md:mt-0'>
           <Chip size='sm' variant='flat' color={priorityColorChip}>

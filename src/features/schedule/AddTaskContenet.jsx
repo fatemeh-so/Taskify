@@ -9,6 +9,7 @@ import {
   addTask,
   addTitle,
   addToDoValue,
+  clearAllField,
 } from './taskSlice'
 import { ListPlus, Trash } from 'phosphor-react'
 import useAddTask from './useTask'
@@ -34,7 +35,6 @@ function AddTaskContent() {
     todoValue,
     currentPriority,
     currentStatus,
-    allTask,
   } = useSelector((store) => store.task)
   const dispatch = useDispatch()
 
@@ -42,7 +42,7 @@ function AddTaskContent() {
   const [statusError, setStatusError] = useState(false)
 
   useEffect(() => {
-    dispatch(addToDoValue(todos ))
+    dispatch(addToDoValue(todos))
   }, [todos, dispatch])
 
   const handleCategoryChange = (value) => {
@@ -102,7 +102,7 @@ function AddTaskContent() {
       return
     }
     const created_at = new Date()
-    const user_id = user.id; // Assuming `user` contains the user data including user ID
+    const user_id = user.id // Assuming `user` contains the user data including user ID
 
     const task = {
       title,
@@ -112,19 +112,15 @@ function AddTaskContent() {
       status: currentStatus,
       created_at,
       user_id, // Include user_id in the task object
-
     }
 
     dispatch(addTask(task))
     addTaskTo(task)
     dispatch(CloseAddTask())
+    dispatch(clearAllField())
   }
-  // console.log(new Date())
-
-  // Function to convert time to Iran time
-
+  
   if (isLoading || isTask || isUser) return <Spinner />
-
   return (
     <div className='container h-full b-red-900 mx-4   md:p-6'>
       <div className=' h-auto rounded-lg bg-white p-6'>
