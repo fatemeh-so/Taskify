@@ -89,7 +89,7 @@ function TimerProjectSchedule() {
   if (isLoading || isEdit || isUser) return <Spinner />
   // console.log(weekEnd);
   return (
-    <div className='mb-8'>
+    <div className='mb-8 w-full'>
       {weekStartDates?.length > 0 && (
         <div className='mt-6 w-full'>
           {weekStartDates.map(({ weekStart, weekEnd, groups }, index) => (
@@ -122,7 +122,7 @@ function TimerProjectSchedule() {
               {groups.map((group, groupIndex) => (
                 <div
                   key={`group-${groupIndex}`}
-                  className='flex flex-col rounded-xl mt-3 p-4'
+                  className='flex flex-col rounded-xl mt-3'
                 >
                   <div className='flex flex-col bg-purple-200 w-full rounded-xl shadow-sm p-4'>
                     <div className='flex justify-between items-center mb-4'>

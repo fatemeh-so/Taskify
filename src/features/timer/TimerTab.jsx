@@ -1,5 +1,5 @@
 import React from 'react'
-import {Tabs, Tab} from '@nextui-org/react'
+import { Tabs, Tab } from '@nextui-org/react'
 import TimerProject from './TimerProject'
 import TimerBar from './TimerBar'
 import TimerBarSchedule from './TimerBarSchedule'
@@ -17,14 +17,18 @@ export default function TimerTab() {
       >
         <Tab key='music' title='Task Timer'>
           {/* <Card> */}
+          <div className='pr-4'>
             <TimerBarSchedule />
             <TimerProjectSchedule />
+          </div>
           {/* </Card> */}
         </Tab>
         <Tab key='photos' title='Timer'>
           {/* <Card className='h-full bg-black'> */}
+          <div className='pr-4'>
             <TimerBar />
-             <TimerProject />
+            <TimerProject />
+          </div>
           {/* </Card> */}
         </Tab>
       </Tabs>
