@@ -87,7 +87,7 @@ function TimerProject() {
   if (isLoading || isEdit || isUser) return <Spinner />
 
   return (
-    <div className='w-[98%] mx-auto mb-8'>
+    <div className='w-[98%] h-full mx-auto mb-8'>
       {weekStartDates.length > 0 && (
         <div className='mt-6 w-full h-full'>
           {weekStartDates.map(({ weekStart, weekEnd, groups }, index) => (

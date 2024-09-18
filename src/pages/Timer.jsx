@@ -3,7 +3,7 @@ import TimerTab from '../features/timer/TimerTab'
 
 function Timer() {
   return (
-    <div className='w-[100%] h-[100vh] lg:pl-[7rem] bg-gray '>
+    <div className='w-[100%] h-full lg:pl-[7rem] overflow-y-auto bbg-white2'>
       <TimerTab />
     </div>
   )
