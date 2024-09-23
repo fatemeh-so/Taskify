@@ -52,9 +52,8 @@ function TimerProjectSchedule() {
         const weekStart = formatDate(
           startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
         )
-        const weekStartSplit=weekStart.split(",")   
-        const weekStartSlice=weekStartSplit.slice(1)
-        
+        const weekStartSplit = weekStart.split(',')
+        const weekStartSlice = weekStartSplit.slice(1)
 
         if (!weeks[weekStart]) {
           weeks[weekStart] = []
@@ -96,7 +95,7 @@ function TimerProjectSchedule() {
             <div key={`week-${index}`} className='mb-8'>
               <div className='flex m-2 gap-1'>
                 <div className='text-md text-gray-600'>
-                  {weekStart.split(",").slice(1)   } -{weekEnd.split(",").slice(1) }
+                  {weekStart.split(',').slice(1)} -{weekEnd.split(',').slice(1)}
                 </div>
                 |
                 <div className='flex items-center gap-1 text-sm text-gray-500'>
@@ -129,7 +128,7 @@ function TimerProjectSchedule() {
                       <span className='text-gray-700 font-semibold'>
                         {formatDate(new Date(group[0].created_at), 'MM/dd')}
                       </span>
-                      <span className='text-gray-900 text-xl font-bold'>
+                      <span className='text-gray-900 lg:text-xl text-lg font-bold'>
                         {new Date(
                           group.reduce(
                             (acc, timer) => acc + timer.duration,
@@ -144,24 +143,30 @@ function TimerProjectSchedule() {
                     {group.map((timerToday, idx) => (
                       <div
                         key={timerToday.id}
-                        className={`bg-white border-t flex items-center justify-between w-full gap-4 p-4 ${
+                        className={`bg-white border-t flex flex-col lg:flex-row items-center justify-between w-full gap-4 px-4 py-2 lg:px-4 lg:py-4 ${
                           idx === group.length - 1 ? 'rounded-b-xl' : ''
                         }`}
                       >
-                        <Input
-                          variant='bordered'
-                          size='lg'
-                          className='flex-1 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-                          type='text'
-                          value={taskNames[timerToday.id] || ''}
-                          onChange={(e) =>
-                            handleInputChange(timerToday.id, e.target.value)
-                          }
-                          onBlur={(e) =>
-                            handleEditInput(timerToday.id, e.target.value)
-                          }
-                        />
-                        <div className='flex flex-col sm:flex-row sm:items-center gap-4'>
+                        <div className='w-full flex justify-between items-center py-2 lg:py-0 gap-4'>
+                          <Input
+                            variant='bordered'
+                            size='lg'
+                            className='flex-1 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                            type='text'
+                            value={taskNames[timerToday.id] || ''}
+                            onChange={(e) =>
+                              handleInputChange(timerToday.id, e.target.value)
+                            }
+                            onBlur={(e) =>
+                              handleEditInput(timerToday.id, e.target.value)
+                            }
+                          />
+                          <div className='block lg:hidden'>
+                            <TimerProjectSettings id={timerToday.id} />
+                          </div>
+                        </div>
+
+                        <div className='w-full flex justify-between lg:justify-end bg- sm:flex-row sm:items-center gap-4 px-[2px]'>
                           <div className='flex justify-end items-center gap-1 text-gray-700'>
                             <span>{formatTime(timerToday.startTime)}</span>
                             <span>-</span>
@@ -172,7 +177,9 @@ function TimerProjectSchedule() {
                               .toISOString()
                               .substr(11, 8)}
                           </span>
-                          <TimerProjectSettings id={timerToday.id} />
+                          <div className='hidden lg:block'>
+                            <TimerProjectSettings id={timerToday.id} />
+                          </div>
                         </div>
                       </div>
                     ))}
