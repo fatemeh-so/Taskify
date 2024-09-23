@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
 import { Chip, Progress } from '@nextui-org/react'
 import {
   Briefcase,
@@ -58,22 +57,22 @@ function TaskReview({ task }) {
 
   return (
     <div className='border  bg-white rounded-lg shadow-md p-4 flex-shrink-0 min-h-full max-w-1/5'>
-      <div className='flex flex-col md:flex-row justify-between items-start md:items-center '>
-        <h1 className='text-lg font-bold text-gray-800'>{task?.title}</h1>
-        <div className='flex items-center gap-1  mt-2 md:mt-0'>
+      <div className='flex  md:flex-row justify-between items-start md:items-center '>
+        <h1 className='text-lg font-bold text-gray-800 px-1'>{task?.title}</h1>
+        <div className='flex items-center py-2 md:mt-0'>
           <Chip size='sm' variant='flat' color={priorityColorChip}>
             {task?.priority}
           </Chip>
         </div>
       </div>
 
-      <div className='flex justify-between items-center mb-4'>
+      <div className='flex justify-between items-center py-2'>
         <div className='flex'>
           {categoryIcons[task?.category]}
           <span className='ml-2 text-lg text-gray-700'>{task?.category}</span>
         </div>
 
-        <span className='text-sm text-gray-600'>
+        <span className='text-sm font-semibold text-gray-600'>
           {task?.duration
             ? new Date(task.duration * 1000).toISOString().substr(11, 8)
             : ''}
