@@ -1,11 +1,9 @@
+/* eslint-disable react/prop-types */
 // Column.js
-
-import Spinner from '../../components/Spinner'
 import SquareRow from './SquareRow'
-import useGetTask from './useGetTask'
+
 
 function ColumnInProgress({ label, color,task }) {
-  // const { data: task, isLoading: isTask } = useGetTask()
 
   // Check if task and task.status are defined before calling toString
   const InProgressTask =

@@ -10,7 +10,7 @@ import { format, isValid } from 'date-fns'
 import { useSelector } from 'react-redux'
 
 export default function MobileTab() {
-  const { close, dateCal, datePickerStatus } = useSelector(
+  const { dateCal, datePickerStatus } = useSelector(
     (store) => store.task
   )
   const [selected, setSelected] = React.useState('photos')
@@ -46,14 +46,10 @@ export default function MobileTab() {
         onSelectionChange={setSelected}
       >
         <Tab key='photos' title='ToDo' className='z-0 '>
-          {/* <Card className='flex'> */}
             <ColumnTodo task={tasksToDisplay} />
-          {/* </Card> */}
         </Tab>
         <Tab key='music' title='In Procces'>
-          {/* <Card> */}
             <ColumnInProgress task={tasksToDisplay} />
-          {/* </Card> */}
         </Tab>
         <Tab key='videos' title='Completed'>
           <ColumnCompleted task={tasksToDisplay} />

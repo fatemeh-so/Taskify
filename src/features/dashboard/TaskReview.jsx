@@ -15,7 +15,6 @@ import {
 } from 'phosphor-react'
 
 function TaskReview({ task }) {
-  // console.log(task);
   const processValueLength = task?.description?.filter(
     (task) => task?.completed === true
   )?.length

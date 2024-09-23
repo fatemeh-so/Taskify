@@ -1,13 +1,11 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { ArrowLeft, ArrowRight } from 'phosphor-react'
 import useGetTask from '../features/schedule/useGetTask'
 import Spinner from '../components/Spinner'
 import TaskReport from '../features/dashboard/TaskReport'
 import TaskReview from '../features/dashboard/TaskReview'
 import ProrityTaskCharts from '../features/dashboard/ProrityTaskCharts'
-import PriorityTasksChart from '../features/dashboard/PriorityTasksChart'
 import StatusTaskChart from '../features/dashboard/StatusTaskChart'
-// import WeeklyTaskDurationChart from '../features/dashboard/WeeklyTaskDurationChart';
 import { isThisWeek } from 'date-fns'
 import WeeklyTaskDurationChart from './WeeklyTaskDurationChart'
 import useGetTimer from '../features/timer/useTimer'
@@ -44,9 +42,6 @@ function Dashboard() {
   if (isTask || isLoading || isUser) return <Spinner />
 
   const chartHeight = 300
-  // const text = "This is another sentence"
-  // const limited_words = text.split(" ", 3)
-  // console.log(limited_words);
   return (
     <div className='w-[100%] lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden xl:h-[90vh] md:h-[100vh] h-[257%]'>
       <TaskReport />
@@ -92,7 +87,6 @@ function Dashboard() {
           <ProrityTaskCharts tasks={tasks} height={chartHeight} />
         </div>{' '}
         <div className='w-full mt-[2rem] md:w-2/4 bg-[#ffffff]'>
-          {/* <PriorityTasksChart height={chartHeight} /> */}
           <WeeklyTaskDurationChart
             height={chartHeight}
             tasks={filter7lastDay}

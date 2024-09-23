@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Input } from '@nextui-org/react'
 import TimerProjectSettings from './TimerProjectSetting'
 import { useDispatch, useSelector } from 'react-redux'
 import useGetTimer from './useTimer'
 import Spinner from '../../components/Spinner'
 import { formatDate, formatTime } from '../../helpers/TimeConverter'
-import { startOfDay, startOfWeek, endOfWeek, isThisWeek } from 'date-fns'
+import { startOfDay, startOfWeek, endOfWeek } from 'date-fns'
 import {
   addGroupDataTimerArray,
   updateTaskName,
@@ -22,7 +22,7 @@ function TimerProjectSchedule() {
   const timerData = timerDatas?.filter((timer) => timer.user_id === user.id)
 
   const dispatch = useDispatch()
-  const { GroupDataTimerArray, taskNames, weekStartDates } = useSelector(
+  const { taskNames, weekStartDates } = useSelector(
     (store) => store.timerSchedule
   )
   useEffect(() => {
@@ -52,9 +52,7 @@ function TimerProjectSchedule() {
         const weekStart = formatDate(
           startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
         )
-        const weekStartSplit = weekStart.split(',')
-        const weekStartSlice = weekStartSplit.slice(1)
-
+     
         if (!weeks[weekStart]) {
           weeks[weekStart] = []
         }

@@ -98,14 +98,6 @@ export default function EditTaskModal() {
   }
 
   const handleSaveTask = (id) => {
-    const updatedTask = {
-      ...currentTask,
-      title,
-      category,
-      priority,
-      description: todos,
-    }
-
     // Dispatch action to save updatedTask
 
     dispatch(closeEditTask())

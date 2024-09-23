@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import {
   BarChart,
   Bar,
@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { format, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns';
 
-const WeeklyTaskDurationChart = ({ tasks, height }) => {
+const WeeklyTaskDurationChart = ({ tasks }) => {
   const weekDays = eachDayOfInterval({
     start: startOfWeek(new Date()),
     end: endOfWeek(new Date()),

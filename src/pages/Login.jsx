@@ -1,10 +1,8 @@
 import { Button, Input } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-// import useSignup from '../features/auth/useSignup';
 import Spinner from '../components/Spinner';
 import useSignin from '../features/auth/useSignin';
-// import useSignin from '../features/auth/useSignup';
 
 function Login() {
   const navigate = useNavigate();

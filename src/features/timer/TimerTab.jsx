@@ -16,20 +16,16 @@ export default function TimerTab() {
         onSelectionChange={setSelected}
       >
         <Tab key='music' title='Task Timer'>
-          {/* <Card> */}
           <div className='pr-4'>
             <TimerBarSchedule />
             <TimerProjectSchedule />
           </div>
-          {/* </Card> */}
         </Tab>
         <Tab key='photos' title='Timer'>
-          {/* <Card className='h-full bg-black'> */}
           <div className='pr-4'>
             <TimerBar />
             <TimerProject />
           </div>
-          {/* </Card> */}
         </Tab>
       </Tabs>
     </div>

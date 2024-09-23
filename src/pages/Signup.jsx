@@ -1,34 +1,30 @@
 import { Button, Input } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-// import useSignup from '../features/auth/useSignup'
-import Spinner from "../components/Spinner"
+import Spinner from '../components/Spinner'
 import useSignip from '../features/auth/useSignup'
 import { useDispatch } from 'react-redux'
 import { testadd } from '../features/schedule/taskSlice'
 function SignUp() {
-  const { register, getValues, formState, handleSubmit, reset } = useForm()
+  const { register, getValues, formState, handleSubmit } = useForm()
   const { errors } = formState
-  const {mutate:signup,isLoading}=useSignip()
-  const dispatch=useDispatch()
-  //   const { isLoading, mutate: signUp } = useSignUp()
+  const { mutate: signup, isLoading } = useSignip()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  function onSubmit({ fullName,email, password }) {
-    signup( {username:fullName, email, password })
+  function onSubmit({ fullName, email, password }) {
+    signup({ username: fullName, email, password })
     dispatch(testadd(true))
     // signUp({ fullName, email, password })
   }
   function handleToLogin(e) {
-    e.preventDefault();
-    navigate('/login');
+    e.preventDefault()
+    navigate('/login')
   }
-  
-    if (isLoading) return <Spinner />
+
+  if (isLoading) return <Spinner />
   return (
     <div className='h-[100vh] flex flex-col justify-center it w[100vh]'>
-      {/* <BottomHeader  /> */}
-      {/* <BottomHeader leftContent={false} to='home' /> */}
       <form
         className='flex h-[100%]  w-[100%]  justify-center  items-center mt-[-1rem] '
         onSubmit={handleSubmit(onSubmit)}
@@ -131,7 +127,11 @@ function SignUp() {
           >
             Have an account?
           </button>
-          <Button disabled={isLoading} className='text-white1 bg-blue1 mt-[1rem] font-semibold ' type='submit'>
+          <Button
+            disabled={isLoading}
+            className='text-white1 bg-blue1 mt-[1rem] font-semibold '
+            type='submit'
+          >
             submit
           </Button>
         </div>

@@ -18,7 +18,7 @@ import Spinner from '../../components/Spinner'
 import { useDispatch } from 'react-redux'
 import EditTaskModal from './EditTaskModal'
 import { editTask } from './taskSlice'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 /* eslint-disable react/prop-types */
 function SquareRow({ task }) {

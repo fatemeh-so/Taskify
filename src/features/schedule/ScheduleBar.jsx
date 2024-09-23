@@ -11,7 +11,7 @@ import Spinner from '../../components/Spinner'
 function ScheduleBar() {
   const { data: task, isLoading: isTask } = useGetTask()
 
-  const { close, status, datePickerStatus } = useSelector((store) => store.task)
+  const {datePickerStatus } = useSelector((store) => store.task)
   const dispatch = useDispatch()
   const [currentDate, setCurrentDate] = useState(new Date())
 
