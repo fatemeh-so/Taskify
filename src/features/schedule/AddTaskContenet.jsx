@@ -119,14 +119,14 @@ function AddTaskContent() {
     dispatch(CloseAddTask())
     dispatch(clearAllField())
   }
-  
+
   if (isLoading || isTask || isUser) return <Spinner />
   return (
-    <div className='container h-full overflow-y-auto b-red-900 md:px-6 px-4 '>
-      <div className='h-full rounded-lg bg-white px-4 '>
-        <div className='text-center mb-6'>
-          <h3 className='text-xl font-semibold text-gray-700'>Add New Task</h3>
-        </div>
+    <div className='container h-full overflow-y-auto b-red-900 md:px-6 px-4 py-4'>
+      <div className='h-full rounded-lg bg-white px-4'>
+        <h3 className='text-xl font-semibold text-center text-gray-700'>
+          Add New Task
+        </h3>
         <div className='flex flex-col gap-6'>
           <Input
             fullWidth
@@ -201,7 +201,7 @@ function AddTaskContent() {
             bordered
             // size='smg'
             onClick={addTodo}
-            className='flex w-full md:w-auto items-center gap-2 self-start'
+            className='flex mt-4 w-full md:w-auto items-center gap-2 self-start'
           >
             <ListPlus size={24} />
             Add Todo
@@ -236,7 +236,12 @@ function AddTaskContent() {
               </div>
             ))}
           </div>
-          <Button className="lg:mb-[2rem] md:mb-[7rem]" color='secondary' onClick={handleAddTask} fullWidth>
+          <Button
+            className='lg:mb-[2rem] md:mb-[7rem]'
+            color='secondary'
+            onClick={handleAddTask}
+            fullWidth
+          >
             Add Task
           </Button>
         </div>
