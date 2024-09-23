@@ -122,8 +122,8 @@ function AddTaskContent() {
   
   if (isLoading || isTask || isUser) return <Spinner />
   return (
-    <div className='container h-full b-red-900 mx-4   md:p-6'>
-      <div className=' h-auto rounded-lg bg-white p-6'>
+    <div className='container h-full overflow-y-auto b-red-900 md:px-6 px-4 '>
+      <div className='h-full rounded-lg bg-white px-4 '>
         <div className='text-center mb-6'>
           <h3 className='text-xl font-semibold text-gray-700'>Add New Task</h3>
         </div>
@@ -228,6 +228,7 @@ function AddTaskContent() {
                 <Button
                   onClick={() => handleDeleteTodo(todo.id)}
                   color='error'
+                  isIconOnly
                   auto
                 >
                   <Trash size={20} />
@@ -235,7 +236,7 @@ function AddTaskContent() {
               </div>
             ))}
           </div>
-          <Button color='secondary' onClick={handleAddTask} fullWidth>
+          <Button className="lg:mb-[2rem] md:mb-[7rem]" color='secondary' onClick={handleAddTask} fullWidth>
             Add Task
           </Button>
         </div>
