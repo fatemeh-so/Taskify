@@ -4,7 +4,11 @@ import TimerProjectSettings from './TimerProjectSetting'
 import { useDispatch, useSelector } from 'react-redux'
 import useGetTimer from './useTimer'
 import Spinner from '../../components/Spinner'
-import { formatDate, formatTime } from '../../helpers/TimeConverter'
+import {
+  FormatDate,
+  formatTime,
+  FormatFaDate,
+} from '../../helpers/TimeConverter'
 import { startOfDay, startOfWeek, endOfWeek } from 'date-fns'
 import {
   addGroupDataTimerArray,
@@ -14,8 +18,11 @@ import {
 import useEditTimer from './useEditTimer'
 import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
 import useGetUser from '../auth/useGetUser'
+import { useTranslation } from 'react-i18next'
 
 function TimerProjectSchedule() {
+  const { i18n, t } = useTranslation()
+  const isEnglish = i18n.language == 'en'
   const { data: timerDatas, isLoading } = useGetTimer()
   const { mutate: edit, isLoading: isEdit } = useEditTimer()
   const { data: user, isLoading: isUser } = useGetUser()
@@ -31,7 +38,9 @@ function TimerProjectSchedule() {
         (timer) => timer.filter === 'schedule'
       )
       const groupedData = filterTimer.reduce((acc, current) => {
-        const date = formatDate(startOfDay(new Date(current.created_at)))
+        const date = isEnglish
+          ? FormatDate(startOfDay(new Date(current.created_at)))
+          : FormatFaDate(startOfDay(new Date(current.created_at)))
         if (!acc[date]) {
           acc[date] = []
         }
@@ -49,10 +58,14 @@ function TimerProjectSchedule() {
 
       // Group by week
       const weekStartDates = sortedGroupedData.reduce((weeks, group) => {
-        const weekStart = formatDate(
-          startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
-        )
-     
+        const weekStart = isEnglish
+          ? FormatDate(
+              startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
+            )
+          : FormatFaDate(
+              startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
+            )
+
         if (!weeks[weekStart]) {
           weeks[weekStart] = []
         }
@@ -63,9 +76,17 @@ function TimerProjectSchedule() {
 
       const labeledWeeks = Object.entries(weekStartDates).map(
         ([weekStart, groups]) => {
-          const weekEnd = formatDate(
-            endOfWeek(new Date(groups[0][0].created_at), { weekStartsOn: 1 })
-          )
+          const weekEnd = isEnglish
+            ? FormatDate(
+                endOfWeek(new Date(groups[0][0].created_at), {
+                  weekStartsOn: 1,
+                })
+              )
+            : FormatFaDate(
+                endOfWeek(new Date(groups[0][0].created_at), {
+                  weekStartsOn: 1,
+                })
+              )
 
           return { weekEnd, weekStart, groups }
         }
@@ -73,7 +94,7 @@ function TimerProjectSchedule() {
 
       dispatch(setWeekStartDates(labeledWeeks))
     }
-  }, [timerDatas, isLoading, dispatch])
+  }, [timerDatas, isLoading, dispatch, isEnglish])
 
   const handleInputChange = (id, value) => {
     dispatch(updateTaskName({ id, taskName: value }))
@@ -86,7 +107,7 @@ function TimerProjectSchedule() {
   if (isLoading || isEdit || isUser) return <Spinner />
   // console.log(weekEnd);
   return (
-    <div className='mb-8 w-full'>
+    <div dir={isEnglish ? 'ltr' : 'rtl'} className='mb-8 w-full'>
       {weekStartDates?.length > 0 && (
         <div className='mt-6 w-full'>
           {weekStartDates.map(({ weekStart, weekEnd, groups }, index) => (
@@ -97,7 +118,7 @@ function TimerProjectSchedule() {
                 </div>
                 |
                 <div className='flex items-center gap-1 text-sm text-gray-500'>
-                  <span>Total : </span>
+                  <span>{t("total")} : </span>
                   <span className='font-semibold text-gray-700'>
                     {new Date(
                       groups.reduce((acc, group) => {
@@ -124,7 +145,12 @@ function TimerProjectSchedule() {
                   <div className='flex flex-col bg-purple-200 w-full rounded-xl shadow-sm p-4'>
                     <div className='flex justify-between items-center mb-4'>
                       <span className='text-gray-700 font-semibold'>
-                        {formatDate(new Date(group[0].created_at), 'MM/dd')}
+                        {i18n.language == 'en'
+                          ? FormatDate(new Date(group[0].created_at), 'MM/dd')
+                          : FormatFaDate(
+                              new Date(group[0].created_at),
+                              'MM/dd'
+                            )}
                       </span>
                       <span className='text-gray-900 lg:text-xl text-lg font-bold'>
                         {new Date(

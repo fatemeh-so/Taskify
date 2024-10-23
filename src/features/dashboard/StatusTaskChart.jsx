@@ -7,8 +7,10 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const StatusTaskChart = ({ tasks }) => {
+  const {t}=useTranslation()
   const COLORS = [
     '#7CB342',
     '#FFB300',
@@ -24,20 +26,6 @@ const StatusTaskChart = ({ tasks }) => {
 
   const totalTasks = tasks.length
 
-  const taskCategories = useMemo(() => {
-    const categories = {}
-    if (tasks.length === 0) return []
-
-    tasks.forEach((task) => {
-      categories[task.category] = (categories[task.category] || 0) + 1
-    })
-
-    return Object.entries(categories).map(([name, value]) => ({
-      name,
-      value,
-      percentage: ((value / totalTasks) * 100).toFixed(0), // Calculate percentage without decimal places
-    }))
-  }, [tasks, totalTasks])
 
   const taskStatuses = useMemo(() => {
     const statuses = {}
@@ -64,8 +52,8 @@ const StatusTaskChart = ({ tasks }) => {
   }
 
   return (
-    <div className='mt-8 bg-white p-4 rounded-lg shadow-md'>
-      <h2 className='text-lg font-bold text-gray-800 mb-4'>Task Priority</h2>
+    <div className='mt-4 bg-white p-4 rounded-lg shadow-md'>
+      <h2 className='text-lg font-bold text-gray-800 mb-4'>{t("taskStatus")}</h2>
       <ResponsiveContainer
         width='100%'
         height={200}

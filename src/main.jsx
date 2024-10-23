@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { store } from '../store.js'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 const queryClient = new QueryClient()
+import './i18n';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

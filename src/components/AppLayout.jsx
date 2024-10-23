@@ -5,6 +5,7 @@ import SearchInputReasult from './SearchInputReasult'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { testadd } from '../features/schedule/taskSlice'
+import { useTranslation } from 'react-i18next'
 
 function AppLayout() {
   const { test } = useSelector((store) => store.task)
@@ -16,13 +17,15 @@ function AppLayout() {
     [test, dispatch]
   )
   const { close } = useSelector((store) => store.header)
+  const { i18n } = useTranslation()
 
-  let cache = {}
-  cache[4] = 20
-  cache[64] = 206
-  cache[74] = 209
-  console.log(cache[64])
-
+  useEffect(() => {
+    if (i18n.language === 'fa') {
+      document.body.classList.add('fa')
+    } else {
+      document.body.classList.remove('fa')
+    }
+  }, [i18n.language])
   return (
     <div className='h-full bg-white2 flex lg:w-[100%] flex-col-reverse lg:flex-row'>
       <div className='flex xl:h-[100vh] flex-col-reverse h-[13vh] '>

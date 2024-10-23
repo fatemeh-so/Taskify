@@ -1,4 +1,6 @@
 import { Checkbox, Chip, Tooltip } from '@nextui-org/react'
+import { format, newDate } from 'date-fns-jalali'
+
 import {
   Briefcase,
   User,
@@ -19,16 +21,18 @@ import { useDispatch } from 'react-redux'
 import EditTaskModal from './EditTaskModal'
 import { editTask } from './taskSlice'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 /* eslint-disable react/prop-types */
 function SquareRow({ task }) {
+  const { t, i18n } = useTranslation()
   const { mutate: deleteTask, isLoading: isDelete } = useDeleteTask()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
- const priorityColorsChip = {
+  const priorityColorsChip = {
     Low: 'success',
-     Medium: 'secondary',
+    Medium: 'secondary',
     High: 'warning',
     Urgent: 'danger',
   }
@@ -49,17 +53,22 @@ function SquareRow({ task }) {
   const priorityColorChip = priorityColorsChip[task?.priority] || 'gray'
 
   const createdAtDate = task?.created_at ? new Date(task.created_at) : null
-  const formattedDate = createdAtDate
-    ? createdAtDate.toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : ''
+  const isPersian = i18n.language === 'fa'
+  const formattedDate = !isPersian
+    ? createdAtDate
+      ? createdAtDate.toLocaleDateString(undefined, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      : ''
+    : format(createdAtDate, 'yyyy MMMM d')
+
   const formattedTime = createdAtDate
     ? createdAtDate.toLocaleTimeString(undefined, {
         hour: '2-digit',
         minute: '2-digit',
+        hour12: false, // Ensures 24-hour format without AM/PM
       })
     : ''
 
@@ -71,32 +80,51 @@ function SquareRow({ task }) {
   if (isDelete) return <Spinner />
 
   return (
-    <div className='p-4 overflow-x-hidden bg-white rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-300 ease-in-out'>
+    <div
+      dir={isPersian ? 'rtl' : 'ltr'}
+      className='p-4 overflow-x-hidden bg-white rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-300 ease-in-out'
+    >
       <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4'>
-        <div className='font-bold  sm:text-xl md:text-lg text-gray-800 mb-2 sm:mb-0' style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+        <div
+          className='font-bold  sm:text-xl md:text-lg text-gray-800 mb-2 sm:mb-0'
+          style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}
+        >
           <span>{task?.title}</span>
         </div>
         <div className='flex items-center gap-3'>
           <span className='text-sm sm:text-base text-gray-600'>
-            {task?.duration ? new Date(task.duration * 1000).toISOString().substr(11, 8) : ''}
+            {task?.duration
+              ? new Date(task.duration * 1000).toISOString().substr(11, 8)
+              : ''}
           </span>
           <Chip color={priorityColorChip} size='sm' variant='flat'>
-            {task.priority}
+            {t(task.priority)}
           </Chip>
         </div>
       </div>
       <div className='border p-4 rounded-lg bg-gray-50'>
         <div className='flex justify-between items-center mb-4'>
-          <div className='flex items-center' style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+          <div
+            className='flex items-center'
+            style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}
+          >
             {categoryIcons[task?.category]}
-            <span className='ml-3 text-gray-700 text-lg'>{task?.category}</span>
+            <span className='ml-3 text-gray-700 text-lg'>
+              {t(task?.category)}
+            </span>
           </div>
         </div>
         <div className='text-gray-700'>
           {task?.description?.map((desc, index) => (
             <div key={index} className='flex justify-start mt-2 mb-2'>
               <Checkbox lineThrough defaultSelected={desc?.completed}>
-                <span className='ml-3' style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+                <span
+                  className='ml-3'
+                  style={{
+                    overflowWrap: 'break-word',
+                    wordBreak: 'break-word',
+                  }}
+                >
                   {desc.text}
                 </span>
               </Checkbox>
@@ -110,14 +138,14 @@ function SquareRow({ task }) {
             {formattedDate}, {formattedTime}
           </span>
           <div className='flex gap-4 mt-2 sm:mt-0'>
-            <Tooltip content='Edit'>
+            <Tooltip content={t('edit')}>
               <Pencil
                 onClick={() => editTaskHandler(task.id)}
                 size={20}
                 className='cursor-pointer hover:text-blue-500 transition-colors duration-200'
               />
             </Tooltip>
-            <Tooltip content='Delete'>
+            <Tooltip content={t('delete')}>
               <Trash
                 onClick={() => deleteTask(task.id)}
                 size={20}

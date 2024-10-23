@@ -78,7 +78,7 @@ function TaskReview({ task }) {
 
       <div className="mt-4">
         <span className="text-sm text-gray-500">
-          Created on: {formattedDate} at {formattedTime}
+          {formattedDate} at {formattedTime}
         </span>
       </div>
     </div>

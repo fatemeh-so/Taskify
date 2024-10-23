@@ -1,4 +1,3 @@
-import React from 'react';
 import { Spinner } from 'phosphor-react';
 import { useDispatch, useSelector } from 'react-redux';
 import useGetTask from '../features/schedule/useGetTask';
@@ -65,7 +64,7 @@ function SearchInputResult() {
   }
 
   return (
-    <div className="w-full h-full bg-gray-50 p-4">
+    <div className="w-full h-full bg-gray-50 p-4 pl-[7rem] overflow-x-hidden">
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-4 text-blue-600">Tasks</h2>
         {filteredTasks.length > 0 ? (

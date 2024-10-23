@@ -12,9 +12,37 @@
 body {
   box-sizing: border-box;
 
-  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  /* font-family: 'Neue Haas Grotesk Display Pro', sans-serif; */
 
   /* font-optical-sizing: auto; */
   font-weight: 500;
   /* font-style: normal; */
+}
+/* Font for Persian (Dirooz FD) */
+/* Font for Persian (Dirooz FD) */
+@font-face {
+  font-family: 'Dirooz FD';
+  src: url('/font/Dirooz-FD.woff2') format('woff2'),
+    url('/font/Dirooz-FD.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Font for English (Dirooz WOL) */
+@font-face {
+  font-family: 'Dirooz WOL';
+  src: url('/font/Without-Latin/Dirooz-WOL.woff2') format('woff2'),
+    url('/font/Without-Latin/Dirooz-WOL.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Default Font (for English content) */
+body {
+  font-family: 'Dirooz WOL', sans-serif;
+}
+
+/* Font for Persian */
+body.fa {
+  font-family: 'Dirooz FD', sans-serif;
 }

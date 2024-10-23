@@ -5,18 +5,24 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  Switch,
 } from '@nextui-org/react'
 import HeaderTitle from './HeaderTitle.jsx'
 import { SearchIcon } from './SearchIcon.jsx'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addInputValue, openSearch } from '../features/Header/HeaderSlice.jsx'
 import useGetUser from '../features/auth/useGetUser.js'
 import Spinner from './Spinner.jsx'
 import { SignOut } from 'phosphor-react'
 import useLogout from '../features/auth/useSignout.js'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function Header() {
+  const [isEn, setIsEn] = useState()
+  const { t, i18n } = useTranslation()
+
   const { data: user, isLoading } = useGetUser()
   const { mutate: logout, isLoading: isOut } = useLogout()
   const { pathname } = useLocation()
@@ -51,7 +57,25 @@ export default function Header() {
   return (
     <div className='flex justify-between py-4'>
       <HeaderTitle />
-      <div className='flex gap-5 px-6 '>
+      <div className='flex items-center gap-5 px-6 '>
+        {/* change language */}
+        <div className='flex items-center gap-2'>
+          <Switch
+            size='sm'
+            onClick={() => {
+              setIsEn(!isEn)
+              if (isEn) {
+                i18n.changeLanguage('en')
+              }else{
+                i18n.changeLanguage("fa")
+              }
+            }}
+          >
+            {!isEn ? <p>{t("persian")}</p> : <p>فارسی</p>}
+          </Switch>
+        </div>
+
+        {/* search */}
         <Input
           classNames={inputClassNames}
           onChange={handleChange}
@@ -86,14 +110,22 @@ export default function Header() {
             >
               My Profile
             </DropdownItem>
-            <DropdownItem onTouchStart={() => handelNavigate('/')} onClick={() => handelNavigate('/')} key='analytics'>
+            <DropdownItem
+              onTouchStart={() => handelNavigate('/')}
+              onClick={() => handelNavigate('/')}
+              key='analytics'
+            >
               Analytics
             </DropdownItem>
             <DropdownItem key='system'>
               {/* <NavLink to='/'>System</NavLink> */}
             </DropdownItem>
             <DropdownItem key='logout' color='danger'>
-              <div onClick={logout} onTouchStart={logout} className='flex gap-1 text-red-500'>
+              <div
+                onClick={logout}
+                onTouchStart={logout}
+                className='flex gap-1 text-red-500'
+              >
                 <SignOut className='mt-1' /> <p>Log Out</p>
               </div>
             </DropdownItem>

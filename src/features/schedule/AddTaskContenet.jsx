@@ -16,16 +16,18 @@ import useAddTask from './useTask'
 import Spinner from '../../components/Spinner'
 import useGetTask from './useGetTask'
 import useGetUser from '../auth/useGetUser'
+import { useTranslation } from 'react-i18next'
 
 function AddTaskContent() {
+  const { t, i18n } = useTranslation()
   const { mutate: addTaskTo, isLoading } = useAddTask()
-  const { data: task, isLoading: isTask } = useGetTask()
+  const { isLoading: isTask } = useGetTask()
   const { data: user, isLoading: isUser } = useGetUser()
   const priorities = [
-    { id: 1, name: 'Low', color: 'text-green-500' },
-    { id: 2, name: 'Medium', color: 'text-yellow-500' },
-    { id: 3, name: 'High', color: 'text-red-500' },
-    { id: 4, name: 'Urgent', color: 'text-purple-500' },
+    { id: 1, name: { en: 'Low', fa: 'کم' }, color: 'text-green-500' },
+    { id: 2, name: { en: 'Medium', fa: 'متوسط' }, color: 'text-yellow-500' },
+    { id: 3, name: { en: 'High', fa: 'بالا' }, color: 'text-red-500' },
+    { id: 4, name: { en: 'Urgent', fa: 'فوری' }, color: 'text-purple-500' },
   ]
   const {
     statuses,
@@ -37,7 +39,6 @@ function AddTaskContent() {
     currentStatus,
   } = useSelector((store) => store.task)
   const dispatch = useDispatch()
-
   const [todos, setTodos] = useState([])
   const [statusError, setStatusError] = useState(false)
 
@@ -50,7 +51,7 @@ function AddTaskContent() {
       (category) => category.id.toString() === value
     )
     if (selectedCategory) {
-      dispatch(addCategories(selectedCategory.name))
+      dispatch(addCategories(selectedCategory.name.en))
     }
   }
 
@@ -59,7 +60,7 @@ function AddTaskContent() {
       (priority) => priority.id.toString() === value
     )
     if (selectedPriority) {
-      dispatch(addPriority(selectedPriority.name))
+      dispatch(addPriority(selectedPriority.name.en))
     }
   }
 
@@ -68,8 +69,8 @@ function AddTaskContent() {
       (status) => status.id.toString() === value
     )
     if (selectedStatus) {
-      dispatch(addStatus(selectedStatus.name))
-      setStatusError(false) // Clear error if status is selected
+      dispatch(addStatus(selectedStatus.name.en))
+      setStatusError(false)
     }
   }
 
@@ -101,8 +102,8 @@ function AddTaskContent() {
       setStatusError(true)
       return
     }
-    const created_at = new Date()
-    const user_id = user.id // Assuming `user` contains the user data including user ID
+    const created_at = new Date().toISOString()
+    const user_id = user.id
 
     const task = {
       title,
@@ -111,9 +112,8 @@ function AddTaskContent() {
       description: todoValue,
       status: currentStatus,
       created_at,
-      user_id, // Include user_id in the task object
+      user_id,
     }
-
     dispatch(addTask(task))
     addTaskTo(task)
     dispatch(CloseAddTask())
@@ -122,10 +122,13 @@ function AddTaskContent() {
 
   if (isLoading || isTask || isUser) return <Spinner />
   return (
-    <div className='container h-full overflow-y-auto b-red-900 md:px-6 px-4 py-4'>
+    <div
+      dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
+      className='container h-full overflow-y-auto b-red-900 md:px-6 px-4 py-4'
+    >
       <div className='h-full rounded-lg bg-white px-4'>
         <h3 className='text-xl font-semibold text-center text-gray-700'>
-          Add New Task
+          {t('addNewTask')}
         </h3>
         <div className='flex flex-col gap-6'>
           <Input
@@ -137,13 +140,13 @@ function AddTaskContent() {
             }}
             type='text'
             variant='underlined'
-            label='Title'
-            placeholder='Enter task title'
+            label={t('title')}
+            placeholder={t('titleInput')}
           />
           <div className='flex flex-col md:flex-row gap-6'>
             <Select
               fullWidth
-              label='Category'
+              label={t('category')}
               size='lg'
               onChange={(e) => handleCategoryChange(e.target.value)}
               color='secondary'
@@ -152,13 +155,13 @@ function AddTaskContent() {
             >
               {categories.map((c) => (
                 <SelectItem color='primary' key={c.id} value={c.id.toString()}>
-                  {c.name}
+                  {c.name[i18n.language]}
                 </SelectItem>
               ))}
             </Select>
             <Select
               fullWidth
-              label='Priority'
+              label={t('priority')}
               size='lg'
               onChange={(e) => handlePriorityChange(e.target.value)}
               color='secondary'
@@ -171,13 +174,13 @@ function AddTaskContent() {
                   key={p.id}
                   value={p.id.toString()}
                 >
-                  {p.name}
+                  {p.name[i18n.language]}
                 </SelectItem>
               ))}
             </Select>
             <Select
               fullWidth
-              label='Status'
+              label={t('status')}
               isRequired={true}
               size='lg'
               onChange={(e) => handleStatusChange(e.target.value)}
@@ -189,22 +192,22 @@ function AddTaskContent() {
             >
               {statuses.map((s) => (
                 <SelectItem key={s.id} value={s.id.toString()}>
-                  {s.name}
+                  {s.name[i18n.language]}
                 </SelectItem>
               ))}
             </Select>
           </div>
           {statusError && (
-            <p className='text-red-500 text-sm'>Status is required.</p>
+            <p className='text-red-500 text-sm'>{t('statusRe')}</p>
           )}
           <Button
             bordered
             // size='smg'
             onClick={addTodo}
-            className='flex mt-4 w-full md:w-auto items-center gap-2 self-start'
+            className='flex mt-4  text-bold  md:text-lg w-full md:w-auto items-center gap-2 self-start'
           >
             <ListPlus size={24} />
-            Add Todo
+            {t('addTodo')}
           </Button>
           <div className='mt-4'>
             {todos.map((todo) => (
@@ -237,12 +240,12 @@ function AddTaskContent() {
             ))}
           </div>
           <Button
-            className='lg:mb-[2rem] md:mb-[7rem]'
+            className='lg:mb-[2rem] md:mb-[7rem] text-bold text-white text-md md:text-lg'
             color='secondary'
             onClick={handleAddTask}
             fullWidth
           >
-            Add Task
+            {t('addTask')}
           </Button>
         </div>
       </div>

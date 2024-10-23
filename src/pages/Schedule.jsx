@@ -10,8 +10,10 @@ import useGetTask from '../features/schedule/useGetTask'
 import Spinner from '../components/Spinner'
 import ColumnCompleted from '../features/schedule/ColumnCopmleted'
 import useGetUser from '../features/auth/useGetUser'
+import { useTranslation } from 'react-i18next'
 
 function Schedule() {
+  const { t } = useTranslation()
   const { close, dateCal, datePickerStatus } = useSelector(
     (store) => store.task
   )
@@ -50,15 +52,15 @@ function Schedule() {
         </div>
 
         <div className='hidden md:flex w-full h-full flex-col md:flex-row overflow-y-auto md:overflow-hidden'>
-          <ColumnTodo task={tasksToDisplay} label='To Do' color='pink1' />
+          <ColumnTodo task={tasksToDisplay} label={t('notStarted')} color='pink1' />
           <ColumnInProgress
             task={tasksToDisplay}
-            label='In Progress'
+            label={t('inProgress')}
             color='blue1'
           />
           <ColumnCompleted
             task={tasksToDisplay}
-            label='Completed'
+            label={t('completed')}
             color='yellow'
           />
         </div>

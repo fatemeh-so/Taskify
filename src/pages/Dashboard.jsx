@@ -10,8 +10,10 @@ import { isThisWeek } from 'date-fns'
 import WeeklyTaskDurationChart from './WeeklyTaskDurationChart'
 import useGetTimer from '../features/timer/useTimer'
 import useGetUser from '../features/auth/useGetUser'
+import { useTranslation } from 'react-i18next'
 
 function Dashboard() {
+  const { t } = useTranslation()
   const { data: task, isLoading: isTask } = useGetTask()
   const { data: timerDatas, isLoading } = useGetTimer()
   const { data: user, isLoading: isUser } = useGetUser()
@@ -22,7 +24,6 @@ function Dashboard() {
   const taskFilterInProgressive = tasks?.filter(
     (task) => task?.status === 'In Progress'
   )
-  console.log(taskFilterInProgressive)
   const filter7lastDay = timerData?.filter((t) =>
     isThisWeek(new Date(t?.created_at))
   )
@@ -47,9 +48,9 @@ function Dashboard() {
       <TaskReport />
 
       <div className='relative bg-white rounded-lg'>
-        <div className='flex h-[4rem] justify-between items-center mt-4 p-4'>
+        <div className='flex h-[4rem] justify-between items-center  p-4'>
           <h1 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800'>
-            In Progress Review
+            {t('InProgressReview')}
           </h1>
           <div className='gap-2 flex'>
             <button
@@ -70,13 +71,15 @@ function Dashboard() {
         </div>
         <div
           ref={scrollContainerRef}
-          className='flex w-full md:h-[30vh] overflow-x-hidden gap-2 justify-start items-start pb-4 px-4 '
+          className='flex  w-full md:h-[30vh] overflow-x-hidden gap-2 justify-start items-start pb-8 px-4 '
         >
           {taskFilterInProgressive.length > 0 ? (
-            taskFilterInProgressive.map((task) => <TaskReview key={task.id} task={task} />)
+            taskFilterInProgressive.map((task) => (
+              <TaskReview key={task.id} task={task} />
+            ))
           ) : (
             <div className='flex justify-center items-center w-full h-32 text-gray-500'>
-              No tasks to display
+              {t('noTask')}
             </div>
           )}
         </div>
@@ -86,7 +89,7 @@ function Dashboard() {
         <div className='w-full md:w-2/4'>
           <ProrityTaskCharts tasks={tasks} height={chartHeight} />
         </div>{' '}
-        <div className='w-full mt-[2rem] md:w-2/4 bg-[#ffffff]'>
+        <div className='w-full mt-[1rem] md:w-2/4 bg-[#ffffff]'>
           <WeeklyTaskDurationChart
             height={chartHeight}
             tasks={filter7lastDay}

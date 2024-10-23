@@ -12,8 +12,10 @@ import {
   UsersThree,
   Heartbeat,
 } from 'phosphor-react'
+import { useTranslation } from 'react-i18next'
 
 function TaskReview({ task }) {
+  const {t}=useTranslation()
   const processValueLength = task?.description?.filter(
     (task) => task?.completed === true
   )?.length
@@ -56,7 +58,7 @@ function TaskReview({ task }) {
     : ''
 
   return (
-    <div className='border  bg-white rounded-lg shadow-md p-4 flex-shrink-0 min-h-full max-w-1/5'>
+    <div className='border bg-white rounded-lg shadow-md p-4 flex-shrink-0 min-h-full max-w-1/5'>
       <div className='flex  md:flex-row justify-between items-start md:items-center '>
         <h1 className='text-lg font-bold text-gray-800 px-1'>{task?.title}</h1>
         <div className='flex items-center py-2 md:mt-0'>
@@ -95,7 +97,7 @@ function TaskReview({ task }) {
 
       <div className='mt-4'>
         <span className='text-sm text-gray-500'>
-          Created on: {formattedDate} at {formattedTime}
+           {formattedDate} at {formattedTime}
         </span>
       </div>
     </div>

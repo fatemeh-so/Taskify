@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 // import { setWeekStartDates, addGroupDataTimerArray } from './timerSlice'
 // import useGetTimer from './useGetTimer'
-import { formatDate } from '../../helpers/TimeConverter'
+import { FormatDate } from '../../helpers/TimeConverter'
 import { startOfDay, startOfWeek, endOfWeek } from 'date-fns'
 import Spinner from '../../components/Spinner'
 import { addGroupDataTimerArray, setWeekStartDates } from '../timer/timerSlice'
@@ -24,7 +24,7 @@ const TimerScheduleDataInitializer = ({ children }) => {
     if (!isLoading && timerData) {
       const filterTimer = timerData.filter((timer) => timer.filter === 'timer')
       const groupedData = filterTimer.reduce((acc, current) => {
-        const date = formatDate(startOfDay(new Date(current.created_at)))
+        const date = FormatDate(startOfDay(new Date(current.created_at)))
         if (!acc[date]) {
           acc[date] = []
         }
@@ -39,7 +39,7 @@ const TimerScheduleDataInitializer = ({ children }) => {
       dispatch(addGroupDataTimerArray(sortedGroupedData))
 
       const weekStartDates = sortedGroupedData.reduce((weeks, group) => {
-        const weekStart = formatDate(
+        const weekStart = FormatDate(
           startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
         )
         if (!weeks[weekStart]) {
@@ -51,7 +51,7 @@ const TimerScheduleDataInitializer = ({ children }) => {
 
       const labeledWeeks = Object.entries(weekStartDates).map(
         ([weekStart, groups]) => {
-          const weekEnd = formatDate(
+          const weekEnd = FormatDate(
             endOfWeek(new Date(groups[0][0].created_at), { weekStartsOn: 1 })
           )
           return { weekEnd, weekStart, groups }
@@ -69,7 +69,7 @@ const TimerScheduleDataInitializer = ({ children }) => {
         (timer) => timer.filter === 'schedule'
       )
       const groupedData = filterTimer.reduce((acc, current) => {
-        const date = formatDate(startOfDay(new Date(current.created_at)))
+        const date = FormatDate(startOfDay(new Date(current.created_at)))
         if (!acc[date]) {
           acc[date] = []
         }
@@ -84,7 +84,7 @@ const TimerScheduleDataInitializer = ({ children }) => {
       dispatch(addGroupDataTimerArray2(sortedGroupedData))
 
       const weekStartDates = sortedGroupedData.reduce((weeks, group) => {
-        const weekStart = formatDate(
+        const weekStart = FormatDate(
           startOfWeek(new Date(group[0].created_at), { weekStartsOn: 1 })
         )
         if (!weeks[weekStart]) {
@@ -96,7 +96,7 @@ const TimerScheduleDataInitializer = ({ children }) => {
 
       const labeledWeeks = Object.entries(weekStartDates).map(
         ([weekStart, groups]) => {
-          const weekEnd = formatDate(
+          const weekEnd = FormatDate(
             endOfWeek(new Date(groups[0][0].created_at), { weekStartsOn: 1 })
           )
           return { weekEnd, weekStart, groups }

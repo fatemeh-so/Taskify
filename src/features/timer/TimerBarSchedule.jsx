@@ -5,7 +5,7 @@ import {
   resetTimer,
   setOpen,
   startTimer,
-  stopTimer
+  stopTimer,
 } from './timerScheduleSlice'
 import Spinner from '../../components/Spinner'
 import useAddTimer from './useAddTimer'
@@ -14,16 +14,19 @@ import toast from 'react-hot-toast'
 import useGetTask from '../schedule/useGetTask'
 import ScheduleSearchResult from './ScheduleSearchResult'
 import useGetUser from '../auth/useGetUser'
+import { useTranslation } from 'react-i18next'
 
 function TimerBarSchedule() {
+  const { t } = useTranslation()
+
   const dispatch = useDispatch()
   const { mutate: addTimer, isLoading: isAddTimer } = useAddTimer()
   const { mutate: editTask, isLoading: isEditTask } = useEditTask()
   const { data: user, isLoading: isUser } = useGetUser()
-  const [valueSearch, setValueSearch] = useState("")
+  const [valueSearch, setValueSearch] = useState('')
 
   const { data: tasks, isLoading: isTask } = useGetTask()
-const task=tasks?.filter(task=>task.user_id===user.id)
+  const task = tasks?.filter((task) => task.user_id === user.id)
   const { duration, taskName, startTime, open, taskId } = useSelector(
     (store) => store.timerSchedule
   )
@@ -91,7 +94,7 @@ const task=tasks?.filter(task=>task.user_id===user.id)
         size='lg'
         onClick={handleStartStop}
       >
-        {open ? 'Stop' : 'Start'}
+        {open ? t('stop') : t('start')}
       </Button>
       <div className='text-lg font-semibold'>{convertDuration}</div>
     </div>

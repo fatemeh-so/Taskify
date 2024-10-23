@@ -11,14 +11,16 @@ import {
 import Spinner from '../../components/Spinner'
 import useAddTimer from './useAddTimer'
 import useGetUser from '../auth/useGetUser'
+import { useTranslation } from 'react-i18next'
 
 function TimerBar() {
+  const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
   const { mutate: addTimer, isLoading: isAddTimer } = useAddTimer()
   const { duration, taskName, startTime, open } = useSelector(
     (store) => store.timer
   )
-  const {data:user,isLoading:isUser}=useGetUser()
+  const { data: user, isLoading: isUser } = useGetUser()
 
   // Convert duration to a time string starting from 00:00:00
   const convertDuration = new Date(duration * 1000).toISOString().substr(11, 8)
@@ -58,13 +60,16 @@ function TimerBar() {
     }
     dispatch(setOpen(!open))
   }
-  if (isAddTimer||isUser) return <Spinner />
+  if (isAddTimer || isUser) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] gap-6 flex max-w-full rounded-[1rem] items-center justify-between px-4  py-6'>
+    <div
+      dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
+      className='fa bg-[#ffffff] gap-6 flex max-w-full rounded-[1rem] items-center justify-between px-4  py-6'
+    >
       <Input
         type='text'
-        placeholder={`What are you working on?`}
+        placeholder={t(`timerInput`)}
         value={taskName}
         variant='bordered'
         onChange={(e) => {
@@ -80,7 +85,7 @@ function TimerBar() {
         size='lg'
         onClick={handleStartStop}
       >
-        {open ? 'Stop' : 'Start'}
+        {open ? t('stop') : t('start')}
       </Button>
     </div>
   )

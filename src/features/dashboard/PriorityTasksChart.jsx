@@ -1,4 +1,3 @@
-import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Spinner from '../../components/Spinner';
 import useGetTask from '../schedule/useGetTask';

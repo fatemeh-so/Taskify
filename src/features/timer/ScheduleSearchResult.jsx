@@ -7,12 +7,16 @@ import { addTaskId, addTaskName } from './timerScheduleSlice'
 import { openAddTask } from '../schedule/taskSlice'
 import { useNavigate } from 'react-router-dom'
 import useGetUser from '../auth/useGetUser'
+import { useTranslation } from 'react-i18next'
 
 function ScheduleSearchResult({ valueSearch, setValueSearch }) {
+  const { t ,i18n} = useTranslation()
   const [close1, setClose] = useState(false)
   const { data: task, isLoading: isTaskLoading } = useGetTask()
   const { data: user, isLoading: isUser } = useGetUser()
-  const tasks = task.filter((task) => task.user_id === user.id&&task.status==="In Progress")
+  const tasks = task.filter(
+    (task) => task.user_id === user.id && task.status === 'In Progress'
+  )
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -48,14 +52,14 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
   if (isTaskLoading || isUser) return <Spinner />
 
   return (
-    <div className='flex flex-col w-full'>
+    <div dir={i18n.language=="en"?"ltr":"rtl"} className='flex flex-col w-full'>
       <Input
         onChange={handleSearchResult}
         onFocus={() => {
           setClose(true)
         }}
         type='text'
-        placeholder='Select your task ...'
+        placeholder={t('selectYourTask')}
         value={valueSearch}
         variant='bordered'
         className='flex-grow min-w-[200px]'
@@ -71,18 +75,18 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
         }
       />
       {close1 && (
-        <div className='w-full my-[.1rem] overflow-y-auto bg-white rounded h-[6rem] shadow-md'>
+        <div  className='w-full my-[.1rem] overflow-y-auto bg-white rounded h-[6rem] shadow-md'>
           {filteredTasks?.length > 0 ? (
             filteredTasks.map((task) => (
               <div
                 key={task.id}
                 onClick={() => handelAddTaskName(task.title, task.id)}
-                className='border-b flex gap-2 p-2 cursor-pointer hover:bg-slate-100 transition duration-200'
+                className='border-b flex flex-row-reverse justify-between items-center w-full gap-2 p-2 cursor-pointer hover:bg-slate-100 transition duration-200'
               >
-                <div className='flex-1'>
-                  <span className='font-semibold'>{task.title}</span>
+                <div className=''>
+                  <span className='font-semibold '>{task.title}</span>
                 </div>
-                <div className='flex items-center gap-2'>
+                <div  className='flex items-center gap-2'>
                   <span>
                     {task.status === 'Not Started' ? (
                       <div className='flex gap-1 items-center'>
@@ -92,16 +96,16 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
                     ) : (
                       <div className='flex gap-1 items-center'>
                         <div className='rounded-full w-2 h-2 bg-yellow-200'></div>
-                        In Progress
+                        {t("inProgress")}
                       </div>
                     )}
                   </span>
                   <span
                     className={`font-mono ${
                       priorities.find((p) => p.name === task.priority)?.color
-                    }`}
+                    } pb-1`}
                   >
-                    {task.priority}
+                    {t(task.priority)}
                   </span>
                 </div>
               </div>
@@ -118,7 +122,7 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
               color='primary'
               onClick={openTask}
             >
-              Add New Task
+              {t("addNewTask")}
             </Button>
           </div>
         </div>

@@ -4,8 +4,10 @@ import TimerProject from './TimerProject'
 import TimerBar from './TimerBar'
 import TimerBarSchedule from './TimerBarSchedule'
 import TimerProjectSchedule from './TimerProjectSchedule'
+import { useTranslation } from 'react-i18next'
 
 export default function TimerTab() {
+  const { t } = useTranslation()
   const [selected, setSelected] = React.useState('photos')
 
   return (
@@ -15,13 +17,13 @@ export default function TimerTab() {
         selectedKey={selected}
         onSelectionChange={setSelected}
       >
-        <Tab key='music' title='Task Timer'>
+        <Tab key='music' title={t('taskTimer')}>
           <div className='pr-4'>
             <TimerBarSchedule />
             <TimerProjectSchedule />
           </div>
         </Tab>
-        <Tab key='photos' title='Timer'>
+        <Tab key='photos' title={t('timer')}>
           <div className='pr-4'>
             <TimerBar />
             <TimerProject />
