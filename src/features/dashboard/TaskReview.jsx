@@ -13,9 +13,10 @@ import {
   Heartbeat,
 } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
+import { format, newDate } from 'date-fns-jalali'
 
 function TaskReview({ task }) {
-  const {t}=useTranslation()
+  const { t, i18n } = useTranslation()
   const processValueLength = task?.description?.filter(
     (task) => task?.completed === true
   )?.length
@@ -43,27 +44,35 @@ function TaskReview({ task }) {
 
   const priorityColorChip = priorityColorsChip[task?.priority] || 'gray'
   const createdAtDate = task?.created_at ? new Date(task?.created_at) : null
-  const formattedDate = createdAtDate
-    ? createdAtDate.toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : ''
+  const isPersian = i18n.language === 'fa'
+  const formattedDate = !isPersian
+    ? createdAtDate
+      ? createdAtDate.toLocaleDateString(undefined, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      : ''
+    : format(createdAtDate, 'yyyy , d MMMM ')
+
   const formattedTime = createdAtDate
     ? createdAtDate.toLocaleTimeString(undefined, {
         hour: '2-digit',
         minute: '2-digit',
+        hour12: false, // Ensures 24-hour format without AM/PM
       })
     : ''
 
   return (
-    <div className='border bg-white rounded-lg shadow-md p-4 flex-shrink-0 min-h-full max-w-1/5'>
+    <div
+      dir={isPersian ? 'rtl' : 'ltr'}
+      className='border min-h-[250px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 max-w-1/5'
+    >
       <div className='flex  md:flex-row justify-between items-start md:items-center '>
         <h1 className='text-lg font-bold text-gray-800 px-1'>{task?.title}</h1>
         <div className='flex items-center py-2 md:mt-0'>
           <Chip size='sm' variant='flat' color={priorityColorChip}>
-            {task?.priority}
+            {t(task?.priority)}
           </Chip>
         </div>
       </div>
@@ -71,7 +80,9 @@ function TaskReview({ task }) {
       <div className='flex justify-between items-center py-2'>
         <div className='flex'>
           {categoryIcons[task?.category]}
-          <span className='ml-2 text-lg text-gray-700'>{task?.category}</span>
+          <span className='ml-2 text-lg text-gray-700'>
+            {t(task?.category)}
+          </span>
         </div>
 
         <span className='text-sm font-semibold text-gray-600'>
@@ -83,7 +94,7 @@ function TaskReview({ task }) {
 
       <div className='bg-gray-50 p-4 rounded-lg'>
         <div className='mb-4'>
-          <span className='text-gray-700'>Task Completion:</span>
+          <span className='text-gray-700'>{t('taskCompletion')}:</span>
           <span className='ml-2 text-gray-800 font-semibold'>
             {processValueLength}/{allProcess?.length}
           </span>
@@ -97,7 +108,7 @@ function TaskReview({ task }) {
 
       <div className='mt-4'>
         <span className='text-sm text-gray-500'>
-           {formattedDate} at {formattedTime}
+          {formattedDate} , {formattedTime}
         </span>
       </div>
     </div>

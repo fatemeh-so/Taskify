@@ -3,9 +3,8 @@ import { Tabs, Tab } from '@nextui-org/react'
 import TimerProject from './TimerProject'
 import TimerBar from './TimerBar'
 import TimerBarSchedule from './TimerBarSchedule'
-import TimerProjectSchedule from './TimerProjectSchedule'
 import { useTranslation } from 'react-i18next'
-
+import TimerProjectSchedule from "./TimerProjectSchedule"
 export default function TimerTab() {
   const { t } = useTranslation()
   const [selected, setSelected] = React.useState('photos')

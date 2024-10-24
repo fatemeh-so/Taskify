@@ -66,21 +66,22 @@ export default function Header() {
               setIsEn(!isEn)
               if (isEn) {
                 i18n.changeLanguage('en')
-              }else{
-                i18n.changeLanguage("fa")
+              } else {
+                i18n.changeLanguage('fa')
               }
             }}
           >
-            {!isEn ? <p>{t("persian")}</p> : <p>فارسی</p>}
+            {!isEn ? <p>{t('persian')}</p> : <p>فارسی</p>}
           </Switch>
         </div>
 
         {/* search */}
         <Input
-          classNames={inputClassNames}
+          dir={i18n == 'en' ? 'rtl' : 'ltr'}
+          classNames={`${inputClassNames} text-right`}
           onChange={handleChange}
           onFocus={() => handleFocus(true)}
-          placeholder='Type to search...'
+          placeholder={t('searchInput')}
           size='sm'
           startContent={<SearchIcon size={18} />}
           type='search'

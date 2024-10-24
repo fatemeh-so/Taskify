@@ -1,12 +1,11 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import useGetTask from '../schedule/useGetTask'
-import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
+// import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
 import useGetUser from '../auth/useGetUser'
 import { useTranslation } from 'react-i18next'
 
-function TaskReport() {
+export default function TaskReport() {
   const { t } = useTranslation()
   const { data: tasks, isLoading: isTask } = useGetTask()
   const { data: user, isLoading: isUser } = useGetUser()
@@ -29,7 +28,6 @@ function TaskReport() {
   const completedTask =
     task?.filter((task) => task.status?.toString() === 'Completed').length || 0
 
-  const allTimer = task?.reduce((acc, cur) => acc + cur?.duration, 0) || 0
 
   const totalWeekTimer =
     weekStartDates?.[0]?.groups
@@ -86,10 +84,3 @@ function TaskReport() {
   )
 }
 
-const TaskReportWithInitialization = () => (
-  <TimerScheduleDataInitializer>
-    <TaskReport />
-  </TimerScheduleDataInitializer>
-)
-
-export default TaskReportWithInitialization

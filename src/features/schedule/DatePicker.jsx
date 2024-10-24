@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addDateCal, closeDateCal } from './taskSlice'
 import useGetTask from './useGetTask'
 import Spinner from '../../components/Spinner'
+import { useTranslation } from 'react-i18next'
 
 export default function FilterTaskByDate() {
+  const {t}=useTranslation()
   const { dateCal } = useSelector((store) => store.task)
   const dispatch = useDispatch()
 
@@ -24,12 +26,11 @@ export default function FilterTaskByDate() {
         size='sm'
         color='secondary'
         variant='bordered'
-        label='Filter by date'
+        label={t('filterDate')}
         className='w-full h-[rem]'
         onChange={handleCal}
         value={dateCal}
       />
-      <div></div>
     </div>
   )
 }

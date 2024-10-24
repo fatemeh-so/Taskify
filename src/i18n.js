@@ -72,7 +72,7 @@ const resources = {
         November: 'November',
         December: 'December',
       },
-     
+
       weekdays: {
         Saturday: 'Saturday',
         Sunday: 'Sunday',
@@ -95,9 +95,12 @@ const resources = {
       selectYourTask: 'Select Your Task ...',
       start: 'Start',
       stop: 'Stop',
-      newTimer:"new timer",
-      taskTimer:"Task Timer",
-      timerInput:"What are you working on?"
+      newTimer: 'new timer',
+      taskTimer: 'Task Timer',
+      timerInput: 'What are you working on?',
+      searchInput:'Type to search...',
+      filterDate:"filter by date"
+      
     },
   },
   fa: {
@@ -107,6 +110,9 @@ const resources = {
       persian: 'فارسی',
       totalTask: ' همه تسک ها',
       notStarted: 'شروع نشده',
+      'Not Started': 'شروع نشده',
+      "In Progress": "در حال انجام",
+      "Completed": "تکمیل شده",
       inProgress: 'در حال انجام',
       completed: 'تکمیل شده',
       currentWeekTimer: 'تایمر هفته جاری',
@@ -119,10 +125,10 @@ const resources = {
       add: 'افزودن',
       save: 'ذخیره',
       InProgressReview: 'تسک های در حال انجام',
-      taskCompletion: 'تسک هلی تکمیل شده',
+      taskCompletion: 'تسک های تکمیل شده',
       work: 'کار',
       personal: 'شخصی',
-      study: 'درسی',
+      Study: 'درسی',
       fitness: ' ورزشی',
       family: 'خانوادگی',
       health: 'سلامتی',
@@ -194,19 +200,20 @@ const resources = {
       weekDay: 'روز هفته',
       today: 'امروز',
       yesterday: 'دیروز',
-      deleteTimer:"حذف تایمر",
-      editTimer:"ویرایش تایمر",
-      addTimer:"افزودن تایمر",
+      deleteTimer: 'حذف تایمر',
+      editTimer: 'ویرایش تایمر',
+      addTimer: 'افزودن تایمر',
       total: 'کل',
       filter: 'فیلتر',
       start: 'شروع',
       stop: 'توقف',
-      selectYourTask: ' ... انتخاب تسک',
-      newTimer:"تایمر جدید",
-      timer:"زمن سنج",
-      taskTimer:"زمانسنج تسک",
-      timerInput:"روی چی کار میکنی؟"
-
+      selectYourTask: '  انتخاب تسک...',
+      newTimer: 'تایمر جدید',
+      timer: 'زمان سنج',
+      taskTimer: 'زمان سنج تسک',
+      timerInput: 'روی چی کار میکنی؟',
+      searchInput:" ...جستجو",
+      filterDate:" فیلتر کردن با تاریخ"
     },
   },
 }

@@ -16,11 +16,11 @@ import {
   setWeekStartDates,
 } from './timerScheduleSlice'
 import useEditTimer from './useEditTimer'
-import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
+// import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
 import useGetUser from '../auth/useGetUser'
 import { useTranslation } from 'react-i18next'
 
-function TimerProjectSchedule() {
+export default function TimerProjectSchedule() {
   const { i18n, t } = useTranslation()
   const isEnglish = i18n.language == 'en'
   const { data: timerDatas, isLoading } = useGetTimer()
@@ -118,7 +118,7 @@ function TimerProjectSchedule() {
                 </div>
                 |
                 <div className='flex items-center gap-1 text-sm text-gray-500'>
-                  <span>{t("total")} : </span>
+                  <span>{t('total')} : </span>
                   <span className='font-semibold text-gray-700'>
                     {new Date(
                       groups.reduce((acc, group) => {
@@ -218,10 +218,3 @@ function TimerProjectSchedule() {
   )
 }
 
-const TaskReportWithInitialization = () => (
-  <TimerScheduleDataInitializer>
-    <TimerProjectSchedule />
-  </TimerScheduleDataInitializer>
-)
-
-export default TaskReportWithInitialization

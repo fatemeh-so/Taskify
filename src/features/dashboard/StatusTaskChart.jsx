@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const StatusTaskChart = ({ tasks }) => {
-  const {t}=useTranslation()
+  const { t } = useTranslation()
   const COLORS = [
     '#7CB342',
     '#FFB300',
@@ -26,7 +26,6 @@ const StatusTaskChart = ({ tasks }) => {
 
   const totalTasks = tasks.length
 
-
   const taskStatuses = useMemo(() => {
     const statuses = {}
     if (tasks.length === 0) return []
@@ -37,7 +36,7 @@ const StatusTaskChart = ({ tasks }) => {
     })
 
     return Object.entries(statuses).map(([name, value]) => ({
-      name,
+      name: t(name),
       value,
       percentage: ((value / totalTasks) * 100).toFixed(0), // Calculate percentage without decimal places
     }))
@@ -46,14 +45,16 @@ const StatusTaskChart = ({ tasks }) => {
   if (tasks.length === 0) {
     return (
       <div className='flex mt-8 h-[17.3rem] shadow-sm justify-center items-center bg-white w-full  text-gray-500'>
-        No tasks to display
+        {t('noTask')}
       </div>
     )
   }
 
   return (
     <div className='mt-4 bg-white p-4 rounded-lg shadow-md'>
-      <h2 className='text-lg font-bold text-gray-800 mb-4'>{t("taskStatus")}</h2>
+      <h2 className='text-lg font-bold text-gray-800 mb-4'>
+        {t('taskStatus')}
+      </h2>
       <ResponsiveContainer
         width='100%'
         height={200}

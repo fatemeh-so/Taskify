@@ -31,7 +31,7 @@ function ProrityTaskCharts({ tasks }) {
       });
     }
     return Object.entries(categories).map(([name, value]) => ({
-      name,
+      name: t(name),
       value,
       percentage: ((value / totalTasks) * 100).toFixed(0), // Calculate percentage without decimal places
     }));

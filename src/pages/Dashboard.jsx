@@ -48,8 +48,8 @@ function Dashboard() {
       <TaskReport />
 
       <div className='relative bg-white rounded-lg'>
-        <div className='flex h-[4rem] justify-between items-center  p-4'>
-          <h1 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800'>
+        <div className='flex ] justify-between items-center px-4 pt-4'>
+          <h1 className='text-lg md:text-lg lg:text-xl pb-2 font-bold text-gray-800'>
             {t('InProgressReview')}
           </h1>
           <div className='gap-2 flex'>
@@ -71,7 +71,7 @@ function Dashboard() {
         </div>
         <div
           ref={scrollContainerRef}
-          className='flex  w-full md:h-[30vh] overflow-x-hidden gap-2 justify-start items-start pb-8 px-4 '
+          className='flex  w-full overflow-x-hidden gap-2 justify-start items-start px-4 pb-4 '
         >
           {taskFilterInProgressive.length > 0 ? (
             taskFilterInProgressive.map((task) => (

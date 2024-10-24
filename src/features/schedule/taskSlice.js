@@ -93,7 +93,6 @@ const taskSlice = createSlice({
     clearAllField: (state) => {
       state.title = null
       state.currentPriority = null
-      state.statuses = []
       state.currentCategory = null
       state.currentStatus = ''
     },
