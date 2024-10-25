@@ -16,18 +16,25 @@ import useGetUser from '../features/auth/useGetUser.js'
 import Spinner from './Spinner.jsx'
 import { SignOut } from 'phosphor-react'
 import useLogout from '../features/auth/useSignout.js'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export default function Header() {
-  const [isEn, setIsEn] = useState()
   const { t, i18n } = useTranslation()
-
   const { data: user, isLoading } = useGetUser()
   const { mutate: logout, isLoading: isOut } = useLogout()
   const { pathname } = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    // Retrieve language from localStorage on component mount
+    const savedLanguage = localStorage.getItem('appLanguage')
+    if (savedLanguage && savedLanguage !== i18n.language) {
+      i18n.changeLanguage(savedLanguage)
+    }
+  }, [i18n])
+
   const handleFocus = (value) => {
     dispatch(openSearch(value))
   }
@@ -40,9 +47,13 @@ export default function Header() {
     handleFocus(false)
     dispatch(addInputValue(''))
   }
-  function handelNavigate(value) {
-    navigate(value)
+
+  const handleLanguageSwitch = () => {
+    const newLanguage = i18n.language === 'en' ? 'fa' : 'en'
+    i18n.changeLanguage(newLanguage)
+    localStorage.setItem('appLanguage', newLanguage) // Save the new language
   }
+
   if (pathname === '/login' || pathname === '/signup') return null
   if (isLoading || isOut) return <Spinner />
 
@@ -50,34 +61,23 @@ export default function Header() {
     base: 'w-[9rem] sm:w-[12rem] h-9 md:h-10',
     mainWrapper: 'h-full',
     input: 'text-small',
-    inputWrapper:
-      'h-full font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
+    inputWrapper: 'h-full font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
   }
 
   return (
     <div className='flex justify-between py-4'>
       <HeaderTitle />
       <div className='flex items-center gap-5 px-6 '>
-        {/* change language */}
+        {/* Language Switch */}
         <div className='flex items-center gap-2'>
-          <Switch
-            size='sm'
-            onClick={() => {
-              setIsEn(!isEn)
-              if (isEn) {
-                i18n.changeLanguage('en')
-              } else {
-                i18n.changeLanguage('fa')
-              }
-            }}
-          >
-            {!isEn ? <p>{t('persian')}</p> : <p>فارسی</p>}
+          <Switch size='sm' onClick={handleLanguageSwitch}>
+            {i18n.language !== 'en' ? <p>فارسی</p> : <p>english</p>}
           </Switch>
         </div>
 
-        {/* search */}
+        {/* Search */}
         <Input
-          dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
+          dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
           classNames={`${inputClassNames}`}
           onChange={handleChange}
           onFocus={() => handleFocus(true)}
@@ -87,10 +87,7 @@ export default function Header() {
           type='search'
           endContent={<button onClick={handleClearSearch}>x</button>}
         />
-        <Dropdown
-          dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
-          placement='bottom-end'
-        >
+        <Dropdown dir={i18n.language === 'en' ? 'ltr' : 'rtl'} placement='bottom-end'>
           <DropdownTrigger>
             <Avatar
               isBordered
@@ -109,13 +106,10 @@ export default function Header() {
             </DropdownItem>
             <DropdownItem
               key='settings'
-              onClick={() => handelNavigate('/profile')}
-              onTouchStart={() => handelNavigate('/profile')}
+              onClick={() => navigate('/profile')}
+              onTouchStart={() => navigate('/profile')}
             >
               {t('myProfile')}
-            </DropdownItem>
-            <DropdownItem key='system'>
-              {/* <NavLink to='/'>System</NavLink> */}
             </DropdownItem>
             <DropdownItem key='logout' color='danger'>
               <div

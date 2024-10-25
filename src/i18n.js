@@ -98,20 +98,17 @@ const resources = {
       newTimer: 'new timer',
       taskTimer: 'Task Timer',
       timerInput: 'What are you working on?',
-      searchInput:'Type to search...',
-      filterDate:"filter by date",
-      myProfile:"My Profile",
-      analyze:" Analyze",
-      logout:"Logout",
-      userName:"User Name",
-      password:"Password",
-      enterYourPassword:"Enter Your Password",
-      enterYourUserName:"Enter Your User Name",
-      chooseFile:"Choose File",
-      saveChanges:"Save Changes",
-
-      
-      
+      searchInput: 'Type to search...',
+      filterDate: 'filter by date',
+      myProfile: 'My Profile',
+      analyze: ' Analyze',
+      logout: 'Logout',
+      userName: 'User Name',
+      password: 'Password',
+      enterYourPassword: 'Enter Your Password',
+      enterYourUserName: 'Enter Your User Name',
+      chooseFile: 'Choose File',
+      saveChanges: 'Save Changes',
     },
   },
   fa: {
@@ -122,8 +119,8 @@ const resources = {
       totalTask: ' همه تسک ها',
       notStarted: 'شروع نشده',
       'Not Started': 'شروع نشده',
-      "In Progress": "در حال انجام",
-      "Completed": "تکمیل شده",
+      'In Progress': 'در حال انجام',
+      Completed: 'تکمیل شده',
       inProgress: 'در حال انجام',
       completed: 'تکمیل شده',
       currentWeekTimer: 'تایمر هفته جاری',
@@ -223,20 +220,17 @@ const resources = {
       timer: 'زمان سنج',
       taskTimer: 'زمان سنج تسک',
       timerInput: 'روی چی کار میکنی؟',
-      searchInput:" ...جستجو",
-      filterDate:" فیلتر کردن با تاریخ",
-      logout:"خروج",
-      myProfile:"پروفایل من",
-      userName:"نام کاربری",
-      enterYourPassword:" پسوردتان را وارد کنید",
-      enterYourUserName:" نام کاربری  را واردکنید",
-      chooseFile:"انتخاب فایل",
-      saveChanges:"ذخیره تغییرات",
-      Password:"رمز عبور",
-      username:"نام کاربری"
-
-
-
+      searchInput: ' ...جستجو',
+      filterDate: ' فیلتر کردن با تاریخ',
+      logout: 'خروج',
+      myProfile: 'پروفایل من',
+      userName: 'نام کاربری',
+      enterYourPassword: ' پسوردتان را وارد کنید',
+      enterYourUserName: ' نام کاربری  را واردکنید',
+      chooseFile: 'انتخاب فایل',
+      saveChanges: 'ذخیره تغییرات',
+      Password: 'رمز عبور',
+      username: 'نام کاربری',
     },
   },
 }
@@ -244,6 +238,11 @@ const resources = {
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
+    detection: {
+      // Use localStorage to save the language setting
+      caches: ['localStorage'],
+      order: ['localStorage', 'navigator', 'htmlTag'],
+    },
     resources,
     lng: 'en',
     fallbackLng: 'en',
