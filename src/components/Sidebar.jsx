@@ -4,8 +4,10 @@ import useLogout from '../features/auth/useSignout'
 import Spinner from './Spinner'
 import { AcmeLogo } from './AcmeLogo'
 import { Tooltip } from '@nextui-org/react'
+import { useTranslation } from 'react-i18next'
 
 function Sidebar({ className }) {
+  const { t } = useTranslation()
   const { mutate: logout, isLoading } = useLogout()
   const navigate = useNavigate()
 
@@ -63,7 +65,7 @@ function Sidebar({ className }) {
             />
           </li>
           <li onClick={() => logout()}>
-            <Tooltip content='logout'>
+            <Tooltip content={t('logout')}>
               <SignOut size={24} color='#f4ecf4' />
             </Tooltip>
           </li>

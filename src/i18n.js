@@ -99,7 +99,18 @@ const resources = {
       taskTimer: 'Task Timer',
       timerInput: 'What are you working on?',
       searchInput:'Type to search...',
-      filterDate:"filter by date"
+      filterDate:"filter by date",
+      myProfile:"My Profile",
+      analyze:" Analyze",
+      logout:"Logout",
+      userName:"User Name",
+      password:"Password",
+      enterYourPassword:"Enter Your Password",
+      enterYourUserName:"Enter Your User Name",
+      chooseFile:"Choose File",
+      saveChanges:"Save Changes",
+
+      
       
     },
   },
@@ -213,7 +224,19 @@ const resources = {
       taskTimer: 'زمان سنج تسک',
       timerInput: 'روی چی کار میکنی؟',
       searchInput:" ...جستجو",
-      filterDate:" فیلتر کردن با تاریخ"
+      filterDate:" فیلتر کردن با تاریخ",
+      logout:"خروج",
+      myProfile:"پروفایل من",
+      userName:"نام کاربری",
+      enterYourPassword:" پسوردتان را وارد کنید",
+      enterYourUserName:" نام کاربری  را واردکنید",
+      chooseFile:"انتخاب فایل",
+      saveChanges:"ذخیره تغییرات",
+      Password:"رمز عبور",
+      username:"نام کاربری"
+
+
+
     },
   },
 }

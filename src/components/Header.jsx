@@ -77,8 +77,8 @@ export default function Header() {
 
         {/* search */}
         <Input
-          dir={i18n == 'en' ? 'rtl' : 'ltr'}
-          classNames={`${inputClassNames} text-right`}
+          dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
+          classNames={`${inputClassNames}`}
           onChange={handleChange}
           onFocus={() => handleFocus(true)}
           placeholder={t('searchInput')}
@@ -87,12 +87,15 @@ export default function Header() {
           type='search'
           endContent={<button onClick={handleClearSearch}>x</button>}
         />
-        <Dropdown placement='bottom-end'>
+        <Dropdown
+          dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
+          placement='bottom-end'
+        >
           <DropdownTrigger>
             <Avatar
               isBordered
               as='button'
-              className='transition-transform'
+              className='transition-transform w-[3rem]'
               color='secondary'
               name={user?.user_metadata?.username || 'User'}
               size='sm'
@@ -109,14 +112,7 @@ export default function Header() {
               onClick={() => handelNavigate('/profile')}
               onTouchStart={() => handelNavigate('/profile')}
             >
-              My Profile
-            </DropdownItem>
-            <DropdownItem
-              onTouchStart={() => handelNavigate('/')}
-              onClick={() => handelNavigate('/')}
-              key='analytics'
-            >
-              Analytics
+              {t('myProfile')}
             </DropdownItem>
             <DropdownItem key='system'>
               {/* <NavLink to='/'>System</NavLink> */}
@@ -127,7 +123,7 @@ export default function Header() {
                 onTouchStart={logout}
                 className='flex gap-1 text-red-500'
               >
-                <SignOut className='mt-1' /> <p>Log Out</p>
+                <SignOut className='mt-1' /> <p>{t('logout')}</p>
               </div>
             </DropdownItem>
           </DropdownMenu>
