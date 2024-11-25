@@ -5,6 +5,7 @@ import Spinner from '../components/Spinner'
 import useSignip from '../features/auth/useSignup'
 import { useDispatch } from 'react-redux'
 import { testadd } from '../features/schedule/taskSlice'
+
 function SignUp() {
   const { register, getValues, formState, handleSubmit } = useForm()
   const { errors } = formState
@@ -15,127 +16,101 @@ function SignUp() {
   function onSubmit({ fullName, email, password }) {
     signup({ username: fullName, email, password })
     dispatch(testadd(true))
-    // signUp({ fullName, email, password })
   }
+
   function handleToLogin(e) {
     e.preventDefault()
     navigate('/login')
   }
 
   if (isLoading) return <Spinner />
-  return (
-    <div className='h-[100vh] flex flex-col justify-center it w[100vh]'>
-      <form
-        className='flex h-[100%]  w-[100%]  justify-center  items-center mt-[-1rem] '
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className='  w-[100%] roundedl-[3rem] rounded-[2rem]  flex flex-col justify-center items-center h-[55vh] bg-gay-700/90'>
-          <h1 className='text-[1.8rem] my-[1rem] '>Sign Up</h1>
 
-          {/* full name */}
-          <div className=' w-full flex flex-col gap-2 max-w-[240px]'>
-            <Input
-              classNames={{
-                mainWrapper: 'h-full ',
-                input: 'text-small ',
-                inputWrapper:
-                  'h-full  font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
-              }}
-              label='Full Name'
-              id='fullName'
-              {...register('fullName', { required: 'this field is required' })}
-            />
-            <p className='text-default-500 text-small ml-[1rem] text-red-600'>
-              {errors?.fullName?.message}
-            </p>
-          </div>
-          {/* email */}
-          <div className='w-full flex flex-col gap-2 max-w-[240px]'>
-            <Input
-              classNames={{
-                mainWrapper: 'h-full ',
-                input: 'text-small ',
-                inputWrapper:
-                  'h-full  font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
-              }}
-              label=' Email'
-              // placeholder='FullName'
-              id='email'
-              {...register('email', {
-                required: 'this field is required',
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: 'Please provide a valid email address',
-                },
-              })}
-            />
-            <p className='text-default-500 text-small ml-[1rem] text-red-600'>
-              {errors?.email?.message}
-            </p>
-            {/* pass */}
-          </div>
-          <div className='w-full flex flex-col gap-2 max-w-[240px]'>
-            <Input
-              classNames={{
-                mainWrapper: 'h-full ',
-                input: 'text-small ',
-                inputWrapper:
-                  'h-full  font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
-              }}
-              type='password'
-              label=' Password'
-              // placeholder='FullName'
-              id='password'
-              {...register('password', {
-                required: 'this field is required',
-                minLength: {
-                  value: 8,
-                  message: 'Password needs a minimum of 8 characters',
-                },
-              })}
-            />
-            <p className='text-default-500 text-small ml-[1rem] text-red-600'>
-              {errors?.password?.message}
-            </p>
-          </div>
-          {/* re pass */}
-          <div className='w-full flex flex-col gap-2 max-w-[240px]'>
-            <Input
-              classNames={{
-                mainWrapper: 'h-full ',
-                input: 'text-small ',
-                inputWrapper:
-                  'h-full  font-normal text-default-500 bg-[#ffffff] dark:bg-[#ffffff]',
-              }}
-              type='password'
-              label=' Repeat Password'
-              // placeholder='FullName'
-              id='passwordConfirm'
-              {...register('passwordConfirm', {
-                required: 'this field is required',
-                validate: (value) =>
-                  value === getValues().password || 'Passwords need to match',
-              })}
-            />
-            <p className='text-default-500 text-small ml-[1rem] text-red-600'>
-              {errors?.passwordConfirm?.message}
-            </p>
-          </div>
-          <button
-            onClick={handleToLogin}
-            className='text-default-500 text-small  text-blue-300'
-          >
-            Have an account?
-          </button>
+  return (
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 to-pink-50 p-4'>
+      <div className='bg-white rounded-lg shadow-md p-8 w-full max-w-md'>
+        <h1 className='text-2xl font-semibold text-center text-gray-800 mb-6'>
+          Create an Account on Taskify
+        </h1>
+
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+          <Input
+            type='text'
+            label='Full Name'
+            {...register('fullName', {
+              required: 'Full name is required',
+            })}
+            className='max-w-full'
+          />
+          {errors.fullName && (
+            <p className='text-xs text-red-500 mt-1'>{errors.fullName.message}</p>
+          )}
+
+          <Input
+            type='email'
+            label='Email'
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Please provide a valid email address',
+              },
+            })}
+            className='max-w-full'
+          />
+          {errors.email && (
+            <p className='text-xs text-red-500 mt-1'>{errors.email.message}</p>
+          )}
+
+          <Input
+            type='password'
+            label='Password'
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 8,
+                message: 'Password must be at least 8 characters',
+              },
+            })}
+            className='max-w-full'
+          />
+          {errors.password && (
+            <p className='text-xs text-red-500 mt-1'>{errors.password.message}</p>
+          )}
+
+          <Input
+            type='password'
+            label='Repeat Password'
+            {...register('passwordConfirm', {
+              required: 'Please confirm your password',
+              validate: (value) =>
+                value === getValues().password || 'Passwords must match',
+            })}
+            className='max-w-full'
+          />
+          {errors.passwordConfirm && (
+            <p className='text-xs text-red-500 mt-1'>{errors.passwordConfirm.message}</p>
+          )}
+
           <Button
-            disabled={isLoading}
-            className='text-white1 bg-blue1 mt-[1rem] font-semibold '
             type='submit'
+            className='w-full bg-gradient-to-tr from-pink-500 to-pink-300 text-white shadow-lg'
           >
-            submit
+            Sign Up
           </Button>
+        </form>
+
+        <div className='mt-6 text-center'>
+          <p className='text-sm text-gray-600'>
+            Already have an account?{' '}
+            <button
+              onClick={handleToLogin}
+              className='text-pink-500 hover:text-pink-600 font-medium'
+            >
+              Log in
+            </button>
+          </p>
         </div>
-      </form>
+      </div>
     </div>
   )
 }

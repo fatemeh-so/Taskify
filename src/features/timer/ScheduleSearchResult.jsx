@@ -27,7 +27,7 @@ function ScheduleSearchResult({ valueSearch, setValueSearch }) {
   }
 
   const filteredTasks = tasks?.filter((task) =>
-    task.title.toLowerCase().includes(valueSearch?.toLowerCase())
+    task?.title?.toLowerCase()?.includes(valueSearch?.toLowerCase())
   )
 
   function handelAddTaskName(n, id) {
