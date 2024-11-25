@@ -65,7 +65,7 @@ const WeeklyTaskDurationChart = ({ tasks }) => {
     }
   })
   return (
-    <div className='bg-white p-4 rounded-lg shadow-md'>
+    <div className='bg-white p-4 rounded-lg shadow-md lg:mt-8 mt-4'>
       <ResponsiveContainer width='100%' height={245}>
         <BarChart data={i18n.language === 'fa' ? JalaliData : data}>
           <CartesianGrid strokeDasharray='3 3' />

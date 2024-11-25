@@ -47,8 +47,8 @@ function Dashboard() {
     <div className='w-[100%] lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden xl:h-[90vh] md:h-[100vh] h-[257%]'>
       <TaskReport />
 
-      <div className='relative bg-white rounded-lg'>
-        <div className='flex ] justify-between items-center px-4 pt-4'>
+      <div className='relative min-h-[18rem] bg-white rounded-lg'>
+        <div className='flex justify-between items-center px-4 pt-4'>
           <h1 className='text-lg md:text-lg lg:text-xl pb-2 font-bold text-gray-800'>
             {t('InProgressReview')}
           </h1>
@@ -71,7 +71,7 @@ function Dashboard() {
         </div>
         <div
           ref={scrollContainerRef}
-          className='flex  w-full overflow-x-hidden gap-2 justify-start items-start px-4 pb-4 '
+          className='flex w-full overflow-x-hidden gap-2 justify-start items-start px-4 pb-4 '
         >
           {taskFilterInProgressive.length > 0 ? (
             taskFilterInProgressive.map((task) => (
@@ -89,7 +89,7 @@ function Dashboard() {
         <div className='w-full md:w-2/4'>
           <ProrityTaskCharts tasks={tasks} height={chartHeight} />
         </div>{' '}
-        <div className='w-full mt-[1rem] md:w-2/4 bg-[#ffffff]'>
+        <div className='w-full md:w-2/4'>
           <WeeklyTaskDurationChart
             height={chartHeight}
             tasks={filter7lastDay}

@@ -44,7 +44,7 @@ const StatusTaskChart = ({ tasks }) => {
 
   if (tasks.length === 0) {
     return (
-      <div className='flex mt-8 h-[17.3rem] shadow-sm justify-center items-center bg-white w-full  text-gray-500'>
+      <div className='flex mt-8 h-[17.3rem] shadow-sm rounded-lg justify-center items-center bg-white w-full  text-gray-500'>
         {t('noTask')}
       </div>
     )

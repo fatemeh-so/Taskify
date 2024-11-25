@@ -30,7 +30,7 @@ function ScheduleBar() {
           <span  className='sm:text-lg sm:font-semibold text-[1rem]'>
             {i18n.language == 'en'
               ? format(currentDate, 'MMMM dd, yyyy')
-              : formatJalali(currentDate, 'MMMM dd, yyyy')}
+              : formatJalali(currentDate, ' yyyy,dd MMMM')}
           </span>
         </div>
         <div className='flex items-center'>
