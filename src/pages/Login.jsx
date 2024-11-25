@@ -26,7 +26,7 @@ function Login() {
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 to-pink-50 p-4'>
-      <div className='bg-white rounded-lg shadow-md p-8 w-full max-w-sm'>
+      <div className='bg-white rounded-2xl  p-8 w-full max-w-sm'>
         <h1 className='text-2xl font-semibold text-center text-gray-800 mb-6'>
           Welcome to Taskify
         </h1>
@@ -72,7 +72,7 @@ function Login() {
             // radius='full'
             className='w-full bg-gradient-to-tr from-pink-500 to-pink-300 text-white shadow-lg'
           >
-            Button
+            Login
           </Button>
         </form>
 
