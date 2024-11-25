@@ -27,7 +27,7 @@ function SignUp() {
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-400 to-pink-50 p-4'>
-      <div className='bg-white rounded-lg shadow-md p-8 w-full max-w-md'>
+      <div className='bg-white rounded-lg shadow-2xl p-8 w-full max-w-md'>
         <h1 className='text-2xl font-semibold text-center text-gray-800 mb-6'>
           Create an Account
         </h1>
