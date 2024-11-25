@@ -220,7 +220,7 @@ const resources = {
       timer: 'زمان سنج',
       taskTimer: 'زمان سنج تسک',
       timerInput: 'روی چی کار میکنی؟',
-      searchInput: ' ...جستجو',
+      searchInput: ' جستجو ...',
       filterDate: ' فیلتر کردن با تاریخ',
       logout: 'خروج',
       myProfile: 'پروفایل من',

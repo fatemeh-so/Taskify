@@ -78,13 +78,14 @@ export default function Header() {
         {/* Search */}
         <Input
           dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
-          classNames={`${inputClassNames}`}
+          classNames={`${inputClassNames} bg-gray-100`}
           onChange={handleChange}
           onFocus={() => handleFocus(true)}
           placeholder={t('searchInput')}
-          size='sm'
+          size='md'
           startContent={<SearchIcon size={18} />}
           type='search'
+          variant='bordered'
           endContent={<button onClick={handleClearSearch}>x</button>}
         />
         <Dropdown dir={i18n.language === 'en' ? 'ltr' : 'rtl'} placement='bottom-end'>
@@ -92,7 +93,7 @@ export default function Header() {
             <Avatar
               isBordered
               as='button'
-              className='transition-transform w-[3rem]'
+              className='transition-transform w-[3.5rem]'
               color='secondary'
               name={user?.user_metadata?.username || 'User'}
               size='sm'
