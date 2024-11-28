@@ -98,7 +98,7 @@ const resources = {
       newTimer: 'new timer',
       taskTimer: 'Task Timer',
       timerInput: 'What are you working on?',
-      searchInput: 'Type to search...',
+      searchInput: 'search...',
       filterDate: 'filter by date',
       myProfile: 'My Profile',
       analyze: ' Analyze',

@@ -33,7 +33,7 @@ function HeaderTitle() {
 
   return (
     <>
-      <h1 className='lg:text-[2rem] lg:pl-[7rem] pl-4 md:text-[2rem] text-[1rem] font-bold'>
+      <h1 className='lg:text-[2rem] lg:pl-[7rem] pl- pt-2 md:text-[2rem] text-[1rem] font-bold'>
         {path}
       </h1>
     </>
