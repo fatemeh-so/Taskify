@@ -4,7 +4,6 @@ import TaskReview from '../dashboard/TaskReview'
 import { useTranslation } from 'react-i18next'
 
 function InprogressTaskReports({taskFilterInProgressive}) {
-  console.log(taskFilterInProgressive)
   const { t, i18n } = useTranslation()
 
   const scrollContainerRef = useRef(null)
