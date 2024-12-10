@@ -17,7 +17,7 @@ export default function useSignup() {
 
       toast.success(
         "Account successfully created! Please login."
-      ),
+      )
     },
   })
   return { mutate, isLoading }
