@@ -184,7 +184,7 @@ export default function EditTaskModal() {
                   </Select>
                   <Select
                     // fullWidth
-                    label='Status'
+                    label={t('status')}
                     size='lg'
                     onChange={(e) => handleStatusChange(e.target.value)}
                     color='secondary'
