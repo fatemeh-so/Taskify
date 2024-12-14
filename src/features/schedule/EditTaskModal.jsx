@@ -19,15 +19,17 @@ import { useNavigate, useParams } from 'react-router-dom'
 import useGetTask from './useGetTask'
 import Spinner from '../../components/Spinner'
 import useEditTask from './useEditTask'
+import { useTranslation } from 'react-i18next'
 
 const priorities = [
-  { id: 1, name: 'Low', color: 'text-green-500' },
-  { id: 2, name: 'Medium', color: 'text-yellow-500' },
-  { id: 3, name: 'High', color: 'text-red-500' },
-  { id: 4, name: 'Urgent', color: 'text-purple-500' },
+  { id: 1, name: { en: 'Low', fa: 'کم' }, color: 'text-green-500' },
+  { id: 2, name: { en: 'Medium', fa: 'متوسط' }, color: 'text-yellow-500' },
+  { id: 3, name: { en: 'High', fa: 'بالا' }, color: 'text-red-500' },
+  { id: 4, name: { en: 'Urgent', fa: 'فوری' }, color: 'text-purple-500' },
 ]
 
 export default function EditTaskModal() {
+  const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { data: task, isLoading } = useGetTask()
@@ -44,12 +46,13 @@ export default function EditTaskModal() {
   const [priority, setPriority] = useState(currentTask.priority || '')
   const [todos, setTodos] = useState(currentTask.description || [])
   const [currentStatus, setCurrentStatus] = useState(currentTask.status || '')
+  console.log(categories)
   useEffect(() => {
     if (currentTask) {
-      setTitle(currentTask.title || '')
-      setCategory(currentTask.category || '')
-      setPriority(currentTask.priority || '')
-      setTodos(currentTask.description || [])
+      setTitle(currentTask?.title || '')
+      setCategory(currentTask?.category || '')
+      setPriority(currentTask?.priority || '')
+      setTodos(currentTask?.description || [])
     }
   }, [task, scheduleId])
 
@@ -62,7 +65,9 @@ export default function EditTaskModal() {
       (category) => category.id.toString() === value
     )
     if (selectedCategory) {
-      setCategory(selectedCategory.name)
+      setCategory(selectedCategory.name.en)
+
+      // setCategory(selectedCategory.name)
     }
   }
 
@@ -71,7 +76,7 @@ export default function EditTaskModal() {
       (priority) => priority.id.toString() === value
     )
     if (selectedPriority) {
-      setPriority(selectedPriority.name)
+      setPriority(selectedPriority.name.en)
     }
   }
   const handleStatusChange = (value) => {
@@ -79,7 +84,7 @@ export default function EditTaskModal() {
       (status) => status.id.toString() === value
     )
     if (selectedStatus) {
-      setCurrentStatus(selectedStatus.name)
+      setCurrentStatus(selectedStatus.name.en)
     }
   }
   const handleTodoChange = (index, field, value) => {
@@ -140,36 +145,40 @@ export default function EditTaskModal() {
                 />
                 <div className=' sm:flex-row gap-4'>
                   <Select
-                    label='Category'
+                    fullWidth
+                    label={t('category')}
                     size='lg'
+                    onChange={(e) => handleCategoryChange(e.target.value)}
                     color='secondary'
-                    className='flex-1'
                     variant='underlined'
                     selectionMode='single'
-                    onChange={(e) => handleCategoryChange(e.target.value)}
                   >
                     {categories.map((c) => (
-                      <SelectItem key={c.id} value={c.id.toString()}>
-                        {c.name}
+                      <SelectItem
+                        color='primary'
+                        key={c.id}
+                        value={c.id.toString()}
+                      >
+                        {c.name[i18n.language]}
                       </SelectItem>
                     ))}
                   </Select>
                   <Select
-                    label='Priority'
+                    fullWidth
+                    label={t('priority')}
                     size='lg'
+                    onChange={(e) => handlePriorityChange(e.target.value)}
                     color='secondary'
-                    className='flex-1'
                     variant='underlined'
                     selectionMode='single'
-                    onChange={(e) => handlePriorityChange(e.target.value)}
                   >
                     {priorities.map((p) => (
                       <SelectItem
+                        className={p.color}
                         key={p.id}
                         value={p.id.toString()}
-                        className={p.color}
                       >
-                        {p.name}
+                        {p.name[i18n.language]}
                       </SelectItem>
                     ))}
                   </Select>
@@ -184,7 +193,7 @@ export default function EditTaskModal() {
                   >
                     {statuses.map((s) => (
                       <SelectItem key={s.id} value={s.id.toString()}>
-                        {s.name}
+                        {s.name[i18n.language]}
                       </SelectItem>
                     ))}
                   </Select>
