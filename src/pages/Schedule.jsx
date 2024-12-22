@@ -45,7 +45,7 @@ function Schedule() {
 
   return (
     <div className='relative lg:pl-[6rem] z-10 h-full w-full md:overflow-hidden bg-white2'>
-      {close && <AddTask onClose={openTask} />}
+      <AddTask onClose={openTask} close={close} />
       <div className='w-full h-full'>
         <div className='w-full h-auto lg:pr-4 px-4 pt-4'>
           <ScheduleBar />

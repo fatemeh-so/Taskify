@@ -167,7 +167,7 @@ const resources = {
       medium: 'متوسط',
       Medium: 'متوسط',
       Low: 'کم',
-      Urgent: 'خیلی ممهم',
+      Urgent: 'خیلی مهم',
       High: 'مهم',
       addTodo: 'افزودن تسک',
       status: 'وضعیت',

@@ -41,6 +41,7 @@ function TimerProject() {
           : FormatFaDate(startOfDay(new Date(current.created_at)))
         if (!acc[date]) {
           acc[date] = []
+
         }
 
         acc[date].push(current)
@@ -84,7 +85,6 @@ function TimerProject() {
                   weekStartsOn: 1,
                 })
               )
-
           return { weekEnd, weekStart, groups }
         }
       )
@@ -107,7 +107,7 @@ function TimerProject() {
     <div dir={isEnglish ? 'ltr' : 'rtl'} className='w-full h-full mx-auto mb-8'>
       {weekStartDates.length > 0 && (
         <div className='mt-6 w-full h-full'>
-          {weekStartDates.map(({ weekStart, weekEnd, groups }, index) => (
+          {weekStartDates.map(({ weekEnd, weekStart, groups }, index) => (
             <div key={`week-${index}`} className='mb-8'>
               <div className='flex  m-2 gap-1'>
                 <div className='text-md text-gray-600'>

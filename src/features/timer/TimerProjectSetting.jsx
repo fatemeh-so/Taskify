@@ -13,7 +13,7 @@ import { setOpen } from './timerSlice'
 import { useTranslation } from 'react-i18next'
 
 export default function TimerProjectSettings({ id }) {
-  const {t}=useTranslation()
+  const {t,i18n}=useTranslation()
   const { mutate: deleting, isLoading: isDelete } = useDelete()
   const dispatch = useDispatch()
   const { open } = useSelector((store) => store.timer)
@@ -26,7 +26,7 @@ export default function TimerProjectSettings({ id }) {
 
   return (
     <div className='z-0'>
-      <Dropdown>
+      <Dropdown dir={i18n.language==="en"?'ltr':'rtl'}>
         <DropdownTrigger>
           <Button isIconOnly variant='bordered'>
             <DotsThreeVertical size={28} color='#4e494e' />

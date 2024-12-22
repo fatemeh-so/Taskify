@@ -124,129 +124,151 @@ function AddTaskContent() {
   return (
     <div
       dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
-      className='container h-full overflow-y-auto b-red-900 md:px-6 px-4 py-4'
+      className='min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8'
     >
-      <div className='h-full rounded-lg bg-white px-4'>
-        <h3 className='text-xl font-semibold text-center text-gray-700'>
-          {t('addNewTask')}
-        </h3>
-        <div className='flex flex-col gap-6'>
-          <Input
-            fullWidth
-            size='lg'
-            color='secondary'
-            onChange={(event) => {
-              dispatch(addTitle(event.target.value))
-            }}
-            type='text'
-            variant='underlined'
-            label={t('title')}
-            placeholder={t('titleInput')}
-          />
-          <div className='flex flex-col md:flex-row gap-6'>
-            <Select
+      <div className='max-w-3xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden'>
+        <div className='px-6 py-8'>
+          {/* <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
+            {t('addNewTask')}
+          </h3> */}
+          <div className='space-y-6'>
+            <Input
               fullWidth
-              label={t('category')}
               size='lg'
-              onChange={(e) => handleCategoryChange(e.target.value)}
               color='secondary'
-              variant='underlined'
-              selectionMode='single'
-            >
-              {categories.map((c) => (
-                <SelectItem color='primary' key={c.id} value={c.id.toString()}>
-                  {c.name[i18n.language]}
-                </SelectItem>
-              ))}
-            </Select>
-            <Select
-              fullWidth
-              label={t('priority')}
-              size='lg'
-              onChange={(e) => handlePriorityChange(e.target.value)}
+              onChange={(event) => {
+                dispatch(addTitle(event.target.value))
+              }}
+              type='text'
+              variant='bordered'
+              label={t('title')}
+              placeholder={t('titleInput')}
+              className='text-lg'
+            />
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+              <Select
+                fullWidth
+                label={t('category')}
+                size='lg'
+                onChange={(e) => handleCategoryChange(e.target.value)}
+                color='secondary'
+                variant='bordered'
+                selectionMode='single'
+              >
+                {categories.map((c) => (
+                  <SelectItem
+                    dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
+                    key={c.id}
+                    value={c.id.toString()}
+                    className={
+                      i18n.language == 'en' ? 'text-left' : 'text-right'
+                    }
+                  >
+                    {c.name[i18n.language]}
+                  </SelectItem>
+                ))}
+              </Select>
+              <Select
+                fullWidth
+                label={t('priority')}
+                size='lg'
+                onChange={(e) => handlePriorityChange(e.target.value)}
+                color='secondary'
+                variant='bordered'
+                selectionMode='single'
+              >
+                {priorities.map((p) => (
+                  <SelectItem
+                    dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
+                    key={p.id}
+                    value={p.id.toString()}
+                    className={`${
+                      i18n.language == 'en' ? 'text-left' : 'text-right'
+                    } ${p.color}`}
+                  >
+                    {p.name[i18n.language]}
+                  </SelectItem>
+                ))}
+              </Select>
+              <Select
+                fullWidth
+                label={t('status')}
+                isRequired={true}
+                size='lg'
+                onChange={(e) => handleStatusChange(e.target.value)}
+                color='secondary'
+                variant='bordered'
+                selectionMode='single'
+                error={statusError}
+              >
+                {statuses.map((s) => (
+                  <SelectItem
+                    dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
+                    key={s.id}
+                    value={s.id.toString()}
+                    className={
+                      i18n.language == 'en' ? 'text-left' : 'text-right'
+                    }
+                  >
+                    {s.name[i18n.language]}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            {statusError && (
+              <p className='text-red-500 text-sm'>{t('statusRe')}</p>
+            )}
+            <Button
               color='secondary'
-              variant='underlined'
-              selectionMode='single'
+              variant='flat'
+              onClick={addTodo}
+              className='flex items-center gap-2 text-lg font-semibold'
+              startContent={<ListPlus size={24} />}
             >
-              {priorities.map((p) => (
-                <SelectItem
-                  className={p.color}
-                  key={p.id}
-                  value={p.id.toString()}
+              {t('addTodo')}
+            </Button>
+            <div className='space-y-4'>
+              {todos.map((todo) => (
+                <div
+                  key={todo.id}
+                  className='flex items-center gap-4 bg-gray-50 p-4 rounded-lg'
                 >
-                  {p.name[i18n.language]}
-                </SelectItem>
+                  <Checkbox
+                    size='lg'
+                    checked={todo.completed}
+                    onChange={() => toggleTodoCompleted(todo.id)}
+                    lineThrough
+                  />
+                  <Input
+                    fullWidth
+                    size='lg'
+                    color='secondary'
+                    value={todo.text}
+                    onChange={(e) => handleTodoChange(todo.id, e.target.value)}
+                    type='text'
+                    variant='bordered'
+                    placeholder={t('newTask')}
+                    className='flex-grow'
+                  />
+                  <Button
+                    onClick={() => handleDeleteTodo(todo.id)}
+                    color='danger'
+                    isIconOnly
+                    variant='flat'
+                  >
+                    <Trash size={20} />
+                  </Button>
+                </div>
               ))}
-            </Select>
-            <Select
-              fullWidth
-              label={t('status')}
-              isRequired={true}
-              size='lg'
-              onChange={(e) => handleStatusChange(e.target.value)}
+            </div>
+            <Button
               color='secondary'
-              variant='underlined'
-              selectionMode='single'
-              // defaultSelectedKeys="Not Started"
-              error={statusError}
+              onClick={handleAddTask}
+              className='w-full text-lg font-bold py-6'
             >
-              {statuses.map((s) => (
-                <SelectItem key={s.id} value={s.id.toString()}>
-                  {s.name[i18n.language]}
-                </SelectItem>
-              ))}
-            </Select>
+              {t('addTask')}
+            </Button>
           </div>
-          {statusError && (
-            <p className='text-red-500 text-sm'>{t('statusRe')}</p>
-          )}
-          <Button
-            bordered
-            // size='smg'
-            onClick={addTodo}
-            className='flex mt-4  text-bold  md:text-lg w-full md:w-auto items-center gap-2 self-start'
-          >
-            <ListPlus size={24} />
-            {t('addTodo')}
-          </Button>
-          <div className='mt-4'>
-            {todos.map((todo) => (
-              <div key={todo.id} className='flex items-center py-2 gap-4 mb-2'>
-                <Checkbox
-                  size='lg'
-                  checked={todo.completed}
-                  onChange={() => toggleTodoCompleted(todo.id)}
-                  lineThrough
-                />
-                <Input
-                  fullWidth
-                  size='sm'
-                  color='secondary'
-                  value={todo.text}
-                  onChange={(e) => handleTodoChange(todo.id, e.target.value)}
-                  type='text'
-                  variant='underlined'
-                  placeholder='New task'
-                />
-                <Button
-                  onClick={() => handleDeleteTodo(todo.id)}
-                  color='error'
-                  isIconOnly
-                  auto
-                >
-                  <Trash size={20} />
-                </Button>
-              </div>
-            ))}
-          </div>
-          <Button
-            className='lg:mb-[2rem] md:mb-[7rem] text-bold text-white text-md md:text-lg'
-            color='secondary'
-            onClick={handleAddTask}
-            fullWidth
-          >
-            {t('addTask')}
-          </Button>
         </div>
       </div>
     </div>
