@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 function ProrityTaskCharts({ tasks }) {
-  const { t } = useTranslation(); // مطمئن شوید که این درست کار می‌کند
+  const { t } = useTranslation(); 
   const COLORS = [
     '#7CB342',
     '#FFB300',
@@ -39,7 +39,7 @@ function ProrityTaskCharts({ tasks }) {
 
   if (tasks.length === 0) {
     return (
-      <div className='flex mt-8 h-[17.3rem] shadow-sm rounded-lg justify-center items-center bg-white w-full text-gray-500'>
+      <div className='flex mt-4 h-[17.3rem] shadow-sm rounded-lg justify-center items-center bg-white w-full text-gray-500'>
         {t('noTask')} 
       </div>
     );
