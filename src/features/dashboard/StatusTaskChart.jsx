@@ -45,7 +45,7 @@ const StatusTaskChart = ({ tasks }) => {
 
   if (tasks.length === 0) {
     return (
-      <div className='flex mt-8 h-[17.3rem] shadow-sm rounded-lg justify-center items-center bg-white w-full  text-gray-500'>
+      <div className='flex mt-4 h-[17.3rem] shadow-sm rounded-lg justify-center items-center bg-white w-full  text-gray-500'>
         {t('noTask')}
       </div>
     )
@@ -53,9 +53,7 @@ const StatusTaskChart = ({ tasks }) => {
 
   return (
     <div className='mt-4 bg-white p-4 rounded-lg shadow-md'>
-      <h2 className='text-lg font- text-gray-800 mb-4'>
-        {t('taskStatus')}
-      </h2>
+      <h2 className='text-lg font- text-gray-800 mb-4'>{t('taskStatus')}</h2>
       <ResponsiveContainer
         width='100%'
         height={200}
