@@ -124,7 +124,7 @@ function AddTaskContent() {
   return (
     <div
       dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
-      className='min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8'
+      className='min-h-screen bg-purple-50 py-8 px-4 sm:px-6 lg:px-8'
     >
       <div className='max-w-3xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden'>
         <div className='px-6 py-8'>
