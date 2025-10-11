@@ -7,7 +7,7 @@ import uploadAvatar from '../services/uploadAvatar'
 import { useTranslation } from 'react-i18next'
 
 const MyProfile = () => {
-  const {t,i18n}=useTranslation()
+  const { t, i18n } = useTranslation()
   const { data: user, isLoading: isUserLoading } = useGetUser()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -69,13 +69,16 @@ const MyProfile = () => {
 
   return (
     <>
-      <div   className='lg:px-[7rem] px-4 h-full'>
-        <h1 className='text-3xl  font-semibold mb-6'>{t("myProfile")}</h1>
-        <div dir={i18n.language=="en"?"ltr":"rtl"} className='flex h-full flex-col md:flex-row gap-8 pr-8 pl-4'>
+      <div className='lg:px-[7rem] px-4 h-full'>
+        <h1 className='text-3xl  font-semibold mb-6 mt-4'>{t('myProfile')}</h1>
+        <div
+          dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
+          className='flex h-full flex-col md:flex-row gap-8 pr-8 pl-4'
+        >
           <div className='flex-shrink-0 relative gap-4 bf'>
             <Avatar src={avatarUrl} className='w-20 h-20 text-large' />
           </div>
-          <div   className='flex-grow lg:ml-[2rem]'>
+          <div className='flex-grow lg:ml-[2rem]'>
             <Input
               label={t('username')}
               placeholder={t('enterYourUserName')}
@@ -96,7 +99,7 @@ const MyProfile = () => {
                 htmlFor='avatarInput'
                 className='w-[8rem] text-center md:left-[18rem] top-0  md:top-0 right-0 bg-primary hover:bg-primary-dark py-2 rounded-xl text-white cursor-pointer'
               >
-                {t("chooseFile")}
+                {t('chooseFile')}
               </label>
               <input
                 id='avatarInput'
@@ -106,7 +109,7 @@ const MyProfile = () => {
                 onChange={handleAvatarChange}
               />
               <Button className='text-lg' onClick={handleSave} color='primary'>
-                {t("saveChanges")}
+                {t('saveChanges')}
               </Button>
             </div>
           </div>
