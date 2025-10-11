@@ -65,10 +65,8 @@ const WeeklyTaskDurationChart = ({ tasks }) => {
     }
   })
   return (
-    <div className='mt-4 bg-white p-4 rounded-lg shadow-md'>
-      <h2 className='text-lg text-gray-800 mb-4'>
-        {t('taskTimer')}
-      </h2>
+    <div className='mt-4 bg-white p-4 rounded-lg '>
+      <h2 className='text-lg text-gray-800 mb-4'>{t('taskTimer')}</h2>
       <ResponsiveContainer
         width='100%'
         height={200}
