@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 function ProrityTaskCharts({ tasks }) {
-  const { t } = useTranslation() // مطمئن شوید که این درست کار می‌کند
+  const { t } = useTranslation() 
   const COLORS = [
     '#7CB342',
     '#FFB300',
