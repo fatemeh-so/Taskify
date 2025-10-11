@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from 'phosphor-react'
 import TaskReview from '../dashboard/TaskReview'
 import { useTranslation } from 'react-i18next'
 
-function InprogressTaskReports({taskFilterInProgressive}) {
+function InprogressTaskReports({ taskFilterInProgressive }) {
   const { t, i18n } = useTranslation()
 
   const scrollContainerRef = useRef(null)
