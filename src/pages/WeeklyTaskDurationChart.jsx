@@ -69,9 +69,9 @@ const WeeklyTaskDurationChart = ({ tasks }) => {
       <h2 className='text-lg text-gray-800 mb-4'>{t('taskTimer')}</h2>
       <ResponsiveContainer
         width='100%'
-        height={200}
+        height={190}
         minHeight={150}
-        maxHeight={300}
+        maxHeight={200}
       >
         <BarChart data={i18n.language === 'fa' ? JalaliData : data}>
           <CartesianGrid strokeDasharray='3 3' />

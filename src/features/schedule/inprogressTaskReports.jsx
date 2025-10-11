@@ -4,7 +4,7 @@ import TaskReview from '../dashboard/TaskReview'
 import { useTranslation } from 'react-i18next'
 
 function InprogressTaskReports({ taskFilterInProgressive }) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const scrollContainerRef = useRef(null)
 
@@ -22,10 +22,10 @@ function InprogressTaskReports({ taskFilterInProgressive }) {
   return (
     <div className='relative min-h-[18rem] bg-white rounded-lg'>
       <div className='flex justify-between items-center px-4 pt-4'>
-        <h1 className='text-lg md:text-lg lg:text-xl pb-2 font-bold text-gray-800'>
+        <h1 className='text-md md:text-lg lg:text-xl pb-2 font-bold text-gray-800'>
           {t('InProgressReview')}
         </h1>
-        <div className='gap-2 flex'>
+        <div className='gap-2 flex mb-2'>
           <button
             className='rounded-full border p-2 hover:bg-blue-100'
             onClick={scrollLeft}

@@ -52,13 +52,13 @@ const StatusTaskChart = ({ tasks }) => {
   }
 
   return (
-    <div className='mt-4 bg-white p-4 rounded-lg shadow-md'>
+    <div className='mt-4 bg-white p-4 rounded-lg '>
       <h2 className='text-lg font- text-gray-800 mb-4'>{t('taskStatus')}</h2>
       <ResponsiveContainer
         width='100%'
-        height={200}
+        height={190}
         minHeight={150}
-        maxHeight={300}
+        maxHeight={200}
       >
         <PieChart>
           <Pie
@@ -69,7 +69,7 @@ const StatusTaskChart = ({ tasks }) => {
             cy='50%'
             outerRadius={60}
             fill='#8884d8'
-            label={({ name, percentage }) => `${percentage}%`} // Display percentage inside the Pie
+            label={({ percentage }) => `${percentage}%`} // Display percentage inside the Pie
           >
             {taskStatuses.map((entry, index) => (
               <Cell

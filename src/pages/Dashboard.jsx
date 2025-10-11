@@ -1,4 +1,3 @@
-
 import useGetTask from '../features/schedule/useGetTask'
 import Spinner from '../components/Spinner'
 import TaskReport from '../features/dashboard/TaskReport'
@@ -26,21 +25,24 @@ function Dashboard() {
     isThisWeek(new Date(t?.created_at))
   )
 
-
-
   if (isTask || isLoading || isUser) return <Spinner />
 
   const chartHeight = 300
   return (
-    <div className='w-[100%] lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden xl:h-[90vh] md:h-[100vh] h-[257%]'>
+    <div className='w-full lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden bg-gray-50 sm:h-[170vh] md:h-[107vh] h-[185vh] lg:max-h-[90vh]'>
       <TaskReport />
 
-    <InprogressTaskReports taskFilterInProgressive={taskFilterInProgressive}/>
+      <InprogressTaskReports
+        taskFilterInProgressive={taskFilterInProgressive}
+      />
 
-      <div dir={i18n.language==="en"?'ltr':'rtl'} className='flex items-start flex-col md:flex-row gap-4 md:h-[30rem]'>
+      <div
+        dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
+        className='flex items-start flex-col md:flex-row gap-0 md:gap-4 md:h-[30rem]'
+      >
         <div className='w-full md:w-2/4'>
           <ProrityTaskCharts tasks={tasks} height={chartHeight} />
-        </div>{' '}
+        </div>
         <div className='w-full md:w-2/4'>
           <WeeklyTaskDurationChart
             height={chartHeight}

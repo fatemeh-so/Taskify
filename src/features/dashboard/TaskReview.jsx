@@ -13,7 +13,7 @@ import {
   Heartbeat,
 } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
-import { format, newDate } from 'date-fns-jalali'
+import { format } from 'date-fns-jalali'
 
 function TaskReview({ task }) {
   const { t, i18n } = useTranslation()
@@ -66,7 +66,7 @@ function TaskReview({ task }) {
   return (
     <div
       dir={isPersian ? 'rtl' : 'ltr'}
-      className='border min-h-[250px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 max-w-1/5'
+      className='border min-h-[250px] bg-white rounded-lg  p-4 flex-shrink-0 max-w-1/5'
     >
       <div className='flex  md:flex-row justify-between items-start md:items-center '>
         <h1 className='text-lg font-bold text-gray-800 px-1'>{task?.title}</h1>

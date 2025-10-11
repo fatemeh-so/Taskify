@@ -44,7 +44,7 @@ export default function TaskReport() {
     .substr(11, 8)
 
   return (
-    <div className='w-full p-0 md:py-4'>
+    <div className='w-full p-0 md:py-4 mb-2 lg:mb-0'>
       <div className='flex flex-wrap justify-around gap-2 md:gap-4'>
         <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
           <span className='text-lg md:text-2xl text-green-500'>{total}</span>
