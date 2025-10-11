@@ -25,11 +25,17 @@ function ColumnTodo({ label, color, task }) {
           {label}
         </div>
       </div>
-      <div className='overflow-y-auto h-[100%] w-[100%]'>
-        {todoTask?.map((task) => (
-          <SquareRow key={task?.id} task={task} />
-        ))}
-      </div>
+      {todoTask.length !== 0 ? (
+        <div className='overflow-y-auto h-[100%] w-[100%]'>
+          {todoTask?.map((task) => (
+            <SquareRow key={task?.id} task={task} />
+          ))}
+        </div>
+      ) : (
+        <div className='flex justify-center items-center w-full h-24 text-gray-500 bg-[#ffffff] rounded-xl '>
+          No Task
+        </div>
+      )}
     </div>
   )
 }
