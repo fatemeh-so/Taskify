@@ -20,10 +20,10 @@ function AddTask({ onClose, close }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className='flex flex-col w-full md:w-3/4 xl:w-1/3 bg-white shadow-2xl'
+            className='flex flex-col w-full md:w-3/4 xl:w-2/4 bg-white shadow-2xl'
           >
-            <div className='flex items-center justify-between p-4 border-b border-gray-200'>
-              <h2 className='text-2xl font-semibold text-gray-800'>
+            <div className='flex items-center justify-between p-4 border-b border-purple-200 bg-gradient-to-br from-purple-100 to-purple-200'>
+              <h2 className='text-2xl font-semibold text-gray-800 '>
                 {t('addNewTask')}
               </h2>
               <motion.button
