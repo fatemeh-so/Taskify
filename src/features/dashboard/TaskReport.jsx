@@ -28,7 +28,6 @@ export default function TaskReport() {
   const completedTask =
     task?.filter((task) => task.status?.toString() === 'Completed').length || 0
 
-
   const totalWeekTimer =
     weekStartDates?.[0]?.groups
       ?.flat()
@@ -45,19 +44,19 @@ export default function TaskReport() {
     .substr(11, 8)
 
   return (
-    <div className='w-full p-2 md:p-4'>
+    <div className='w-full p-0 md:py-4'>
       <div className='flex flex-wrap justify-around gap-2 md:gap-4'>
-        <div className='bg-white p-2 md:p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
           <span className='text-lg md:text-2xl text-green-500'>{total}</span>
           <h1 className='text-sm md:text-lg text-gray-600'>{t('totalTask')}</h1>
         </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
           <span className='text-lg md:text-2xl text-pink-500'>{todoTask}</span>
           <h1 className='text-sm md:text-lg text-gray-600'>
             {t('notStarted')}
           </h1>
         </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
           <span className='text-lg md:text-2xl text-blue-500'>
             {inProgressTask}
           </span>
@@ -65,13 +64,13 @@ export default function TaskReport() {
             {t('inProgress')}
           </h1>
         </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
           <span className='text-lg md:text-2xl text-yellow-500'>
             {completedTask}
           </span>
           <h1 className='text-sm md:text-lg text-gray-600'>{t('completed')}</h1>
         </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
           <span className='text-lg md:text-2xl text-orange-500'>
             {formattedTotalWeekTimer}
           </span>
@@ -83,4 +82,3 @@ export default function TaskReport() {
     </div>
   )
 }
-
