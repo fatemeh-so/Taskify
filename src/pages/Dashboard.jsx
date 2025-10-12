@@ -29,7 +29,7 @@ function Dashboard() {
 
   const chartHeight = 300
   return (
-    <div className='w-full lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden bg-gray-50 sm:h-[170vh] md:h-[107vh] h-[185vh] lg:max-h-[90vh]'>
+    <div className='w-full lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden bg-gray-50 sm:h-[170vh] md:h-[107vh] h-[185vh] lg:max-h-[92vh]'>
       <TaskReport />
 
       <InprogressTaskReports
