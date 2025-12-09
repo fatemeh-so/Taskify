@@ -13,11 +13,19 @@ export default function useSignup() {
     mutationKey: ['user'],
     onSuccess: (data) => {
       queryClient.setQueryData(['users'], data.user)
-      navigate('/dashboard', { replace: true })
+      navigate('/login', { replace: true })
 
-      toast.success(
-        "Account successfully created! Please login."
-      )
+      toast.success('Account successfully created! Please login.', {
+        duration: 7000,
+        position: 'top-center',
+      })
+    },
+    onError: (error) => {
+      toast.error(error?.message || 'Something went wrong', {
+        duration: 7000,
+        position: 'top-center',
+        backgroundColor: 'white',
+      })
     },
   })
   return { mutate, isLoading }

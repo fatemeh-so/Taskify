@@ -1,4 +1,4 @@
-import{ useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   Avatar,
   Dropdown,
@@ -10,7 +10,7 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Button
+  Button,
 } from '@nextui-org/react'
 import HeaderTitle from './HeaderTitle.jsx'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -58,15 +58,15 @@ export default function Header() {
   if (isLoading || isOut) return <Spinner />
 
   return (
-    <Navbar 
-      maxWidth="full" 
-      className="z-10 bg-transparent shadow-sm"
-      height="4rem"
+    <Navbar
+      maxWidth='full'
+      className='z-10 bg-transparent shadow-sm'
+      height='4rem'
     >
       <NavbarBrand>
         <HeaderTitle />
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex" justify="center">
+      <NavbarContent className='hidden sm:flex' justify='center'>
         {/* <NavbarItem>
           <Input
             classNames={{
@@ -96,16 +96,20 @@ export default function Header() {
           />
         </NavbarItem> */}
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent justify='end'>
         <NavbarItem>
-          <Switch 
-            size="md" 
-            color="secondary"
+          <Switch
+            size='md'
+            color='secondary'
             thumbIcon={({ isSelected, className }) =>
               isSelected ? (
-                <span className={`${className} text-[10px] font-semibold `}>EN</span>
+                <span className={`${className} text-[10px] font-semibold `}>
+                  EN
+                </span>
               ) : (
-                <span className={`${className} text-[10px] font-semibold `}>FA</span>
+                <span className={`${className} text-[10px] font-semibold `}>
+                  FA
+                </span>
               )
             }
             isSelected={i18n.language === 'en'}
@@ -113,38 +117,44 @@ export default function Header() {
           />
         </NavbarItem>
         <NavbarItem>
-          <Dropdown placement="bottom-end">
+          <Dropdown placement='bottom-end'>
             <DropdownTrigger>
               <Avatar
                 isBordered
-                as="button"
-                className="transition-transform"
-                color="secondary"
+                as='button'
+                className='transition-transform'
+                color='secondary'
                 name={user?.user_metadata?.username || 'User'}
-                size="sm"
+                size='sm'
                 src={user?.user_metadata?.avatar}
               />
             </DropdownTrigger>
-            <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">{user?.user_metadata?.username}</p>
-                <p className="font-semibold">{user?.email}</p>
+            <DropdownMenu aria-label='Profile Actions' variant='flat'>
+              <DropdownItem key='profile' className='h-14 gap-2'>
+                <p className='font-semibold'>{user?.user_metadata?.username}</p>
+                <p className='font-semibold'>{user?.email}</p>
               </DropdownItem>
-              <DropdownItem 
-                key="settings" 
+              <DropdownItem
+                key='settings'
                 onClick={() => navigate('/profile')}
                 onTouchStart={() => navigate('/profile')}
               >
                 {t('myProfile')}
               </DropdownItem>
-              <DropdownItem key="logout" color="danger">
+              <DropdownItem key='logout' color='danger' className='p-0'>
                 <Button
-                  color="danger"
-                  variant="light"
+                  variant='light'
                   startContent={<SignOut size={18} />}
                   onClick={logout}
                   onTouchStart={logout}
-                  className="w-full justify-start px-2"
+                  className='
+      w-full justify-start px-2
+      bg-transparent
+      hover:bg-transparent
+      active:bg-transparent
+      focus:bg-transparent
+      data-[hover=true]:bg-transparent
+    '
                 >
                   {t('logout')}
                 </Button>
@@ -156,4 +166,3 @@ export default function Header() {
     </Navbar>
   )
 }
-
