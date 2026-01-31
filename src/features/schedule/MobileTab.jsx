@@ -10,9 +10,7 @@ import { format, isValid } from 'date-fns'
 import { useSelector } from 'react-redux'
 
 export default function MobileTab() {
-  const { dateCal, datePickerStatus } = useSelector(
-    (store) => store.task
-  )
+  const { dateCal, datePickerStatus } = useSelector((store) => store.task)
   const [selected, setSelected] = React.useState('photos')
   const { data: tasks, isLoading: isTask } = useGetTask()
   const { data: user, isLoading } = useGetUser()
@@ -33,25 +31,24 @@ export default function MobileTab() {
       : []
     : task
 
-
   if (isTask || isLoading) return <Spinner />
   return (
-    <div className='   md:hidden z-0   w-full h-[70%] md:h-[90%] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden'>
+    <div className='flex flex-col w-full h-full md:hidden'>
       <Tabs
-        color='secondary'
+        color='primary'
         fullWidth={true}
         variant='underlined'
         aria-label='Options'
         selectedKey={selected}
         onSelectionChange={setSelected}
       >
-        <Tab key='photos' title='ToDo' className='z-0 '>
-            <ColumnTodo task={tasksToDisplay} />
+        <Tab key='photos' title='To Do' className='h-full'>
+          <ColumnTodo task={tasksToDisplay} />
         </Tab>
-        <Tab key='music' title='In Procces'>
-            <ColumnInProgress task={tasksToDisplay} />
+        <Tab key='music' title='In Progress' className='h-full'>
+          <ColumnInProgress task={tasksToDisplay} />
         </Tab>
-        <Tab key='videos' title='Completed'>
+        <Tab key='videos' title='Completed' className='h-full'>
           <ColumnCompleted task={tasksToDisplay} />
         </Tab>
       </Tabs>

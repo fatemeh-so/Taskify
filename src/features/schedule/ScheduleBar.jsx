@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
-import { format} from 'date-fns'
+import { format } from 'date-fns'
 import { format as formatJalali } from 'date-fns-jalali'
 import { Button } from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +9,7 @@ import useGetTask from './useGetTask'
 import Spinner from '../../components/Spinner'
 import { useTranslation } from 'react-i18next'
 import FilterTaskByDate from './DatePicker'
+import { Plus, X } from 'phosphor-react'
 
 function ScheduleBar() {
   const { t, i18n } = useTranslation()
@@ -24,46 +26,41 @@ function ScheduleBar() {
   if (isTask) return <Spinner />
 
   return (
-    <div className='bg-[#ffffff] flex flex-col gap-2 md:gap-0 md:flex-row max-w-full rounded-[1rem] h-auto  items-center justify-between px-4 py-4'>
-      <div className='flex items-center w-full justify-between md:justify-start'>
-        <div className='flex-2  text-center md:text-left mb-2 md:mb-0'>
-          <span  className='sm:text-lg sm:font-semibold text-[1rem]'>
-            {i18n.language == 'en'
-              ? format(currentDate, 'MMMM dd, yyyy')
-              : formatJalali(currentDate, ' yyyy,dd MMMM')}
-          </span>
-        </div>
-        <div className='flex items-center'>
-          <Button
-            onClick={openTask}
-            color='primary'
-            className='md:hidden flex font-semibold text-[1rem] md:w-auto md:text-[1.1rem] h-9  mr-1 md:ml-2'
-            variant='bordered'
-            size='sm'
-          >
-            +Task
-          </Button>
-        </div>
+    <div className='flex flex-col md:flex-row justify-between items-start md:items-center w-full mb-6 gap-4'>
+      <div className='flex flex-col'>
+        <p className='text-gray-500 font-normal text-lg'>
+          {i18n.language == 'en'
+            ? format(currentDate, 'MMMM dd, yyyy')
+            : formatJalali(currentDate, ' yyyy,dd MMMM')}
+        </p>
       </div>
-      <div className='flex mt-1 md:mt-0  md:flex-row justify-between items-center gap-2 md:gap-3 w-full md:w-auto'>
-        <FilterTaskByDate />
+
+      <div className='flex items-center gap-3 w-full md:w-auto'>
+        <div className='flex-1 md:flex-none'>
+          <FilterTaskByDate />
+        </div>
+
         <Button
           onClick={openTask}
           color='primary'
-          className='hidden md:flex font-semibold text-[1rem] md:w-auto md:text-[1.1rem] md:h-11 h-9  mr-1 md:ml-2'
-          variant='bordered'
-          size='sm'
+          className='font-semibold'
+          startContent={<Plus size={18} weight='bold' />}
+          size='md'
+          radius='md'
         >
-          +{t('task')}
+          {t('addTask', { defaultValue: 'Add Task' })}
         </Button>
+
         {datePickerStatus && (
           <Button
-            color='primary'
+            isIconOnly
+            color='danger'
+            variant='flat'
             onClick={() => {
               dispatch(closeDateCal(false))
             }}
           >
-            Show All
+            <X size={18} weight='bold' />
           </Button>
         )}
       </div>

@@ -28,7 +28,7 @@ export async function signIn({ email, password }) {
   })
   if (error) {
     console.error(error)
-    throw new Error('there is an error in get login')
+    throw new Error(error.message)
   }
   return data
 }

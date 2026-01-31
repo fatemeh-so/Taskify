@@ -1,5 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
-import { Button, Input, Select, SelectItem, Checkbox } from '@nextui-org/react'
+import {
+  Button,
+  Input,
+  Select,
+  SelectItem,
+  Checkbox,
+  Textarea,
+} from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   CloseAddTask,
@@ -11,7 +19,15 @@ import {
   addToDoValue,
   clearAllField,
 } from './taskSlice'
-import { ListPlus, Trash } from 'phosphor-react'
+import {
+  ListPlus,
+  Trash,
+  CheckSquare,
+  Plus,
+  Tag,
+  Flag,
+  Hash,
+} from 'phosphor-react'
 import useAddTask from './useTask'
 import Spinner from '../../components/Spinner'
 import useGetTask from './useGetTask'
@@ -124,151 +140,179 @@ function AddTaskContent() {
   return (
     <div
       dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
-      className='min-h-screen bg-purple-50 py-8 px-4 sm:px-6 lg:px-8'
+      className='min-h-full bg-white px-6 pb-8'
     >
-      <div className='max-w-3xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden'>
-        <div className='px-6 py-8'>
-          {/* <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
-            {t('addNewTask')}
-          </h3> */}
-          <div className='space-y-6'>
-            <Input
-              fullWidth
+      <div className='max-w-4xl mx-auto space-y-8 pt-6'>
+        {/* Main Info */}
+        <div className='bg-white space-y-6'>
+          <Input
+            fullWidth
+            size='lg'
+            label={t('title')}
+            labelPlacement='outside'
+            placeholder={t('titleInput')}
+            onChange={(event) => {
+              dispatch(addTitle(event.target.value))
+            }}
+            classNames={{
+              input: 'text-lg font-medium',
+              inputWrapper:
+                'h-14 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 transition-colors',
+            }}
+            variant='flat'
+          />
+
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+            <Select
+              label={t('category')}
+              labelPlacement='outside'
               size='lg'
-              color='secondary'
-              onChange={(event) => {
-                dispatch(addTitle(event.target.value))
-              }}
-              type='text'
-              variant='bordered'
-              label={t('title')}
-              placeholder={t('titleInput')}
-              className='text-lg'
-            />
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-              <Select
-                fullWidth
-                label={t('category')}
-                size='lg'
-                onChange={(e) => handleCategoryChange(e.target.value)}
-                color='secondary'
-                variant='bordered'
-                selectionMode='single'
-              >
-                {categories.map((c) => (
-                  <SelectItem
-                    dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
-                    key={c.id}
-                    value={c.id.toString()}
-                    className={
-                      i18n.language == 'en' ? 'text-left' : 'text-right'
-                    }
-                  >
-                    {c.name[i18n.language]}
-                  </SelectItem>
-                ))}
-              </Select>
-              <Select
-                fullWidth
-                label={t('priority')}
-                size='lg'
-                onChange={(e) => handlePriorityChange(e.target.value)}
-                color='secondary'
-                variant='bordered'
-                selectionMode='single'
-              >
-                {priorities.map((p) => (
-                  <SelectItem
-                    dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
-                    key={p.id}
-                    value={p.id.toString()}
-                    className={`${
-                      i18n.language == 'en' ? 'text-left' : 'text-right'
-                    } ${p.color}`}
-                  >
-                    {p.name[i18n.language]}
-                  </SelectItem>
-                ))}
-              </Select>
-              <Select
-                fullWidth
-                label={t('status')}
-                isRequired={true}
-                size='lg'
-                onChange={(e) => handleStatusChange(e.target.value)}
-                color='secondary'
-                variant='bordered'
-                selectionMode='single'
-                error={statusError}
-              >
-                {statuses.map((s) => (
-                  <SelectItem
-                    dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
-                    key={s.id}
-                    value={s.id.toString()}
-                    className={
-                      i18n.language == 'en' ? 'text-left' : 'text-right'
-                    }
-                  >
-                    {s.name[i18n.language]}
-                  </SelectItem>
-                ))}
-              </Select>
-            </div>
-            {statusError && (
-              <p className='text-red-500 text-sm'>{t('statusRe')}</p>
-            )}
-            <Button
-              color='secondary'
+              placeholder='Select category'
+              startContent={<Tag size={18} className='text-default-400' />}
+              onChange={(e) => handleCategoryChange(e.target.value)}
               variant='flat'
+              selectionMode='single'
+              classNames={{
+                trigger: 'bg-gray-50 hover:bg-gray-100 h-14',
+              }}
+            >
+              {categories.map((c) => (
+                <SelectItem
+                  dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
+                  key={c.id}
+                  value={c.id.toString()}
+                >
+                  {c.name[i18n.language]}
+                </SelectItem>
+              ))}
+            </Select>
+
+            <Select
+              label={t('priority')}
+              labelPlacement='outside'
+              size='lg'
+              placeholder='Select Priority'
+              startContent={<Flag size={18} className='text-default-400' />}
+              onChange={(e) => handlePriorityChange(e.target.value)}
+              variant='flat'
+              selectionMode='single'
+              classNames={{
+                trigger: 'bg-gray-50 hover:bg-gray-100 h-14',
+              }}
+            >
+              {priorities.map((p) => (
+                <SelectItem
+                  dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
+                  key={p.id}
+                  value={p.id.toString()}
+                  className={p.color}
+                >
+                  {p.name[i18n.language]}
+                </SelectItem>
+              ))}
+            </Select>
+
+            <Select
+              label={t('status')}
+              labelPlacement='outside'
+              isRequired
+              size='lg'
+              placeholder='Select Status'
+              startContent={<Hash size={18} className='text-default-400' />}
+              onChange={(e) => handleStatusChange(e.target.value)}
+              variant='flat'
+              selectionMode='single'
+              errorMessage={statusError ? t('statusRe') : ''}
+              isInvalid={statusError}
+              classNames={{
+                trigger: 'bg-gray-50 hover:bg-gray-100 h-14',
+              }}
+            >
+              {statuses.map((s) => (
+                <SelectItem
+                  dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
+                  key={s.id}
+                  value={s.id.toString()}
+                >
+                  {s.name[i18n.language]}
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
+        </div>
+
+        {/* Checklist Section */}
+        <div className='space-y-4'>
+          <div className='flex items-center justify-between'>
+            <h3 className='text-lg font-semibold text-gray-700 flex items-center gap-2'>
+              <CheckSquare size={20} />
+              {t('Checklist', { defaultValue: 'Subtasks' })}
+            </h3>
+            <Button
+              size='sm'
+              color='primary'
+              variant='light'
               onClick={addTodo}
-              className='flex items-center gap-2 text-lg font-semibold'
-              startContent={<ListPlus size={24} />}
+              startContent={<Plus size={16} weight='bold' />}
             >
               {t('addTodo')}
             </Button>
-            <div className='space-y-4'>
-              {todos.map((todo) => (
-                <div
-                  key={todo.id}
-                  className='flex items-center gap-4 bg-gray-50 p-4 rounded-lg'
-                >
-                  <Checkbox
-                    size='lg'
-                    checked={todo.completed}
-                    onChange={() => toggleTodoCompleted(todo.id)}
-                    lineThrough
-                  />
-                  <Input
-                    fullWidth
-                    size='lg'
-                    color='secondary'
-                    value={todo.text}
-                    onChange={(e) => handleTodoChange(todo.id, e.target.value)}
-                    type='text'
-                    variant='bordered'
-                    placeholder={t('newTask')}
-                    className='flex-grow'
-                  />
-                  <Button
-                    onClick={() => handleDeleteTodo(todo.id)}
-                    color='danger'
-                    isIconOnly
-                    variant='flat'
-                  >
-                    <Trash size={20} />
-                  </Button>
-                </div>
-              ))}
-            </div>
-            <Button
-              color='secondary'
-              onClick={handleAddTask}
-              className='w-full text-lg font-bold py-6'
-            >
-              {t('addTask')}
-            </Button>
           </div>
+
+          <div className='space-y-3'>
+            {todos.map((todo) => (
+              <div key={todo.id} className='flex items-center gap-3 group'>
+                <Checkbox
+                  size='lg'
+                  radius='full'
+                  isSelected={todo.completed}
+                  onValueChange={() => toggleTodoCompleted(todo.id)}
+                  color='success'
+                />
+                <Input
+                  fullWidth
+                  size='md'
+                  value={todo.text}
+                  onChange={(e) => handleTodoChange(todo.id, e.target.value)}
+                  type='text'
+                  variant='underlined'
+                  placeholder={t('newTask', {
+                    defaultValue: 'Add a subtask description',
+                  })}
+                  classNames={{
+                    input: 'text-gray-700',
+                    inputWrapper: 'shadow-none !border-b-small border-gray-200',
+                  }}
+                />
+                <Button
+                  onClick={() => handleDeleteTodo(todo.id)}
+                  color='danger'
+                  isIconOnly
+                  size='sm'
+                  variant='light'
+                  className='opacity-0 group-hover:opacity-100 transition-opacity'
+                >
+                  <Trash size={18} />
+                </Button>
+              </div>
+            ))}
+            {todos.length === 0 && (
+              <div className='text-gray-400 text-sm italic py-4 text-center border-2 border-dashed border-gray-100 rounded-xl'>
+                No subtasks added yet
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className='pt-4 border-t border-gray-100'>
+          <Button
+            color='primary'
+            onClick={handleAddTask}
+            className='w-full text-lg font-bold h-14'
+            shadow='md'
+          >
+            {t('addTask')}
+          </Button>
         </div>
       </div>
     </div>

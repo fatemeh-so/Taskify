@@ -14,7 +14,15 @@ import {
 } from '@nextui-org/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeEditTask } from './taskSlice'
-import { ListPlus, Trash } from 'phosphor-react'
+import {
+  ListPlus,
+  Trash,
+  CheckSquare,
+  Plus,
+  Tag,
+  Flag,
+  Hash,
+} from 'phosphor-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useGetTask from './useGetTask'
 import Spinner from '../../components/Spinner'
@@ -120,136 +128,182 @@ export default function EditTaskModal() {
   if (isLoading || isEdit) return <Spinner />
   return (
     <Modal
-      isOpen={OpenEditTask}
+      isOpen={true}
       onOpenChange={() => {
         dispatch(closeEditTask())
         navigate('/schedule')
       }}
       isDismissable={false}
       isKeyboardDismissDisabled={true}
+      size='3xl'
+      scrollBehavior='inside'
     >
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className='flex flex-col gap-1'>Edit Task</ModalHeader>
-            <ModalBody>
-              <div className='w-full flex flex-col gap-4'>
-                <Input
-                  size='lg'
-                  color='secondary'
-                  onChange={handleTitleChange}
-                  type='text'
-                  variant='underlined'
-                  label='Title'
-                  value={title}
-                />
-                <div className=' sm:flex-row gap-4'>
-                  <Select
+            <ModalHeader className='flex flex-col gap-1 text-2xl font-bold p-6 border-b border-gray-100'>
+              Edit Task
+            </ModalHeader>
+            <ModalBody className='p-6'>
+              <div className='w-full flex flex-col gap-8'>
+                {/* Info Section */}
+                <div className='space-y-6'>
+                  <Input
                     fullWidth
-                    label={t('category')}
                     size='lg'
-                    onChange={(e) => handleCategoryChange(e.target.value)}
-                    color='secondary'
-                    variant='underlined'
-                    selectionMode='single'
-                  >
-                    {categories.map((c) => (
-                      <SelectItem
-                        color='primary'
-                        key={c.id}
-                        value={c.id.toString()}
-                      >
-                        {c.name[i18n.language]}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                  <Select
-                    fullWidth
-                    label={t('priority')}
-                    size='lg'
-                    onChange={(e) => handlePriorityChange(e.target.value)}
-                    color='secondary'
-                    variant='underlined'
-                    selectionMode='single'
-                  >
-                    {priorities.map((p) => (
-                      <SelectItem
-                        className={p.color}
-                        key={p.id}
-                        value={p.id.toString()}
-                      >
-                        {p.name[i18n.language]}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                  <Select
-                    // fullWidth
-                    label={t('status')}
-                    size='lg'
-                    onChange={(e) => handleStatusChange(e.target.value)}
-                    color='secondary'
-                    variant='underlined'
-                    selectionMode='single'
-                  >
-                    {statuses.map((s) => (
-                      <SelectItem key={s.id} value={s.id.toString()}>
-                        {s.name[i18n.language]}
-                      </SelectItem>
-                    ))}
-                  </Select>
+                    label='Title'
+                    labelPlacement='outside'
+                    value={title}
+                    onChange={handleTitleChange}
+                    variant='flat'
+                    classNames={{
+                      input: 'text-lg font-medium',
+                      inputWrapper:
+                        'h-14 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 transition-colors',
+                    }}
+                  />
+
+                  <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+                    <Select
+                      label={t('category')}
+                      labelPlacement='outside'
+                      size='lg'
+                      onChange={(e) => handleCategoryChange(e.target.value)}
+                      variant='flat'
+                      selectionMode='single'
+                      startContent={
+                        <Tag size={18} className='text-default-400' />
+                      }
+                      classNames={{
+                        trigger: 'bg-gray-50 hover:bg-gray-100 h-14',
+                      }}
+                    >
+                      {categories.map((c) => (
+                        <SelectItem key={c.id} value={c.id.toString()}>
+                          {c.name[i18n.language]}
+                        </SelectItem>
+                      ))}
+                    </Select>
+
+                    <Select
+                      label={t('priority')}
+                      labelPlacement='outside'
+                      size='lg'
+                      onChange={(e) => handlePriorityChange(e.target.value)}
+                      variant='flat'
+                      selectionMode='single'
+                      startContent={
+                        <Flag size={18} className='text-default-400' />
+                      }
+                      classNames={{
+                        trigger: 'bg-gray-50 hover:bg-gray-100 h-14',
+                      }}
+                    >
+                      {priorities.map((p) => (
+                        <SelectItem
+                          className={p.color}
+                          key={p.id}
+                          value={p.id.toString()}
+                        >
+                          {p.name[i18n.language]}
+                        </SelectItem>
+                      ))}
+                    </Select>
+
+                    <Select
+                      label={t('status')}
+                      labelPlacement='outside'
+                      size='lg'
+                      onChange={(e) => handleStatusChange(e.target.value)}
+                      variant='flat'
+                      selectionMode='single'
+                      startContent={
+                        <Hash size={18} className='text-default-400' />
+                      }
+                      classNames={{
+                        trigger: 'bg-gray-50 hover:bg-gray-100 h-14',
+                      }}
+                    >
+                      {statuses.map((s) => (
+                        <SelectItem key={s.id} value={s.id.toString()}>
+                          {s.name[i18n.language]}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  </div>
                 </div>
-                <Button
-                  variant='bordered'
-                  isIconOnly
-                  size='sm'
-                  className='self-start'
-                  onClick={handleAddTodo}
-                >
-                  <ListPlus size={28} color='#790c79' />
-                </Button>
-                <div className='mt-4'>
-                  {todos.map((s, index) => (
-                    <div key={index} className='flex gap-3'>
-                      <Checkbox
-                        size='lg'
-                        checked={s.completed}
-                        onChange={(e) =>
-                          handleTodoChange(index, 'completed', e.target.checked)
-                        }
-                      />
-                      <Input
-                        size='sm'
-                        color='secondary'
-                        value={s.text}
-                        onChange={(e) =>
-                          handleTodoChange(index, 'text', e.target.value)
-                        }
-                        type='text'
-                        variant='underlined'
-                        placeholder='New task'
-                      />
-                      <Button
-                        onClick={() => handleDeleteTodo(index)}
-                        color='danger'
-                        isIconOnly
-                        size='sm'
-                        className=''
-                        variant='bordered'
+
+                {/* Checklist Section */}
+                <div className='space-y-4'>
+                  <div className='flex items-center justify-between'>
+                    <h3 className='text-lg font-semibold text-gray-700 flex items-center gap-2'>
+                      <CheckSquare size={20} />
+                      Checklist
+                    </h3>
+                    <Button
+                      size='sm'
+                      color='primary'
+                      variant='light'
+                      onClick={handleAddTodo}
+                      startContent={<Plus size={16} weight='bold' />}
+                    >
+                      Add Item
+                    </Button>
+                  </div>
+
+                  <div className='space-y-3'>
+                    {todos.map((s, index) => (
+                      <div
+                        key={index}
+                        className='flex items-center gap-3 group'
                       >
-                        <Trash size={20} />
-                      </Button>
-                    </div>
-                  ))}
+                        <Checkbox
+                          size='lg'
+                          radius='full'
+                          isSelected={s.completed}
+                          onValueChange={(e) =>
+                            handleTodoChange(index, 'completed', e)
+                          }
+                          color='success'
+                        />
+                        <Input
+                          fullWidth
+                          size='md'
+                          value={s.text}
+                          onChange={(e) =>
+                            handleTodoChange(index, 'text', e.target.value)
+                          }
+                          type='text'
+                          variant='underlined'
+                          placeholder='New task'
+                          classNames={{
+                            input: 'text-gray-700',
+                            inputWrapper:
+                              'shadow-none !border-b-small border-gray-200',
+                          }}
+                        />
+                        <Button
+                          onClick={() => handleDeleteTodo(index)}
+                          color='danger'
+                          isIconOnly
+                          size='sm'
+                          variant='light'
+                          className='opacity-0 group-hover:opacity-100 transition-opacity'
+                        >
+                          <Trash size={20} />
+                        </Button>
+                      </div>
+                    ))}
+                    {todos.length === 0 && (
+                      <div className='text-gray-400 text-sm italic py-4 text-center border-2 border-dashed border-gray-100 rounded-xl'>
+                        No subtasks added yet
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <Button
-                  color='primary'
-                  onClick={() => handleSaveTask(currentTask.id)}
-                >
-                  Save Task
-                </Button>
               </div>
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter className='p-6 border-t border-gray-100'>
               <Button
                 color='danger'
                 variant='light'
@@ -258,7 +312,14 @@ export default function EditTaskModal() {
                   navigate('/schedule')
                 }}
               >
-                Close
+                Cancel
+              </Button>
+              <Button
+                color='primary'
+                onClick={() => handleSaveTask(currentTask.id)}
+                className='font-semibold'
+              >
+                Save Changes
               </Button>
             </ModalFooter>
           </>

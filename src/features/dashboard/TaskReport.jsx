@@ -1,9 +1,16 @@
 import { useSelector } from 'react-redux'
 import Spinner from '../../components/Spinner'
 import useGetTask from '../schedule/useGetTask'
-// import TimerScheduleDataInitializer from '../dashboard/TimerScheduleDataInitializer'
 import useGetUser from '../auth/useGetUser'
 import { useTranslation } from 'react-i18next'
+import { Card, CardBody } from '@nextui-org/react'
+import {
+  CheckCircle,
+  Clock,
+  HourglassHigh,
+  ListChecks,
+  Circle,
+} from 'phosphor-react'
 
 export default function TaskReport() {
   const { t } = useTranslation()
@@ -43,42 +50,70 @@ export default function TaskReport() {
     .toISOString()
     .substr(11, 8)
 
+  const stats = [
+    {
+      title: t('totalTask'),
+      value: total,
+      icon: ListChecks,
+      color: 'text-indigo-500',
+      bg: 'bg-indigo-50',
+    },
+    {
+      title: t('notStarted'),
+      value: todoTask,
+      icon: Circle,
+      color: 'text-rose-500',
+      bg: 'bg-rose-50',
+    },
+    {
+      title: t('inProgress'),
+      value: inProgressTask,
+      icon: HourglassHigh,
+      color: 'text-blue-500',
+      bg: 'bg-blue-50',
+    },
+    {
+      title: t('completed'),
+      value: completedTask,
+      icon: CheckCircle,
+      color: 'text-emerald-500',
+      bg: 'bg-emerald-50',
+    },
+    {
+      title: t('currentWeekTimer'),
+      value: formattedTotalWeekTimer,
+      icon: Clock,
+      color: 'text-amber-500',
+      bg: 'bg-amber-50',
+    },
+  ]
+
   return (
-    <div className='w-full p-0 md:py-4 mb-2 lg:mb-0'>
-      <div className='flex flex-wrap justify-around gap-2 md:gap-4'>
-        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
-          <span className='text-lg md:text-2xl text-green-500'>{total}</span>
-          <h1 className='text-sm md:text-lg text-gray-600'>{t('totalTask')}</h1>
-        </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
-          <span className='text-lg md:text-2xl text-pink-500'>{todoTask}</span>
-          <h1 className='text-sm md:text-lg text-gray-600'>
-            {t('notStarted')}
-          </h1>
-        </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
-          <span className='text-lg md:text-2xl text-blue-500'>
-            {inProgressTask}
-          </span>
-          <h1 className='text-sm md:text-lg text-gray-600'>
-            {t('inProgress')}
-          </h1>
-        </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
-          <span className='text-lg md:text-2xl text-yellow-500'>
-            {completedTask}
-          </span>
-          <h1 className='text-sm md:text-lg text-gray-600'>{t('completed')}</h1>
-        </div>
-        <div className='bg-white p-2 md:p-4 rounded-lg text-center hover:shadow-lg transition-shadow flex-1 min-w-[120px] md:min-w-[150px]'>
-          <span className='text-lg md:text-2xl text-orange-500'>
-            {formattedTotalWeekTimer}
-          </span>
-          <h1 className='text-sm md:text-lg text-gray-600'>
-            {t('currentWeekTimer')}
-          </h1>
-        </div>
-      </div>
+    <div className='w-full grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6'>
+      {stats.map((stat, index) => (
+        <Card
+          key={index}
+          shadow='sm'
+          className='
+  border-none
+  last:odd:col-span-2
+  md:last:odd:col-span-1
+  lg:col-span-1
+'
+        >
+          <CardBody className='flex flex-row items-center justify-between p-4'>
+            <div>
+              <p className='text-sm text-gray-500 font-medium mb-1'>
+                {stat.title}
+              </p>
+              <h4 className='text-2xl font-bold text-gray-800'>{stat.value}</h4>
+            </div>
+            <div className={`p-3 rounded-xl ${stat.bg} ${stat.color}`}>
+              <stat.icon size={24} weight='bold' />
+            </div>
+          </CardBody>
+        </Card>
+      ))}
     </div>
   )
 }

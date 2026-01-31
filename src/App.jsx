@@ -19,7 +19,7 @@ export default function App() {
       <NextUIProvider>
         <BrowserRouter>
           <Routes>
-             <Route
+            <Route
               element={
                 <ProtectedRoute>
                   <AppLayout />
@@ -28,17 +28,16 @@ export default function App() {
             >
               <Route index element={<Navigate replace to='dashboard' />} />
               <Route path='dashboard' element={<Dashboard />} />
-              <Route path='schedule' element={<Schedule />} />
-              <Route path='schedule/:scheduleId' element={<EditTaskModal />} />
+              <Route path='schedule' element={<Schedule />}>
+                <Route path=':scheduleId' element={<EditTaskModal />} />
+              </Route>
               <Route path='calender' element={<Calender />} />
               <Route path='timer' element={<Timer />} />
               <Route path='profile' element={<MyProfile />} />
-
             </Route>
             <Route path='login' element={<Login />} />
             <Route path='signup' element={<SignUp />} />
-            <Route path="*" element={<PageNotFound />} />
-
+            <Route path='*' element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
       </NextUIProvider>
@@ -57,7 +56,7 @@ export default function App() {
             fontSize: '16px',
             maxWidth: '500px',
             padding: '16px 24px',
-            backgroundColor: 'var(--color-grey-0)',
+            backgroundColor: 'white',
             color: 'var(--color-grey-700)',
           },
         }}

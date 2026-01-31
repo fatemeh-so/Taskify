@@ -60,42 +60,16 @@ export default function Header() {
   return (
     <Navbar
       maxWidth='full'
-      className='z-10 bg-transparent shadow-sm'
+      className='z-0 bg-transparent bg-[#f8f9fa]'
       height='4rem'
+      classNames={{
+        wrapper: 'px-4 lg:px-8',
+      }}
     >
       <NavbarBrand>
         <HeaderTitle />
       </NavbarBrand>
-      <NavbarContent className='hidden sm:flex' justify='center'>
-        {/* <NavbarItem>
-          <Input
-            classNames={{
-              base: "max-w-full sm:max-w-[20rem] h-10",
-              mainWrapper: "h-full",
-              input: "text-small",
-              inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-            }}
-            placeholder={t('searchInput')}
-            size="sm"
-            startContent={<SearchIcon size={18} />}
-            type="search"
-            variant="bordered"
-            onChange={handleChange}
-            onFocus={() => handleFocus(true)}
-            dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
-            endContent={
-              <Button 
-                size="sm" 
-                variant="light" 
-                isIconOnly 
-                onClick={handleClearSearch}
-              >
-                ✕
-              </Button>
-            }
-          />
-        </NavbarItem> */}
-      </NavbarContent>
+      <NavbarContent className='hidden sm:flex' justify='start'></NavbarContent>
       <NavbarContent justify='end'>
         <NavbarItem>
           <Switch

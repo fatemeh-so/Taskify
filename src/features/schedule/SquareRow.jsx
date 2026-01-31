@@ -1,5 +1,15 @@
-import { Checkbox, Chip, Tooltip } from '@nextui-org/react'
-import { format, newDate } from 'date-fns-jalali'
+/* eslint-disable react/prop-types */
+import {
+  Checkbox,
+  Chip,
+  Tooltip,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Button,
+} from '@nextui-org/react'
+import { format } from 'date-fns-jalali'
 
 import {
   Briefcase,
@@ -14,6 +24,7 @@ import {
   Heartbeat,
   Trash,
   Pencil,
+  Clock,
 } from 'phosphor-react'
 import useDeleteTask from './useDeleteTask'
 import Spinner from '../../components/Spinner'
@@ -23,7 +34,6 @@ import { editTask } from './taskSlice'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-/* eslint-disable react/prop-types */
 function SquareRow({ task }) {
   const { t, i18n } = useTranslation()
   const { mutate: deleteTask, isLoading: isDelete } = useDeleteTask()
@@ -38,37 +48,36 @@ function SquareRow({ task }) {
   }
 
   const categoryIcons = {
-    Work: <Briefcase size={20} />,
-    Personal: <User size={20} />,
-    Study: <BookOpen size={20} />,
-    Fitness: <DribbbleLogo size={28} color='#f4ecf4' />,
-    Family: <Heart size={20} />,
-    Health: <Heartbeat size={28} color='#f4ecf4' />,
-    Finance: <Wallet size={20} />,
-    Travel: <Airplane size={20} />,
-    Hobbies: <Palette size={20} />,
-    Social: <UsersThree size={20} />,
+    Work: <Briefcase size={18} />,
+    Personal: <User size={18} />,
+    Study: <BookOpen size={18} />,
+    Fitness: <DribbbleLogo size={18} />,
+    Family: <Heart size={18} />,
+    Health: <Heartbeat size={18} />,
+    Finance: <Wallet size={18} />,
+    Travel: <Airplane size={18} />,
+    Hobbies: <Palette size={18} />,
+    Social: <UsersThree size={18} />,
   }
 
-  const priorityColorChip = priorityColorsChip[task?.priority] || 'gray'
+  const priorityColorChip = priorityColorsChip[task?.priority] || 'default'
 
   const createdAtDate = task?.created_at ? new Date(task.created_at) : null
   const isPersian = i18n.language === 'fa'
   const formattedDate = !isPersian
     ? createdAtDate
       ? createdAtDate.toLocaleDateString(undefined, {
-          year: 'numeric',
-          month: 'long',
+          month: 'short',
           day: 'numeric',
         })
       : ''
-    : format(createdAtDate, 'yyyy MMMM d')
+    : format(createdAtDate, 'd MMMM')
 
   const formattedTime = createdAtDate
     ? createdAtDate.toLocaleTimeString(undefined, {
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false, // Ensures 24-hour format without AM/PM
+        hour12: false,
       })
     : ''
 
@@ -80,83 +89,94 @@ function SquareRow({ task }) {
   if (isDelete) return <Spinner />
 
   return (
-    <div
-      dir={isPersian ? 'rtl' : 'ltr'}
-      className='p-4 overflow-x-hidden bg-white rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-300 ease-in-out'
+    <Card
+      className='w-full mb-3 border-none hover:scale-[1.02] transition-transform duration-200'
+      shadow='sm'
     >
-      <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4'>
-        <div
-          className='font-bold  sm:text-xl md:text-lg text-gray-800 mb-2 sm:mb-0'
-          style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}
-        >
-          <span>{task?.title}</span>
-        </div>
-        <div className='flex items-center gap-3'>
-          <span className='text-sm sm:text-base text-gray-600'>
-            {task?.duration
-              ? new Date(task.duration * 1000).toISOString().substr(11, 8)
-              : ''}
-          </span>
-          <Chip color={priorityColorChip} size='sm' variant='flat'>
-            {t(task.priority)}
-          </Chip>
-        </div>
-      </div>
-      <div className='border p-4 rounded-lg bg-gray-50'>
-        <div className='flex justify-between items-center mb-4'>
-          <div
-            className='flex items-center'
-            style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}
-          >
+      <CardHeader className='flex justify-between items-start px-4 pt-4 pb-0'>
+        <div className='flex flex-col gap-1 items-start max-w-[70%]'>
+          <div className='flex items-center gap-2 text-gray-400 text-xs font-medium uppercase tracking-wider'>
             {categoryIcons[task?.category]}
-            <span className='ml-3 text-gray-700 text-lg'>
-              {t(task?.category)}
-            </span>
+            <span>{t(task?.category)}</span>
           </div>
+          <h4 className='text-md font-bold text-gray-800 line-clamp-2 text-left'>
+            {task?.title}
+          </h4>
         </div>
-        <div className='text-gray-700'>
+        <Chip
+          color={priorityColorChip}
+          size='sm'
+          variant='flat'
+          className='capitalize border-none'
+        >
+          {t(task.priority)}
+        </Chip>
+      </CardHeader>
+
+      <CardBody className='px-4 py-3'>
+        <div className='flex flex-col gap-2'>
           {task?.description?.map((desc, index) => (
-            <div key={index} className='flex justify-start mt-2 mb-2'>
-              <Checkbox lineThrough defaultSelected={desc?.completed}>
-                <span
-                  className='ml-3'
-                  style={{
-                    overflowWrap: 'break-word',
-                    wordBreak: 'break-word',
-                  }}
-                >
-                  {desc.text}
-                </span>
-              </Checkbox>
-            </div>
+            <Checkbox
+              key={index}
+              defaultSelected={desc?.completed}
+              lineThrough
+              size='sm'
+              color={
+                priorityColorChip === 'default' ? 'primary' : priorityColorChip
+              }
+              classNames={{
+                label: 'text-gray-600 text-sm',
+              }}
+            >
+              {desc.text}
+            </Checkbox>
           ))}
         </div>
-      </div>
-      {createdAtDate && (
-        <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4 pt-4 border-t text-sm text-gray-500'>
-          <span style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-            {formattedDate}, {formattedTime}
-          </span>
-          <div className='flex gap-4 mt-2 sm:mt-0'>
-            <Tooltip content={t('edit')}>
-              <Pencil
-                onClick={() => editTaskHandler(task.id)}
-                size={20}
-                className='cursor-pointer hover:text-blue-500 transition-colors duration-200'
-              />
-            </Tooltip>
-            <Tooltip content={t('delete')}>
-              <Trash
-                onClick={() => deleteTask(task.id)}
-                size={20}
-                className='cursor-pointer hover:text-red-500 transition-colors duration-200'
-              />
-            </Tooltip>
-            <EditTaskModal task={task} />
-          </div>
+      </CardBody>
+
+      <CardFooter className='flex justify-between items-center px-4 py-3 border-t border-gray-100 bg-gray-50/50'>
+        <div className='flex items-center gap-1 text-gray-400 text-xs'>
+          <Clock size={14} />
+          <span>{formattedDate}</span>
+          <span>•</span>
+          <span>{formattedTime}</span>
+          {task?.duration > 0 && (
+            <>
+              <span className='ml-1'>•</span>
+              <span className='font-medium text-gray-600'>
+                {new Date(task.duration * 1000).toISOString().substr(11, 8)}
+              </span>
+            </>
+          )}
         </div>
-      )}
-    </div>
+
+        <div className='flex gap-1'>
+          <Tooltip content={t('edit')}>
+            <Button
+              isIconOnly
+              size='sm'
+              variant='light'
+              color='primary'
+              onClick={() => editTaskHandler(task.id)}
+            >
+              <Pencil size={18} />
+            </Button>
+          </Tooltip>
+          <Tooltip content={t('delete')} color='danger'>
+            <Button
+              isIconOnly
+              size='sm'
+              variant='light'
+              color='danger'
+              onClick={() => deleteTask(task.id)}
+            >
+              <Trash size={18} />
+            </Button>
+          </Tooltip>
+          {/* <EditTaskModal task={task} /> REMOVED: Handled by Route */}
+        </div>
+      </CardFooter>
+    </Card>
   )
 }
 

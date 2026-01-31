@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import SquareRow from './SquareRow'
+import { Chip } from '@nextui-org/react'
 
 function ColumnCompleted({ label, color, task }) {
   // const { data: task, isLoading: isTask } = useGetTask()
@@ -8,36 +9,49 @@ function ColumnCompleted({ label, color, task }) {
   const CompletedTask =
     task?.filter((task) => task?.status?.toString() === 'Completed') || []
 
-  const bgColorClass =
-    {
-      pink1: 'bg-pink-100',
-      blue1: 'bg-blue-100',
-      yellow: 'bg-yellow-100',
-    }[color] || 'bg-gray-100' // default to gray if color is not found
+  // Mapping color prop to subtle background colors for the header/count chip
+  const colorMap = {
+    pink1: 'danger',
+    blue1: 'primary',
+    yellow: 'warning',
+  }
+
+  const chipColor = colorMap[color] || 'default'
 
   return (
-    <div
-      className={`flex flex-col flex-1  p-4 rounded overflow-y-auto  `}
-      style={{ maxHeight: '100%' }}
-    >
-      <div className='flex justify-center items-center'>
-        <div
-          className={`text-center hidden md:block w-full rounded-[.4rem] pt-2 h-[2.5rem] font-bold mb-4 ${bgColorClass}`}
+    <div className='flex flex-col h-full flex-1 min-w-[300px]'>
+      {/* Column Header */}
+      <div className='flex items-center justify-between px-2 mb-4'>
+        <div className='flex items-center gap-2'>
+          <div className={`w-3 h-3 rounded-full bg-yellow-500`}></div>
+          <h3 className='font-bold text-gray-700 text-lg uppercase tracking-tight'>
+            {label}
+          </h3>
+        </div>
+        <Chip
+          size='sm'
+          variant='flat'
+          color={chipColor}
+          className='font-semibold'
         >
-          {label}
-        </div>
+          {CompletedTask.length}
+        </Chip>
       </div>
-      {CompletedTask.length > 0 ? (
-        <div className=' overflow-y-auto h-[100%] w-[100%] '>
-          {CompletedTask?.map((task) => {
-            return <SquareRow key={task?.id} task={task} />
-          })}
-        </div>
-      ) : (
-        <div className='flex justify-center items-center w-full h-24 text-gray-500 bg-[#ffffff] rounded-xl '>
-          No Task
-        </div>
-      )}
+
+      {/* Task List */}
+      <div className='flex-1 overflow-y-auto px-2 pb-4 scrollbar-hide'>
+        {CompletedTask.length > 0 ? (
+          <div className='flex flex-col gap-3'>
+            {CompletedTask?.map((task) => {
+              return <SquareRow key={task?.id} task={task} />
+            })}
+          </div>
+        ) : (
+          <div className='flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-200 rounded-xl text-gray-400'>
+            <span className='text-sm font-medium'>No tasks yet</span>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

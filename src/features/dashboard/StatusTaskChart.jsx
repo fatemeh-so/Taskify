@@ -8,6 +8,7 @@ import {
 } from 'recharts'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Card, CardHeader, CardBody } from '@nextui-org/react'
 
 // eslint-disable-next-line react/prop-types
 const StatusTaskChart = ({ tasks }) => {
@@ -45,50 +46,59 @@ const StatusTaskChart = ({ tasks }) => {
 
   if (tasks.length === 0) {
     return (
-      <div className='flex mt-4 h-[17.3rem] shadow-sm rounded-lg justify-center items-center bg-white w-full  text-gray-500'>
+      <Card className='h-[19rem] shadow-sm border border-gray-100 flex justify-center items-center text-gray-500'>
         {t('noTask')}
-      </div>
+      </Card>
     )
   }
 
   return (
-    <div className='mt-4 bg-white p-4 rounded-lg '>
-      <h2 className='text-lg font- text-gray-800 mb-4'>{t('taskStatus')}</h2>
-      <ResponsiveContainer
-        width='100%'
-        height={190}
-        minHeight={150}
-        maxHeight={200}
-      >
-        <PieChart>
-          <Pie
-            data={taskStatuses}
-            dataKey='value'
-            nameKey='name'
-            cx='50%'
-            cy='50%'
-            outerRadius={60}
-            fill='#8884d8'
-            label={({ percentage }) => `${percentage}%`} // Display percentage inside the Pie
-          >
-            {taskStatuses.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend
-            layout='vertical'
-            align='right'
-            verticalAlign='middle'
-            radius='100%'
-            className='rounded-full'
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+    <Card className='shadow-sm border border-gray-100 h-full'>
+      <CardHeader className='pb-0 pt-4 px-4 flex-col items-start'>
+        <h3 className='font-bold text-large text-gray-800'>
+          {t('taskStatus')}
+        </h3>
+      </CardHeader>
+      <CardBody className='overflow-visible py-2'>
+        <ResponsiveContainer width='100%' height={250}>
+          <PieChart>
+            <Pie
+              data={taskStatuses}
+              dataKey='value'
+              nameKey='name'
+              cx='50%'
+              cy='50%'
+              outerRadius={80}
+              innerRadius={60}
+              paddingAngle={5}
+              fill='#8884d8'
+              label={({ percentage }) => `${percentage}%`} // Display percentage inside the Pie
+            >
+              {taskStatuses.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                  stroke='none'
+                />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                borderRadius: '8px',
+                border: 'none',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              }}
+            />
+            <Legend
+              layout='vertical'
+              align='right'
+              verticalAlign='middle'
+              iconType='circle'
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </CardBody>
+    </Card>
   )
 }
 

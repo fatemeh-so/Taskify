@@ -22,20 +22,17 @@ function AddTask({ onClose, close }) {
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className='flex flex-col w-full md:w-3/4 xl:w-2/4 bg-white shadow-2xl'
           >
-            <div className='flex items-center justify-between p-4 border-b border-purple-200 bg-gradient-to-br from-purple-100 to-purple-200'>
-              <h2 className='text-2xl font-semibold text-gray-800 '>
+            <div className='flex items-center justify-between p-6 border-b border-gray-100'>
+              <h2 className='text-3xl font-bold text-gray-800 tracking-tight'>
                 {t('addNewTask')}
               </h2>
               <motion.button
                 onClick={onClose}
-                className=' rounded-full hover:bg-gray-100 transition-colors duration-200'
+                className='p-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors'
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <XCircle
-                  size={32}
-                  className='text-blue-500 hover:text-blue-600'
-                />
+                <XCircle size={32} weight='fill' />
               </motion.button>
             </div>
             <div className='flex-grow overflow-y-auto'>

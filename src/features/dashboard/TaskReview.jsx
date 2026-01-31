@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Chip, Progress } from '@nextui-org/react'
+import { Chip, Progress, Card, CardBody } from '@nextui-org/react'
 import {
   Briefcase,
   User,
@@ -64,54 +64,60 @@ function TaskReview({ task }) {
     : ''
 
   return (
-    <div
+    <Card
       dir={isPersian ? 'rtl' : 'ltr'}
-      className='border min-h-[250px] bg-white rounded-lg  p-4 flex-shrink-0 max-w-1/5'
+      className='bg-white rounded-xl shadow-sm border border-gray-100'
     >
-      <div className='flex  md:flex-row justify-between items-start md:items-center '>
-        <h1 className='text-lg font-bold text-gray-800 px-1'>{task?.title}</h1>
-        <div className='flex items-center py-2 md:mt-0'>
+      <CardBody className='p-4'>
+        <div className='flex justify-between items-start mb-3'>
+          <h1 className='text-lg font-bold text-gray-800 line-clamp-1'>
+            {task?.title}
+          </h1>
           <Chip size='sm' variant='flat' color={priorityColorChip}>
             {t(task?.priority)}
           </Chip>
         </div>
-      </div>
 
-      <div className='flex justify-between items-center py-2'>
-        <div className='flex'>
-          {categoryIcons[task?.category]}
-          <span className='ml-2 text-lg text-gray-700'>
-            {t(task?.category)}
+        <div className='flex justify-between items-center mb-4'>
+          <div className='flex items-center text-gray-600'>
+            {categoryIcons[task?.category]}
+            <span className='ml-2 text-sm font-medium'>
+              {t(task?.category)}
+            </span>
+          </div>
+
+          <span className='text-sm font-mono text-gray-500'>
+            {task?.duration
+              ? new Date(task.duration * 1000).toISOString().substr(11, 8)
+              : ''}
           </span>
         </div>
 
-        <span className='text-sm font-semibold text-gray-600'>
-          {task?.duration
-            ? new Date(task.duration * 1000).toISOString().substr(11, 8)
-            : ''}
-        </span>
-      </div>
+        <div className='bg-gray-50 p-3 rounded-lg mb-4'>
+          <div className='flex justify-between text-xs mb-2'>
+            <span className='text-gray-500'>{t('taskCompletion')}:</span>
+            <span className='font-semibold text-gray-700'>
+              {processValueLength}/{allProcess?.length}
+            </span>
+          </div>
+          <Progress
+            size='sm'
+            aria-label='Task completion'
+            value={(processValueLength / allProcess?.length) * 100}
+            className='max-w-full'
+            color={
+              processValueLength === allProcess?.length ? 'success' : 'primary'
+            }
+          />
+        </div>
 
-      <div className='bg-gray-50 p-4 rounded-lg'>
-        <div className='mb-4'>
-          <span className='text-gray-700'>{t('taskCompletion')}:</span>
-          <span className='ml-2 text-gray-800 font-semibold'>
-            {processValueLength}/{allProcess?.length}
+        <div className='flex items-center text-xs text-gray-400'>
+          <span>
+            {formattedDate} , {formattedTime}
           </span>
         </div>
-        <Progress
-          aria-label='Task completion'
-          value={(processValueLength / allProcess?.length) * 100}
-          className='max-w-full'
-        />
-      </div>
-
-      <div className='mt-4'>
-        <span className='text-sm text-gray-500'>
-          {formattedDate} , {formattedTime}
-        </span>
-      </div>
-    </div>
+      </CardBody>
+    </Card>
   )
 }
 

@@ -10,20 +10,29 @@ export default function TimerTab() {
   const [selected, setSelected] = React.useState('photos')
 
   return (
-    <div className='flex w-full mt-4 lg:h-full md:h-[120vh] flex-col'>
+    <div className='flex w-full flex-col gap-6'>
       <Tabs
-        aria-label='Options'
+        aria-label='Timer Options'
         selectedKey={selected}
         onSelectionChange={setSelected}
+        color='primary'
+        variant='underlined'
+        classNames={{
+          tabList:
+            'gap-6 w-full relative rounded-none p-0 border-b border-divider',
+          cursor: 'w-full bg-primary',
+          tab: 'max-w-fit px-0 h-12 text-lg',
+          tabContent: 'group-data-[selected=true]:text-primary font-medium',
+        }}
       >
         <Tab key='photos' title={t('timer')}>
-          <div className='pr-4'>
+          <div className='flex flex-col gap-6 pt-4'>
             <TimerBar />
             <TimerProject />
           </div>
-        </Tab>{' '}
+        </Tab>
         <Tab key='music' title={t('taskTimer')}>
-          <div className='pr-4'>
+          <div className='flex flex-col gap-6 pt-4'>
             <TimerBarSchedule />
             <TimerProjectSchedule />
           </div>

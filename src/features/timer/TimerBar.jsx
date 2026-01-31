@@ -1,4 +1,5 @@
-import { Button, Input } from '@nextui-org/react'
+/* eslint-disable react/prop-types */
+import { Button, Input, Card } from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import {
@@ -12,6 +13,7 @@ import Spinner from '../../components/Spinner'
 import useAddTimer from './useAddTimer'
 import useGetUser from '../auth/useGetUser'
 import { useTranslation } from 'react-i18next'
+import { Play, Stop, Timer as TimerIcon } from 'phosphor-react'
 
 function TimerBar() {
   const { t, i18n } = useTranslation()
@@ -63,31 +65,54 @@ function TimerBar() {
   if (isAddTimer || isUser) return <Spinner />
 
   return (
-    <div
-      dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
-      className='fa bg-[#ffffff] gap-6 flex max-w-full rounded-[1rem] items-center justify-between px-4  py-6'
-    >
-      <Input
-        type='text'
-        placeholder={t(`timerInput`)}
-        value={taskName}
-        variant='bordered'
-        onChange={(e) => {
-          dispatch(addTaskName(e.target.value))
-        }}
-      />
-      <div>
-        <span>{convertDuration}</span>
-      </div>
-      <Button
-        color={!open ? 'primary' : 'danger'}
-        className='font-semibold min-w-[80px] md:min-w-[100px]'
-        size='lg'
-        onClick={handleStartStop}
+    <Card className='w-full p-4 border-none shadow-sm bg-white' shadow='sm'>
+      <div
+        dir={i18n.language == 'en' ? 'ltr' : 'rtl'}
+        className='flex flex-col md:flex-row items-center gap-4 justify-between'
       >
-        {open ? t('stop') : t('start')}
-      </Button>
-    </div>
+        <Input
+          type='text'
+          placeholder={t(`timerInput`)}
+          value={taskName}
+          size='lg'
+          variant='flat'
+          className='flex-1 lg:max-w-xl'
+          startContent={<TimerIcon size={20} className='text-default-400' />}
+          classNames={{
+            input: 'text-lg',
+            inputWrapper:
+              'bg-gray-50 hover:bg-gray-100 group-data-[focus=true]:bg-gray-100',
+          }}
+          onChange={(e) => {
+            dispatch(addTaskName(e.target.value))
+          }}
+        />
+
+        <div className='flex items-center gap-6 w-full md:w-auto justify-between md:justify-end'>
+          <div className='font-mono text-2xl font-bold text-gray-800 tracking-wider bg-gray-50 px-4 py-2 rounded-lg min-w-[120px] text-center'>
+            {convertDuration}
+          </div>
+
+          <Button
+            color={!open ? 'primary' : 'danger'}
+            className='font-semibold min-w-[120px]'
+            size='lg'
+            radius='lg'
+            variant={open ? 'flat' : 'solid'}
+            startContent={
+              open ? (
+                <Stop weight='bold' size={20} />
+              ) : (
+                <Play weight='bold' size={20} />
+              )
+            }
+            onClick={handleStartStop}
+          >
+            {open ? t('stop') : t('start')}
+          </Button>
+        </div>
+      </div>
+    </Card>
   )
 }
 

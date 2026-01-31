@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { ArrowLeft, ArrowRight } from 'phosphor-react'
 import TaskReview from '../dashboard/TaskReview'
 import { useTranslation } from 'react-i18next'
+import { Card, CardHeader, CardBody, Button } from '@nextui-org/react'
 
 function InprogressTaskReports({ taskFilterInProgressive }) {
   const { t } = useTranslation()
@@ -20,43 +21,52 @@ function InprogressTaskReports({ taskFilterInProgressive }) {
     }
   }
   return (
-    <div className='relative min-h-[18rem] bg-white rounded-lg'>
-      <div className='flex justify-between items-center px-4 pt-4'>
-        <h1 className='text-md md:text-lg lg:text-xl pb-2 font-bold text-gray-800'>
+    <Card className='w-full mb-6 border-none' shadow='sm'>
+      <CardHeader className='flex justify-between items-center px-6 py-4'>
+        <h1 className='text-lg md:text-xl font-bold text-gray-800'>
           {t('InProgressReview')}
         </h1>
-        <div className='gap-2 flex mb-2'>
-          <button
-            className='rounded-full border p-2 hover:bg-blue-100'
+        <div className='flex gap-2'>
+          <Button
+            isIconOnly
+            variant='light'
+            radius='full'
             onClick={scrollLeft}
             aria-label='Scroll Left'
           >
-            <ArrowLeft size={24} />
-          </button>
-          <button
-            className='rounded-full border p-2 hover:bg-blue-100'
+            <ArrowLeft size={20} />
+          </Button>
+          <Button
+            isIconOnly
+            variant='light'
+            radius='full'
             onClick={scrollRight}
             aria-label='Scroll Right'
           >
-            <ArrowRight size={24} />
-          </button>
+            <ArrowRight size={20} />
+          </Button>
         </div>
-      </div>
-      <div
-        ref={scrollContainerRef}
-        className='flex w-full overflow-x-hidden gap-2 justify-start items-start px-4 pb-4 '
-      >
-        {taskFilterInProgressive.length > 0 ? (
-          taskFilterInProgressive.map((task) => (
-            <TaskReview key={task.id} task={task} />
-          ))
-        ) : (
-          <div className='flex justify-center items-center w-full h-32 text-gray-500'>
-            {t('noTask')}
-          </div>
-        )}
-      </div>
-    </div>
+      </CardHeader>
+      <CardBody className='px-0 pb-4'>
+        <div
+          ref={scrollContainerRef}
+          className='flex w-full overflow-x-auto gap-4 px-6 pb-2 scrollbar-hide'
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {taskFilterInProgressive.length > 0 ? (
+            taskFilterInProgressive.map((task) => (
+              <div key={task.id} className='min-w-[280px]'>
+                <TaskReview task={task} />
+              </div>
+            ))
+          ) : (
+            <div className='flex justify-center items-center w-full h-32 text-gray-500'>
+              {t('noTask')}
+            </div>
+          )}
+        </div>
+      </CardBody>
+    </Card>
   )
 }
 

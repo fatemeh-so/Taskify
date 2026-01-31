@@ -1,4 +1,5 @@
-import { Button } from '@nextui-org/react'
+/* eslint-disable react/prop-types */
+import { Button, Card } from '@nextui-org/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import {
@@ -15,6 +16,7 @@ import useGetTask from '../schedule/useGetTask'
 import ScheduleSearchResult from './ScheduleSearchResult'
 import useGetUser from '../auth/useGetUser'
 import { useTranslation } from 'react-i18next'
+import { Play, Stop } from 'phosphor-react'
 
 function TimerBarSchedule() {
   const { t } = useTranslation()
@@ -80,24 +82,43 @@ function TimerBarSchedule() {
   if (isAddTimer || isEditTask || isTask || isUser) return <Spinner />
 
   return (
-    <div className='bg-white gap-4 flex flex-wrap max-w-full rounded-xl mt-4 p-2 md:p-4 items-center justify-between shadow-md'>
-      <div className='w-full'>
-        <ScheduleSearchResult
-          valueSearch={valueSearch}
-          setValueSearch={setValueSearch}
-        />
-      </div>
+    <Card
+      className='w-full p-4 border-none shadow-sm bg-white overflow-visible' // overflow-visible for dropdowns
+      shadow='sm'
+    >
+      <div className='flex flex-col md:flex-row items-center gap-4 justify-between'>
+        <div className='w-full lg:max-w-xl z-20 relative'>
+          <ScheduleSearchResult
+            valueSearch={valueSearch}
+            setValueSearch={setValueSearch}
+          />
+        </div>
 
-      <Button
-        color={!open ? 'secondary' : 'danger'}
-        className='font-semibold min-w-[80px] md:min-w-[100px]'
-        size='lg'
-        onClick={handleStartStop}
-      >
-        {open ? t('stop') : t('start')}
-      </Button>
-      <div className='text-lg font-semibold'>{convertDuration}</div>
-    </div>
+        <div className='flex items-center gap-6 w-full md:w-auto justify-between md:justify-end'>
+          <div className='font-mono text-2xl font-bold text-gray-800 tracking-wider bg-gray-50 px-4 py-2 rounded-lg min-w-[120px] text-center'>
+            {convertDuration}
+          </div>
+
+          <Button
+            color={!open ? 'secondary' : 'danger'}
+            className='font-semibold min-w-[120px]'
+            size='lg'
+            radius='lg'
+            variant={open ? 'flat' : 'solid'}
+            startContent={
+              open ? (
+                <Stop weight='bold' size={20} />
+              ) : (
+                <Play weight='bold' size={20} />
+              )
+            }
+            onClick={handleStartStop}
+          >
+            {open ? t('stop') : t('start')}
+          </Button>
+        </div>
+      </div>
+    </Card>
   )
 }
 

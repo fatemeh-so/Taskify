@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import InprogressTaskReports from '../features/schedule/inprogressTaskReports'
 
 function Dashboard() {
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const { data: task, isLoading: isTask } = useGetTask()
   const { data: timerDatas, isLoading } = useGetTimer()
   const { data: user, isLoading: isUser } = useGetUser()
@@ -27,9 +27,16 @@ function Dashboard() {
 
   if (isTask || isLoading || isUser) return <Spinner />
 
-  const chartHeight = 300
   return (
-    <div className='w-full lg:pl-[7rem] lg:pr-4 px-4 overflow-h-auto md:overflow-hidden bg-gray-50 sm:h-[170vh] md:h-[107vh] h-[185vh] lg:max-h-[92vh]'>
+    <div className='min-h-screen bg-[#f8f9fa] p-4 lg:px-8 lg:py-4 lg:pl-28 pb-20'>
+      {/* <div className='flex flex-col mb-4'>
+        <p className='text-gray-500 mt-1 font-normal text-lg'>
+          {t('welcome_message', {
+            defaultValue: 'Welcome back to your daily overview',
+          })}
+        </p>
+      </div> */}
+
       <TaskReport />
 
       <InprogressTaskReports
@@ -38,19 +45,16 @@ function Dashboard() {
 
       <div
         dir={i18n.language === 'en' ? 'ltr' : 'rtl'}
-        className='flex items-start flex-col md:flex-row gap-0 md:gap-4 md:h-[30rem]'
+        className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
       >
-        <div className='w-full md:w-2/4'>
-          <ProrityTaskCharts tasks={tasks} height={chartHeight} />
+        <div className='w-full'>
+          <ProrityTaskCharts tasks={tasks} />
         </div>
-        <div className='w-full md:w-2/4'>
-          <WeeklyTaskDurationChart
-            height={chartHeight}
-            tasks={filter7lastDay}
-          />
+        <div className='w-full'>
+          <WeeklyTaskDurationChart tasks={filter7lastDay} />
         </div>
-        <div className='w-full md:w-2/4'>
-          <StatusTaskChart tasks={tasks} height={chartHeight} />
+        <div className='w-full'>
+          <StatusTaskChart tasks={tasks} />
         </div>
       </div>
     </div>
