@@ -15,10 +15,13 @@ export default function useSignup() {
       queryClient.setQueryData(['users'], data.user)
       navigate('/login', { replace: true })
 
-      toast.success('Account successfully created! Please login.', {
-        duration: 7000,
-        position: 'top-center',
-      })
+      toast.success(
+        'Account created successfully. An email has been sent for confirmation.',
+        {
+          duration: 7000,
+          position: 'top-center',
+        }
+      )
     },
     onError: (error) => {
       toast.error(error?.message || 'Something went wrong', {
